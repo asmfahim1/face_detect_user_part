@@ -33,7 +33,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
         width: size.width,
         padding: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
-          color: whiteColor,
+          color: whiteColor.withOpacity(0.7),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -159,6 +159,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
     return CommonButton(
       btnHeight: size.height / 20,
       width: size.width / 1.6,
+      buttonColor: blueColor,
       buttonTitle: 'Login',
       onTap: () {
         //login method will call

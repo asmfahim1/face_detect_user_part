@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/home/controller/home_controller.dart';
+import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
+import 'package:mict_final_project/module/home/view/widgets/uploaded_pictures.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +15,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final HomeController home = Get.put(HomeController());
+  final imageList = [
+    openCameraIconPath,
+    openCameraIconPath,
+    openCameraIconPath,
+    openCameraIconPath,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,12 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: 'Home',
         actions: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(Icons.logout_outlined, color: redColor, size: 25,),
+            child: const Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(
+                Icons.logout_outlined,
+                color: redColor,
+                size: 25,
+              ),
             ),
           )
         ],
@@ -31,34 +47,22 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           _profileWidget(),
-          SizedBox(height: 100,),
-          Container(
-            height: 250,
-            width: 250,
-            decoration: BoxDecoration(
-              color: strokeColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                width: 1.2,
-                color: Colors.grey.shade300,
-              )
-            ),
-            child: Icon(Icons.person_outline_outlined, size: 50,),
+          const SizedBox(
+            height: 20,
           ),
-          SizedBoxHeight20(),
-          _uploadPhotoButton(),
+          _uploadedPhotoWidget(home),
         ],
       ),
     );
   }
 
-  Widget _profileWidget(){
+  Widget _profileWidget() {
     Size size = MediaQuery.of(context).size;
     return Container(
       height: size.height / 6,
       width: size.width,
       padding: const EdgeInsets.all(10),
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey.shade300,
         border: Border.all(),
@@ -67,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         children: [
           const CircleAvatar(
-            backgroundColor: greenColor,
+            backgroundColor: blueColor,
             radius: 40,
             child: Icon(
               Icons.person,
@@ -75,16 +79,101 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.white,
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextWidget('Abu Sale Mohammad Fahim', style: TextStyles.title16,),
-              TextWidget('id: 2254991017', style: TextStyles.title16,),
-              TextWidget('exam : BCS exam', style: TextStyles.title16,),
+              TextWidget(
+                'Abu Sale Mohammad Fahim',
+                style: TextStyles.title16,
+              ),
+              TextWidget(
+                'id: 2254991017',
+                style: TextStyles.title16,
+              ),
+              TextWidget(
+                'exam : BCS exam',
+                style: TextStyles.title16,
+              ),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _uploadedPhotoWidget(HomeController homeController) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: ImagePickerWidget(
+            imageFile: homeController.firstImageFile,
+            onTap: () {
+              showImagePickerOptions(context, homeController);
+            },
+          ),
+        ),
+        _uploadPhotoButton(),
+        const SizedBoxHeight20(),
+        const SizedBoxHeight20(),
+        Container(
+          height: 84,
+          padding: const EdgeInsets.only(left: 10),
+          child: Row(
+            children: [
+              _uploadedPicturesWidget(
+                imagePath: appIconImage,
+              ),
+              Container(
+                height: 84,
+                width: 50,
+                alignment: Alignment.center,
+                child: const SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _uploadedPicturesWidget({
+    required String imagePath,
+  }) {
+    Size size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width / 1.2,
+      child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: imageList.length,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 77,
+            width: 84,
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+              color: darkGrayColor,
+              borderRadius: radiusAll10,
+            ),
+            child: UploadedPicturesWidget(
+              imageList[index],
+              height: 48,
+              width: 48,
+              color: whiteColor,
+            ),
+          );
+        },
       ),
     );
   }
@@ -93,11 +182,75 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
     return CommonButton(
       btnHeight: size.height / 20,
-      buttonColor: greenColor,
+      buttonColor: blueColor,
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
         //upload image
+      },
+    );
+  }
+
+  Future<void> showImagePickerOptions(
+    BuildContext context,
+    HomeController homeController,
+  ) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 276,
+            width: 327,
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      homeController.pickImage(ImageSource.camera);
+                      Navigator.pop(context);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.grey,
+                          size: 100,
+                        ),
+                        const SizedBoxHeight20(),
+                        Container(
+                          height: 52,
+                          width: 185,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            border: Border.all(
+                              color: primaryColor,
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          child: TextWidget(
+                            'Open camera',
+                            style: TextStyles.title16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       },
     );
   }

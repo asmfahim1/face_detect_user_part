@@ -6,6 +6,7 @@ import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/home/controller/home_controller.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 import 'package:mict_final_project/module/home/view/widgets/uploaded_pictures.dart';
+import '../../../core/widgets/sized_box_height_10.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,9 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           _profileWidget(),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBoxHeight10(),
           _uploadedPhotoWidget(home),
         ],
       ),
@@ -116,8 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        _uploadPhotoButton(),
-        const SizedBoxHeight20(),
+        _uploadPhotoButton(homeController),
         const SizedBoxHeight20(),
         Container(
           height: 84,
@@ -178,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _uploadPhotoButton() {
+  Widget _uploadPhotoButton(HomeController homeController) {
     Size size = MediaQuery.of(context).size;
     return CommonButton(
       btnHeight: size.height / 20,
@@ -186,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-        //upload image
+        showImagePickerOptions(context, homeController);
       },
     );
   }

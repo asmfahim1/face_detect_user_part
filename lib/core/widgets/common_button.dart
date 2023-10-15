@@ -16,7 +16,7 @@ class CommonButton extends StatelessWidget {
     this.fontWeight = FontWeight.w500,
     this.buttonColor,
     this.leadingIcon,
-    this.trailingIcon, required btnHeight,
+    this.trailingIcon,
   }) : super(key: key);
 
   final String buttonTitle;

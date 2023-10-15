@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mict_final_project/module/registration/view/registration_screen.dart';
 import '../../../../../core/utils/app_routes.dart';
 import '../../../../../core/utils/asset_path.dart';
 import '../../../../../core/utils/colors.dart';
@@ -46,24 +47,6 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
             ),
             const SizedBoxHeight20(),
             _loginButton(),
-            /*const SizedBoxHeight20(),
-            GestureDetector(
-              onTap: () {
-                //go to registration page
-                Get.toNamed(AppRoutes.registrationPage);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextWidget('Don\'t have an account?',
-                      style: TextStyles.title16.copyWith(color: whiteColor)),
-                  TextWidget(
-                    'Sign Up',
-                    style: TextStyles.title16.copyWith(color: primaryColor),
-                  ),
-                ],
-              ),
-            ),*/
           ],
         ),
       ),
@@ -157,13 +140,13 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
   Widget _loginButton() {
     Size size = MediaQuery.of(context).size;
     return CommonButton(
-      btnHeight: size.height / 20,
       width: size.width / 1.6,
       buttonColor: blueColor,
       buttonTitle: 'Login',
       onTap: () {
         //login method will call
-        Get.toNamed(AppRoutes.homeScreen);
+        Get.to(()=> const RegistrationScreen());
+        //Get.toNamed(AppRoutes.homeScreen);
       },
     );
   }

@@ -27,8 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppbar(
-        title: 'Home',
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: whiteColor,
+        centerTitle: true,
+        elevation: 0,
+        title: TextWidget(
+          'Home',
+          style: TextStyles.regular18.copyWith(
+            color: darkGrayColor,
+          ),
+        ),
         actions: [
           GestureDetector(
             onTap: () {
@@ -49,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _profileWidget(),
           const SizedBoxHeight10(),
-          _uploadedPhotoWidget(home),
+          // _uploadedPhotoWidget(home),
         ],
       ),
     );
@@ -103,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _uploadedPhotoWidget(HomeController homeController) {
+  /*Widget _uploadedPhotoWidget(HomeController homeController) {
     return Column(
       children: [
         Padding(
@@ -179,7 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _uploadPhotoButton(HomeController homeController) {
     Size size = MediaQuery.of(context).size;
     return CommonButton(
-      btnHeight: size.height / 20,
       buttonColor: blueColor,
       width: size.width / 2,
       buttonTitle: 'Upload photo',
@@ -187,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
         showImagePickerOptions(context, homeController);
       },
     );
-  }
+  }*/
 
   Future<void> showImagePickerOptions(
     BuildContext context,

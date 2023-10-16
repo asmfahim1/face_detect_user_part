@@ -6,5 +6,5 @@ export 'colors.dart';
 export 'const.dart';
 export 'string_resource.dart';
 export 'styles.dart';
-export 'urls.dart';
+export 'app_constants.dart';
 export 'validator.dart';

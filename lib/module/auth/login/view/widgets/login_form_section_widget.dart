@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
-import 'package:mict_final_project/core/widgets/common_dropdown.dart';
 import 'package:mict_final_project/module/registration/view/registration_screen.dart';
-import '../../../../../core/utils/colors.dart';
-import '../../../../../core/utils/styles.dart';
-import '../../../../../core/utils/validator.dart';
 import '../../../../../core/widgets/common_button.dart';
 import '../../../../../core/widgets/common_text_field_widget.dart';
 import '../../../../../core/widgets/sized_box_height_20.dart';
@@ -33,7 +29,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
         child: Container(
           height: size.height / 1.9,
           width: size.width,
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           decoration: BoxDecoration(
             color: whiteColor.withOpacity(0.7),
             borderRadius: BorderRadius.circular(20),

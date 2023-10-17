@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/login/view/widgets/login_form_section_widget.dart';
 import '../../../../core/utils/exports.dart';
-import 'get_started_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);

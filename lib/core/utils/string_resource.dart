@@ -1,20 +1,13 @@
 final genders = ['Male', 'Female'];
 
+final examList = ['Bank exam', 'BDC exam', 'Biman exam', 'PSC exam'];
+
 final religions = [
   'Select Religion',
   'Christianity',
   'Islam',
   'Hinduism',
   'Buddhism',
-  'Others',
-];
-
-final ethnicites = [
-  'Select Ethnicity',
-  'African',
-  'Bengali',
-  'Arab',
-  'Caucasian',
   'Others',
 ];
 
@@ -39,38 +32,6 @@ final degrees = [
   'SSC/O Level',
   'High School',
   'Primary School',
-];
-
-final seekinges = [
-  'Bride',
-  'Groom',
-  'Both',
-];
-
-final countries = [
-  'Bangladesh',
-];
-
-final statues = [
-  'Unmarried',
-  'Married',
-  'Divorcy',
-  'Age 20-30',
-  'Age 31-45',
-  'Age avobe 45',
-];
-
-final communites = [
-  'Bengali',
-  'Rohinga',
-  'Chakma',
-  'Gharo',
-  'Noakhailla',
-  'Chandpuira',
-];
-
-final categories = [
-  'Middle Class',
 ];
 
 final ages = [
@@ -110,75 +71,6 @@ final maritalStatues = [
   'Awaiting Divorce'
 ];
 
-final childrens = ['Yes', 'No'];
-
-final noOfChildrens = [
-  '1',
-  '2',
-  '3',
-  '3+',
-];
-
-final childrenLivingStatues = [
-  'Living with My Family',
-  'Living with Me',
-  'Living Separately',
-];
-
-final subcommunityReligions = [
-  'Select One',
-  'Ahmadiyya',
-  'Shia',
-  'Sunni',
-  'Hanafi',
-];
-
-final islamReligions = [
-  'Ahmadiyya',
-  'Shia',
-  'Sunni',
-  'Hanafi',
-];
-
-final christianityReligions = [
-  'Protestant',
-  'Catholic',
-  'Orthodox',
-];
-
-final buddhismReligions = [
-  'Mahayana',
-  'Nichiren',
-  'Pure Land',
-  'Tantrayana',
-  'Theravada',
-  'Tendai',
-  'Zen',
-];
-
-final hinduReligions = [
-  'Baidya',
-  'Banik',
-  'Baishnab',
-  'Brahman - Kulin',
-  'Brahman - Other',
-  'Karmakar',
-  'Kashyap',
-  'Kayastha',
-  'Kshatriya',
-  'Mahishya',
-  'Namoshudra',
-  'Saha',
-  'Scheduled Caste (SC)',
-  'Others',
-];
-
-final physicalStatusOption = [
-  'Select One',
-  'Normal',
-  'Physically Challenged',
-];
-
 final bloodGroupOption = [
   'A+',
   'A-',
@@ -199,23 +91,6 @@ final financialStatues = [
   'High',
 ];
 
-final legalGardians = [
-  'Select One',
-  'Father',
-  'Mother',
-  'Aunty',
-  'Uncle',
-  'GrandFather',
-  'GrandMother',
-  'Brother',
-];
-
-final currentLivingStates = [
-  'Select One',
-  'Native (Living in Bangladesh)',
-  'Emigrant (Living Abroad)',
-];
-
 final nativeDistricts = [
   'Select One',
   'Dhaka',
@@ -224,25 +99,4 @@ final nativeDistricts = [
   'Sylhet',
 ];
 
-final emigrantCountries = [
-  'Select One',
-  'Taiwan',
-  'Rasia',
-  'UKrain',
-  'Luxembourg'
-];
 
-final familyResidencies = [
-  'Select One',
-  'Living with Family',
-  'Living Separately',
-];
-
-final deactiveReasons = [
-  'Already Got a Partner',
-  'Receiving No Response',
-  'Lost Interest in Marriage',
-  'Trying Somewhere Else',
-  'No Suitable Candidate',
-  'Others',
-];

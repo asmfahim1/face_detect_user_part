@@ -25,7 +25,17 @@ class CommonDropDown extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      color: strokeColor,
+      padding:
+      const EdgeInsets.only(left: 10, right: 10),
+      alignment: Alignment.centerLeft,
+      margin: const EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          width: 1.0,
+        ),
+        borderRadius: BorderRadius.circular(4.0),
+      ),
       child: DropdownButton(
         padding: const EdgeInsets.only(left: 15),
         isExpanded: true,

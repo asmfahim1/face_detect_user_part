@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mict_final_project/core/utils/exports.dart';
+import 'package:mict_final_project/core/widgets/common_dropdown.dart';
 import 'package:mict_final_project/module/registration/view/registration_screen.dart';
-import '../../../../../core/utils/app_routes.dart';
-import '../../../../../core/utils/asset_path.dart';
 import '../../../../../core/utils/colors.dart';
 import '../../../../../core/utils/styles.dart';
 import '../../../../../core/utils/validator.dart';
 import '../../../../../core/widgets/common_button.dart';
-import '../../../../../core/widgets/common_icon_widget.dart';
 import '../../../../../core/widgets/common_text_field_widget.dart';
 import '../../../../../core/widgets/sized_box_height_20.dart';
 import '../../../../../core/widgets/text_widget.dart';
@@ -21,39 +20,42 @@ class LoginFormSectionWidget extends StatefulWidget {
 }
 
 class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
-  final login = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
   final FocusNode _passwordFocus = FocusNode();
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Form(
-      key: _formKey,
-      child: Container(
-        height: size.height / 1.9,
-        width: size.width,
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
-          color: whiteColor.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(20),
+    return GetBuilder<LoginController>(builder: (controller){
+      return Form(
+        key: _formKey,
+        child: Container(
+          height: size.height / 1.9,
+          width: size.width,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          decoration: BoxDecoration(
+            color: whiteColor.withOpacity(0.7),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBoxHeight20(),
+              _textFields(controller),
+              const SizedBox(
+                height: 15,
+              ),
+              const SizedBoxHeight20(),
+              _loginButton(controller),
+            ],
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBoxHeight20(),
-            _textFields(),
-            const SizedBox(
-              height: 15,
-            ),
-            const SizedBoxHeight20(),
-            _loginButton(),
-          ],
-        ),
-      ),
-    );
+      );
+    });
   }
 
-  Widget _textFields() {
+  Widget _textFields(LoginController login) {
     Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,10 +92,10 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
             onChanged: (newValue) {
               login.setSelectedValue(newValue!);
             },
-            hint: Obx(() => TextWidget(
-              login.examType.value,
+            hint: TextWidget(
+              login.examType,
               style: TextStyles.title16,
-            )),
+            ),
             isExpanded: true,
             // to make the dropdown button span the full width of the container
             icon: const Icon(
@@ -104,40 +106,46 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
         ),
         const SizedBoxHeight20(),
         CommonTextField(
-          hintText: 'Email',
+          hintText: 'User id',
           validator: Validator().nullFieldValidate,
-          controller: login.email,
+          controller: login.userId,
           onFieldSubmitted: (v) {
             FocusScope.of(context).requestFocus(_passwordFocus);
           },
         ),
         const SizedBoxHeight20(),
-        Obx(() {
-          return CommonTextField(
-            validator: Validator().nullFieldValidate,
-            hintText: 'Password',
-            focusNode: _passwordFocus,
-            controller: login.password,
-            obSecure: !login.passwordVisible,
-            onFieldSubmitted: (v) {
-              //login method will call
+        CommonTextField(
+          validator: Validator().nullFieldValidate,
+          hintText: 'Password',
+          focusNode: _passwordFocus,
+          controller: login.password,
+          obSecure: login.passwordVisible,
+          onFieldSubmitted: (v) {
+            //login method will call
+            if (_formKey.currentState!.validate()) {
+
+              /*login.loginMethod().then((value) {
+                  if(value.isSuccess){
+                    //route to home screen
+                  }
+                });*/
+            }
+          },
+          suffixIcon: IconButton(
+            color: blackColor,
+            icon: login.passwordVisible
+                ? const Icon(Icons.visibility)
+                : const Icon(Icons.visibility_off),
+            onPressed: () {
+              login.passwordVisible = !login.passwordVisible;
             },
-            suffixIcon: IconButton(
-              color: blackColor,
-              icon: login.passwordVisible
-                  ? const Icon(Icons.visibility)
-                  : const Icon(Icons.visibility_off),
-              onPressed: () {
-                login.passwordVisible = !login.passwordVisible;
-              },
-            ),
-          );
-        }),
+          ),
+        ),
       ],
     );
   }
 
-  Widget _loginButton() {
+  Widget _loginButton(LoginController login) {
     Size size = MediaQuery.of(context).size;
     return CommonButton(
       width: size.width / 1.6,

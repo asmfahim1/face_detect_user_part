@@ -9,6 +9,7 @@ import 'core/utils/app_routes.dart';
 import 'core/utils/app_version.dart';
 import 'core/utils/colors.dart';
 import 'core/utils/pref_helper.dart';
+import 'core/utils/dependencies.dart' as dep;
 
 
 void main() async {
@@ -20,6 +21,7 @@ void main() async {
       DeviceOrientation.portraitDown,
     ],
   );
+  await dep.init();
   runApp(const MyApp());
 }
 

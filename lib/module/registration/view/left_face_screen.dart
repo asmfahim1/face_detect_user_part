@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../../../core/utils/colors.dart';
 import '../../../core/utils/styles.dart';
 import '../../../core/widgets/common_button.dart';
@@ -30,7 +33,10 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWidget('Upload left side of your face', style: TextStyles.title16,),
+            TextWidget(
+              'Upload left side of your face',
+              style: TextStyles.title16,
+            ),
             _uploadedPhotoWidget(regi)
           ],
         ),
@@ -41,13 +47,15 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
   Widget _uploadedPhotoWidget(RegistrationController regiController) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: ImagePickerWidget(
-            imageFile: regiController.firstImageFile,
-            onTap: () {
-              showImagePickerOptions(context, regiController);
-            },
+        Obx(
+          () => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: ImagePickerWidget(
+              imageFile: File(regi.selectedLeftImagePath.value),
+              onTap: () {
+                showImagePickerOptions(context, regiController);
+              },
+            ),
           ),
         ),
         _uploadPhotoButton(regiController),
@@ -62,17 +70,17 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-        regi.changePage();
-       //showImagePickerOptions(context, regiController);
+        //regi.changePage();
+        regi.pickLeftImage(ImageSource.camera);
       },
     );
   }
 }
 
 Future<void> showImagePickerOptions(
-    BuildContext context,
-    RegistrationController regi,
-    ) async {
+  BuildContext context,
+  RegistrationController regi,
+) async {
   await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -94,8 +102,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    regi.pickImage(ImageSource.camera);
-                    Navigator.pop(context);
+                    regi.pickLeftImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

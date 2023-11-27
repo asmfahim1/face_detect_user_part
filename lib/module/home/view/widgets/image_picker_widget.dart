@@ -1,9 +1,8 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/asset_path.dart';
 import '../../../../core/utils/colors.dart';
-import '../../../../core/widgets/common_icon_widget.dart';
 
 class ImagePickerWidget extends StatelessWidget {
   final File? imageFile;
@@ -16,6 +15,7 @@ class ImagePickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Image path $imageFile');
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -25,22 +25,18 @@ class ImagePickerWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: strokeColor),
         ),
-        child: SizedBox(
-          height: 48,
-          width: 48,
-          child: imageFile != null
-              ? Image.file(
-                  imageFile!,
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.cover,
-                )
-              : const Icon(
-                  Icons.camera_alt_outlined,
-                  size: 50,
-                  color: Colors.grey,
-                ),
-        ),
+        child: imageFile != ''
+            ? Image.file(
+                imageFile!,
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              )
+            : const Icon(
+                Icons.camera_alt_outlined,
+                size: 50,
+                color: Colors.grey,
+              ),
       ),
     );
   }

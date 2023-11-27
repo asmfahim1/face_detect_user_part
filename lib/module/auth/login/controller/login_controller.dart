@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   final TextEditingController userId = TextEditingController();
   final TextEditingController password = TextEditingController();
   final RxBool _passwordVisible = false.obs;
-  final RxString _examType = 'Bank exam'.obs;
+  final RxString _examType = 'Exam type'.obs;
 
   set passwordVisible(bool value) {
     _passwordVisible.value = value;

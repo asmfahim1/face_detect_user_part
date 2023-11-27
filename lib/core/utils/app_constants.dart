@@ -1,9 +1,10 @@
 class AppConstants {
   ///base url
-  static String get baseUrl => '';
+  static String get baseUrl => 'http://localhost:8000/';
 
   static String loginUrl = '';
   static String registerUrl = '';
+  static String fileUpload = 'file-upload';
 
   ///Shared Preferences
   static const String storedToken = 'token';
@@ -15,5 +16,4 @@ class AppConstants {
   //Admin
   static const String storedUserId = 'user_id';
   static const String storedAdminNum = 'admin_num';
-
 }

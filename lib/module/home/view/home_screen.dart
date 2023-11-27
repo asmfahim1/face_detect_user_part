@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextWidget(
                 'Abu Sale Mohammad Fahim',

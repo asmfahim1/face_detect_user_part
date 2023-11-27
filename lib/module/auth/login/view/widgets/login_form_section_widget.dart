@@ -36,8 +36,8 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBoxHeight20(),
               _textFields(controller),
               const SizedBox(
                 height: 15,
@@ -78,7 +78,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
               fontSize: 18.0,
               color: Colors.black,
             ),
-            items: <String>['Bank exam', 'BDC exam', 'Biman exam', 'PSC exam']
+            items: <String>['Bank exam', 'BCS exam', 'Biman exam', 'PSC exam']
                 .map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -130,8 +130,8 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
           suffixIcon: IconButton(
             color: blackColor,
             icon: login.passwordVisible
-                ? const Icon(Icons.visibility)
-                : const Icon(Icons.visibility_off),
+                ? const Icon(Icons.visibility_off)
+                : const Icon(Icons.visibility),
             onPressed: () {
               login.passwordVisible = !login.passwordVisible;
             },

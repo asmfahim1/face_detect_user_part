@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 TextWidget(
                   'Welcome to Face Detection App',
-                  style: TextStyles.title22.copyWith(color: whiteColor),
+                  style: TextStyles.title20.copyWith(color: whiteColor),
                 ),
                 const SizedBoxHeight20(),
                 const LoginFormSectionWidget()

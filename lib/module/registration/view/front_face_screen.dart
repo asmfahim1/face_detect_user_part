@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,7 +7,6 @@ import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 import 'package:mict_final_project/module/registration/controller/registration_controller.dart';
-import '../../../core/utils/colors.dart';
 
 class FrontFaceScreen extends StatefulWidget {
   const FrontFaceScreen({Key? key}) : super(key: key);
@@ -28,7 +29,10 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWidget('Upload font side of your face', style: TextStyles.title16,),
+            TextWidget(
+              'Upload font side of your face',
+              style: TextStyles.title16,
+            ),
             _uploadedPhotoWidget(regi)
           ],
         ),
@@ -39,13 +43,15 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
   Widget _uploadedPhotoWidget(RegistrationController regiController) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: ImagePickerWidget(
-            imageFile: regiController.firstImageFile,
-            onTap: () {
-              showImagePickerOptions(context, regiController);
-            },
+        Obx(
+          () => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: ImagePickerWidget(
+              imageFile: File(regi.selectedFrontImagePath.value),
+              onTap: () {
+                showImagePickerOptions(context, regiController);
+              },
+            ),
           ),
         ),
         _uploadPhotoButton(regiController),
@@ -60,17 +66,17 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-        regi.changePage();
-        //showImagePickerOptions(context, regiController);
+        // regi.changePage();
+        regi.pickFrontImage(ImageSource.camera);
       },
     );
   }
 }
 
 Future<void> showImagePickerOptions(
-    BuildContext context,
-    RegistrationController regi,
-    ) async {
+  BuildContext context,
+  RegistrationController regi,
+) async {
   await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -92,8 +98,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    regi.pickImage(ImageSource.camera);
-                    Navigator.pop(context);
+                    regi.pickFrontImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

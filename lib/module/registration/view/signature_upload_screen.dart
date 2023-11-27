@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/home/view/home_screen.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 import 'package:mict_final_project/module/registration/controller/registration_controller.dart';
-import 'package:get/get.dart';
+
 import '../../../core/utils/exports.dart';
-import '../../../core/widgets/text_widget.dart';
 
 class UploadSignatureScreen extends StatefulWidget {
   const UploadSignatureScreen({Key? key}) : super(key: key);
@@ -28,7 +31,10 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWidget('Upload your signature here', style: TextStyles.title16,),
+            TextWidget(
+              'Upload your signature here',
+              style: TextStyles.title16,
+            ),
             _uploadedPhotoWidget(regi)
           ],
         ),
@@ -39,13 +45,15 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
   Widget _uploadedPhotoWidget(RegistrationController regiController) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: ImagePickerWidget(
-            imageFile: regiController.firstImageFile,
-            onTap: () {
-              showImagePickerOptions(context, regiController);
-            },
+        Obx(
+          () => Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: ImagePickerWidget(
+              imageFile: File(regi.selectedSignatureImagePath.value),
+              onTap: () {
+                showImagePickerOptions(context, regiController);
+              },
+            ),
           ),
         ),
         _uploadPhotoButton(regiController),
@@ -60,17 +68,18 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-        regi.changePage();
-        //showImagePickerOptions(context, regiController);
+        //regi.changePage();
+        regi.pickSignatureImage(ImageSource.camera);
+        Get.to(() => const HomeScreen());
       },
     );
   }
 }
 
 Future<void> showImagePickerOptions(
-    BuildContext context,
-    RegistrationController regi,
-    ) async {
+  BuildContext context,
+  RegistrationController regi,
+) async {
   await showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -92,8 +101,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    regi.pickImage(ImageSource.camera);
-                    Navigator.pop(context);
+                    regi.pickSignatureImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

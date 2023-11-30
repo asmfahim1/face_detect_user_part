@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mict_final_project/core/utils/asset_path.dart';
 
 import '../../../../core/utils/colors.dart';
 
@@ -25,17 +26,18 @@ class ImagePickerWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: strokeColor),
         ),
-        child: imageFile != ''
+        child: imageFile != null || imageFile != ''
             ? Image.file(
                 imageFile!,
                 width: 200,
                 height: 200,
                 fit: BoxFit.cover,
               )
-            : const Icon(
-                Icons.camera_alt_outlined,
-                size: 50,
-                color: Colors.grey,
+            : Image.asset(
+                appIconImage,
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
               ),
       ),
     );

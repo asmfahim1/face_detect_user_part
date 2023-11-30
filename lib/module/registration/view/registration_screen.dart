@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
-import 'package:mict_final_project/module/home/view/home_screen.dart';
 import 'package:mict_final_project/module/registration/controller/registration_controller.dart';
 import 'package:mict_final_project/module/registration/view/front_face_screen.dart';
 import 'package:mict_final_project/module/registration/view/left_face_screen.dart';
 import 'package:mict_final_project/module/registration/view/right_face_screen.dart';
 import 'package:mict_final_project/module/registration/view/signature_upload_screen.dart';
-import '../../../core/utils/exports.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../../../core/utils/exports.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -31,19 +31,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: whiteColor,
+        backgroundColor: primaryColor,
         centerTitle: true,
         elevation: 0,
         title: TextWidget(
           'Registration',
-          style: TextStyles.regular18.copyWith(
+          style: TextStyles.title20.copyWith(
             color: darkGrayColor,
           ),
         ),
       ),
       backgroundColor: whiteColor,
       body: SafeArea(
-        child:  Padding(
+        child: Padding(
           padding: commonScaffoldPadding,
           child: Column(
             children: [

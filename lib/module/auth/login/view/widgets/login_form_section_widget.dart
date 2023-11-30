@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
-import 'package:mict_final_project/module/registration/view/registration_screen.dart';
+
 import '../../../../../core/widgets/common_button.dart';
 import '../../../../../core/widgets/common_text_field_widget.dart';
 import '../../../../../core/widgets/sized_box_height_20.dart';
@@ -19,11 +19,10 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
   final _formKey = GlobalKey<FormState>();
   final FocusNode _passwordFocus = FocusNode();
 
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return GetBuilder<LoginController>(builder: (controller){
+    return GetBuilder<LoginController>(builder: (controller) {
       return Form(
         key: _formKey,
         child: Container(
@@ -42,7 +41,6 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
               const SizedBox(
                 height: 15,
               ),
-              const SizedBoxHeight20(),
               _loginButton(controller),
             ],
           ),
@@ -59,8 +57,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
         Container(
           height: size.height / 14,
           width: size.width,
-          padding:
-          const EdgeInsets.only(left: 10, right: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10),
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.only(top: 10),
           decoration: BoxDecoration(
@@ -119,12 +116,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
           onFieldSubmitted: (v) {
             //login method will call
             if (_formKey.currentState!.validate()) {
-
-              /*login.loginMethod().then((value) {
-                  if(value.isSuccess){
-                    //route to home screen
-                  }
-                });*/
+              login.loginMethod();
             }
           },
           suffixIcon: IconButton(
@@ -148,9 +140,9 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
       buttonColor: blueColor,
       buttonTitle: 'Login',
       onTap: () {
-        //login method will call
-        Get.to(()=> const RegistrationScreen());
-        //Get.toNamed(AppRoutes.homeScreen);
+        if (_formKey.currentState!.validate()) {
+          login.loginMethod();
+        }
       },
     );
   }

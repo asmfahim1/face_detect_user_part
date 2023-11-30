@@ -64,7 +64,7 @@ class DialogUtils {
                 onPressed: () {
                   if (Get.isDialogOpen!) Get.back();
                 },
-                child: const Text("Okay"),
+                child: const Text("Close"),
               ),
             ],
           ),

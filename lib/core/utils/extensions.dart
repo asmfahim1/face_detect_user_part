@@ -1,9 +1,11 @@
 import 'dart:developer' as darttools show log;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 import 'package:intl/intl.dart';
 import 'package:mict_final_project/core/utils/pref_helper.dart';
+
 import '../../constant/constant_key.dart';
 
 extension ConvertNum on String {
@@ -175,8 +177,8 @@ extension FormattedYearMonthDate on String? {
 //This extention sum the value from List<Map<String,dynamic>>
 extension StringToDoubleFoldExtention<T extends List<Map<String, dynamic>>>
     on T {
-  String? get listOfMapStringSum => this
-          .map((e) => double.tryParse(e.values.first?.toString() ?? ""))
+  String? get listOfMapStringSum =>
+      map((e) => double.tryParse(e.values.first?.toString() ?? ""))
           .toList()
           .fold("0", (previous, current) {
         var sum = double.parse(previous?.toString() ?? "0") +

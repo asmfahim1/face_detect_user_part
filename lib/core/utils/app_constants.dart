@@ -1,8 +1,9 @@
 class AppConstants {
   ///base url
-  static String get baseUrl => 'http://localhost:8000/';
+  //static String get baseUrl => 'http://localhost:8000/';
+  static String get baseUrl => 'http://restapi.adequateshop.com/api/';
 
-  static String loginUrl = '';
+  static String loginUrl = '/authaccount/login';
   static String registerUrl = '';
   static String fileUpload = 'file-upload';
 

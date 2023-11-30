@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  bot_toast: ^4.0.4
   intl: ^0.18.0
   image_picker: ^1.0.1
   shared_preferences: ^2.0.18

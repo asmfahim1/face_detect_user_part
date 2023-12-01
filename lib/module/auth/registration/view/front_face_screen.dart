@@ -3,25 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/utils/exports.dart';
+import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
+import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
-import '../../../core/utils/colors.dart';
-import '../../../core/utils/styles.dart';
-import '../../../core/widgets/common_button.dart';
-import '../../../core/widgets/sized_box_height_20.dart';
-import '../../../core/widgets/text_widget.dart';
-import '../../home/view/widgets/image_picker_widget.dart';
-import '../controller/registration_controller.dart';
-
-class LeftFaceUploadScreen extends StatefulWidget {
-  const LeftFaceUploadScreen({Key? key}) : super(key: key);
+class FrontFaceScreen extends StatefulWidget {
+  const FrontFaceScreen({Key? key}) : super(key: key);
 
   @override
-  State<LeftFaceUploadScreen> createState() => _LeftFaceUploadScreenState();
+  State<FrontFaceScreen> createState() => _FrontFaceScreenState();
 }
 
-class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
+class _FrontFaceScreenState extends State<FrontFaceScreen> {
   RegistrationController regi = Get.put(RegistrationController());
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,7 +29,7 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload left side of your face',
+              'Upload font side of your face',
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi)
@@ -51,7 +46,7 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
           () => Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: ImagePickerWidget(
-              imageFile: File(regi.selectedLeftImagePath.value),
+              imageFile: File(regi.selectedFrontImagePath.value),
               onTap: () {
                 showImagePickerOptions(context, regiController);
               },
@@ -70,8 +65,8 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-        //regi.changePage();
-        regi.pickLeftImage(ImageSource.camera);
+        // regi.changePage();
+        regi.pickFrontImage(ImageSource.camera);
       },
     );
   }
@@ -102,7 +97,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    regi.pickLeftImage(ImageSource.camera);
+                    regi.pickFrontImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

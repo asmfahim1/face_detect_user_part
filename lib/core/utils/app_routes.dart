@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:mict_final_project/module/auth/login/view/get_started_screen.dart';
 import 'package:mict_final_project/module/auth/login/view/splash_screen.dart';
-import 'package:mict_final_project/module/registration/view/registration_screen.dart';
+import 'package:mict_final_project/module/auth/registration/view/registration_screen.dart';
 
 import '../../module/auth/login/view/login_screen.dart';
 import '../../module/home/view/home_screen.dart';

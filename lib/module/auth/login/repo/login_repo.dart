@@ -1,8 +1,7 @@
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginRepo{
+class LoginRepo {
   late final ApiClient apiClient;
   late final SharedPreferences sharedPreferences;
 
@@ -25,28 +24,4 @@ class LoginRepo{
     return await apiClient.postData(
         AppConstants.agencyRegUrl, agencyRegBody.toJson());
   }*/
-
-  bool userLoggedIn() {
-    return sharedPreferences.containsKey(AppConstants.storedToken);
-  }
-
-  bool passwordSaved() {
-    return sharedPreferences.containsKey(AppConstants.storedPassword);
-  }
-
-  String getUserToken()  {
-    return sharedPreferences.getString(AppConstants.storedToken) ?? "None";
-  }
-
-  saveUserToken(String token) async {
-    apiClient.token = token;
-    apiClient.updateHeader(token);
-
-    return await sharedPreferences.setString(AppConstants.storedToken, token);
-  }
-
-  bool clearSavedPassword() {
-    sharedPreferences.remove(AppConstants.storedPassword);
-    return true;
-  }
 }

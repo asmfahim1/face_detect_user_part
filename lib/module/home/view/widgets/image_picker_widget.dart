@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mict_final_project/core/utils/asset_path.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 
 import '../../../../core/utils/colors.dart';
 
@@ -20,23 +21,23 @@ class ImagePickerWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 170,
-        width: 155,
+        height: Dimensions.height100 * 2,
+        width: Dimensions.width100 * 2,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(color: strokeColor),
         ),
-        child: imageFile != null || imageFile != ''
+        child: (imageFile != null && imageFile!.path.isNotEmpty)
             ? Image.file(
                 imageFile!,
-                width: 200,
-                height: 200,
+                height: Dimensions.height100 * 2,
+                width: Dimensions.width100 * 2,
                 fit: BoxFit.cover,
               )
             : Image.asset(
                 appIconImage,
-                width: 200,
-                height: 200,
+                height: Dimensions.height100 * 2,
+                width: Dimensions.width100 * 2,
                 fit: BoxFit.cover,
               ),
       ),

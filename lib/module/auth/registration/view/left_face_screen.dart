@@ -6,16 +6,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
-import 'package:mict_final_project/module/registration/controller/registration_controller.dart';
 
-class FrontFaceScreen extends StatefulWidget {
-  const FrontFaceScreen({Key? key}) : super(key: key);
+import '../controller/registration_controller.dart';
+
+class LeftFaceUploadScreen extends StatefulWidget {
+  const LeftFaceUploadScreen({Key? key}) : super(key: key);
 
   @override
-  State<FrontFaceScreen> createState() => _FrontFaceScreenState();
+  State<LeftFaceUploadScreen> createState() => _LeftFaceUploadScreenState();
 }
 
-class _FrontFaceScreenState extends State<FrontFaceScreen> {
+class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
   RegistrationController regi = Get.put(RegistrationController());
 
   @override
@@ -30,7 +31,7 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload font side of your face',
+              'Upload left side of your face',
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi)
@@ -47,7 +48,7 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
           () => Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: ImagePickerWidget(
-              imageFile: File(regi.selectedFrontImagePath.value),
+              imageFile: File(regi.selectedLeftImagePath.value),
               onTap: () {
                 showImagePickerOptions(context, regiController);
               },
@@ -66,8 +67,8 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-        // regi.changePage();
-        regi.pickFrontImage(ImageSource.camera);
+        //regi.changePage();
+        regi.pickLeftImage(ImageSource.camera);
       },
     );
   }
@@ -98,7 +99,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    regi.pickFrontImage(ImageSource.camera);
+                    regi.pickLeftImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

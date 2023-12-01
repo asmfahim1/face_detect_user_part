@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
 import 'package:mict_final_project/module/home/view/home_screen.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
-import 'package:mict_final_project/module/registration/controller/registration_controller.dart';
-
-import '../../../core/utils/exports.dart';
 
 class UploadSignatureScreen extends StatefulWidget {
   const UploadSignatureScreen({Key? key}) : super(key: key);

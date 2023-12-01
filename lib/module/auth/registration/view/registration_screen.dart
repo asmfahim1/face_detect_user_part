@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
-import 'package:mict_final_project/module/registration/controller/registration_controller.dart';
-import 'package:mict_final_project/module/registration/view/front_face_screen.dart';
-import 'package:mict_final_project/module/registration/view/left_face_screen.dart';
-import 'package:mict_final_project/module/registration/view/right_face_screen.dart';
-import 'package:mict_final_project/module/registration/view/signature_upload_screen.dart';
+import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
+import 'package:mict_final_project/module/auth/registration/view/front_face_screen.dart';
+import 'package:mict_final_project/module/auth/registration/view/left_face_screen.dart';
+import 'package:mict_final_project/module/auth/registration/view/right_face_screen.dart';
+import 'package:mict_final_project/module/auth/registration/view/signature_upload_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import '../../../core/utils/exports.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);

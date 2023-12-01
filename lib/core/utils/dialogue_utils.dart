@@ -16,6 +16,7 @@ class DialogUtils {
           child: SizedBox(
             height: Dimensions.height40,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   width: Dimensions.width20,
@@ -74,12 +75,18 @@ class DialogUtils {
     );
   }
 
-  static void showSnackBar(String messageTitle, String messageBody) {
+  static void showSnackBar(String messageTitle, String messageBody,
+      {int seconds = 1, Color bgColor = greenColor}) {
     Get.snackbar(
       messageTitle,
       messageBody,
       icon: const Icon(Icons.person, color: Colors.white),
-      snackPosition: SnackPosition.BOTTOM,
+      borderWidth: 1.5,
+      borderColor: Colors.black54,
+      colorText: Colors.white,
+      backgroundColor: bgColor,
+      duration: Duration(seconds: seconds),
+      snackPosition: SnackPosition.TOP,
     );
   }
 }

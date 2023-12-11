@@ -1,4 +1,4 @@
-# mict_final_project
+# face_detection_project
 
 A new Flutter project.
 

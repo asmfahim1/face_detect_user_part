@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
-import 'package:mict_final_project/module/home/view/home_screen.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
 class UploadSignatureScreen extends StatefulWidget {
@@ -66,10 +65,10 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
       buttonColor: blueColor,
       width: size.width / 2,
       buttonTitle: 'Upload photo',
-      onTap: () {
+      onTap: () async {
         //regi.changePage();
-        regi.pickSignatureImage(ImageSource.camera);
-        Get.to(() => const HomeScreen());
+        print('the value of the page is :${regi.pageController}');
+        await regi.pickSignatureImage(ImageSource.camera);
       },
     );
   }

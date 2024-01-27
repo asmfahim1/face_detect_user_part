@@ -18,24 +18,29 @@ class AppRoutes {
 
   static List<GetPage> routes = [
     GetPage(
-        name: splashScreen,
-        transition: Transition.cupertino,
-        page: () => const SplashScreen()),
+      name: splashScreen,
+      transition: Transition.cupertino,
+      page: () => const SplashScreen(),
+    ),
     GetPage(
-        name: getStartedScreen,
-        transition: Transition.cupertino,
-        page: () => const GetStartedScreen()),
+      name: getStartedScreen,
+      transition: Transition.cupertino,
+      page: () => const GetStartedScreen(),
+    ),
     GetPage(
-        name: loginScreen,
-        transition: Transition.noTransition,
-        page: () => const LoginScreen()),
+      name: loginScreen,
+      transition: Transition.noTransition,
+      page: () => const LoginScreen(),
+    ),
     GetPage(
-        name: registrationPage,
-        transition: Transition.noTransition,
-        page: () => const RegistrationScreen()),
+      name: registrationPage,
+      transition: Transition.noTransition,
+      page: () => const RegistrationScreen(),
+    ),
     GetPage(
-        name: homeScreen,
-        transition: Transition.noTransition,
-        page: () => const HomeScreen()),
+      name: homeScreen,
+      transition: Transition.noTransition,
+      page: () => const HomeScreen(),
+    ),
   ];
 }

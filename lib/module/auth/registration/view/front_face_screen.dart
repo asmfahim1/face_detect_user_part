@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
@@ -29,7 +28,7 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload font side of your face',
+              'Upload front side of your face',
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi)
@@ -66,7 +65,7 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
       buttonTitle: 'Upload photo',
       onTap: () {
         // regi.changePage();
-        regi.pickFrontImage(ImageSource.camera);
+        // regi.pickFrontImage(ImageSource.camera);
       },
     );
   }
@@ -97,7 +96,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    regi.pickFrontImage(ImageSource.camera);
+                    //regi.pickFrontImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

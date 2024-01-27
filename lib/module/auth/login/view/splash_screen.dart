@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/auth/login/controller/login_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,11 +18,12 @@ class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-    Timer(const Duration(seconds: 2), () {
-      Get.toNamed(AppRoutes.getStartedScreen);
+    Future.delayed(const Duration(seconds: 3)).then((value) {
+      return Get.find<LoginController>().userLoggedIn()
+          ? Get.offAllNamed(AppRoutes.homeScreen)
+          : Get.offAllNamed(AppRoutes.loginScreen);
     });
+    super.initState();
   }
 
   @override

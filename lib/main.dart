@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:google_fonts/google_fonts.dart';
 //localization
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
-import 'core/utils/app_routes.dart';
-import 'core/utils/app_version.dart';
-import 'core/utils/colors.dart';
-import 'core/utils/pref_helper.dart';
-import 'core/utils/dependencies.dart' as dep;
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 
+import 'core/utils/app_routes.dart';
+import 'core/utils/colors.dart';
+import 'core/utils/dependencies.dart' as dep;
+import 'core/utils/pref_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initServices();
-  await SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ],
-  );
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   await dep.init();
+  initializeGet();
   runApp(const MyApp());
 }
 
-/// Make sure you always init shared pref first. It has token and token is need
-/// to make API call
-initServices() async {
-  await PrefHelper.init();
-  await AppVersion.getVersion();
+Future<void> initializeGet() async {
+  await Get.putAsync(() async {
+    return Dimensions(); // Initialize Dimensions class
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -55,8 +50,8 @@ class MyApp extends StatelessWidget {
         primaryColor: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         colorScheme: ThemeData().colorScheme.copyWith(
-          secondary: secondaryColor,
-        ),
+              secondary: secondaryColor,
+            ),
       ),
       //home: const SplashScreen(),
       initialRoute: AppRoutes.splashScreen,

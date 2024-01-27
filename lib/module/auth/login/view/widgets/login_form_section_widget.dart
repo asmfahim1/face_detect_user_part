@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 
 import '../../../../../core/widgets/common_button.dart';
@@ -102,7 +101,7 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
         CommonTextField(
           hintText: 'User id',
           validator: Validator().nullFieldValidate,
-          controller: login.userId,
+          controller: login.email,
           onFieldSubmitted: (v) {
             FocusScope.of(context).requestFocus(_passwordFocus);
           },
@@ -141,10 +140,10 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
       buttonColor: blueColor,
       buttonTitle: 'Login',
       onTap: () {
-        Get.toNamed(AppRoutes.registrationPage);
-        // if (_formKey.currentState!.validate()) {
-        //   login.loginMethod();
-        // }
+        //Get.toNamed(AppRoutes.registrationPage);
+        if (_formKey.currentState!.validate()) {
+          login.loginMethod();
+        }
       },
     );
   }

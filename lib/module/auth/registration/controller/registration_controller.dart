@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mict_final_project/core/utils/dialogue_utils.dart';
+import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/utils/extensions.dart';
 
 class RegistrationController extends GetxController {
-  final apiClient = ApiClient();
   PageController _pageController = PageController(initialPage: 0);
   int _activePage = 0;
   RxString selectedFrontImagePath = ''.obs;
@@ -57,21 +56,56 @@ class RegistrationController extends GetxController {
 
   void changePage() {
     if (pageController.page != null) {
-      pageController.nextPage(
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      int currentPage = pageController.page!.round();
+      if (currentPage < 3 - 1) {
+        // Not the last page, proceed to the next page
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        );
+      } else {
+        // Last page, navigate to home page
+        Get.offAllNamed(AppRoutes.homeScreen); // Adjust route as needed
+      }
     }
   }
 
+/*  final RxString frontFileName = ''.obs;
+  RxBool isFileUploaded = false.obs;
   Future<void> pickFrontImage(ImageSource source) async {
-    final pickedImage =
-        await ImagePicker.platform.getImageFromSource(source: source);
+    print('test 1');
+    final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
+      print('test 2');
       selectedFrontImagePath.value = pickedImage.path;
-      selectedFrontImageSize.value =
-          '${((File(selectedFrontImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
-      await uploadSelectedImage(selectedFrontImagePath.value);
+      frontFileName.value = pickedImage.path.split('/').last;
+      final File imageFile = File(selectedFrontImagePath.value);
+      isFileUploaded(true);
+      DialogUtils.showLoading();
+      try {
+        print('test 3');
+        Map<String, dynamic> response = await apiClient.uploadFileWithDio(
+            AppConstants.fileUpload, imageFile, frontFileName.value);
+        print('response : $response');
+        if (response["statusCode"] == 200) {
+          //selectedPdfFileList[index] = response["name"];
+          print('test 1=================$response');
+        } else {
+          print('test 2=================$response');
+        }
+        print('test 4');
+        Get.back();
+        Get.back();
+        isFileUploaded(false);
+      } catch (error) {
+        print('test 5 $error');
+        Get.back();
+        Get.back();
+        isFileUploaded(false);
+      }
       //await uploadData(selectedFrontImagePath.value, 'http://localhost:8000/file-upload');
     } else {
+      print('test 6');
       Get.back();
       Get.snackbar(
         'Warning!',
@@ -82,17 +116,17 @@ class RegistrationController extends GetxController {
         duration: const Duration(seconds: 2),
       );
     }
-  }
+  }*/
 
-  Future<void> pickLeftImage(ImageSource source) async {
+  Future<void> pickRightImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      selectedLeftImagePath.value = pickedImage.path;
-      //image size converted to MB
-      selectedLeftImageSize.value =
-          '${((File(selectedLeftImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
+      selectedRightImagePath.value = pickedImage.path;
+      selectedRightImageSize.value =
+          '${((File(selectedRightImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
+      // await uploadSelectedImage(selectedRightImagePath.value);
       Get.back();
-      "the size of the image is: $selectedFrontImageSize".log();
+      "the size of the image is: $selectedRightImagePath".log();
     } else {
       Get.back();
       Get.snackbar('Warning!', 'No image selected from device',
@@ -103,15 +137,15 @@ class RegistrationController extends GetxController {
     }
   }
 
-  Future<void> pickRightImage(ImageSource source) async {
+  Future<void> pickLeftImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      selectedRightImagePath.value = pickedImage.path;
-      //image size converted to MB
-      selectedRightImageSize.value =
-          '${((File(selectedRightImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
+      selectedLeftImagePath.value = pickedImage.path;
+      selectedLeftImageSize.value =
+          '${((File(selectedLeftImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
+      // await uploadSelectedImage(selectedLeftImagePath.value);
       Get.back();
-      "the size of the image is: $selectedRightImagePath".log();
+      "the size of the image is: $selectedLeftImageSize".log();
     } else {
       Get.back();
       Get.snackbar('Warning!', 'No image selected from device',
@@ -126,9 +160,9 @@ class RegistrationController extends GetxController {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
       selectedSignatureImagePath.value = pickedImage.path;
-      //image size converted to MB
       selectedSignatureImageSize.value =
           '${((File(selectedSignatureImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
+      //await uploadSelectedImage(selectedSignatureImagePath.value);
       Get.back();
       "the size of the image is: $selectedSignatureImagePath".log();
     } else {
@@ -141,28 +175,24 @@ class RegistrationController extends GetxController {
     }
   }
 
-  Future<void> uploadSelectedImage(String imagePath) async {
+  /*Future<void> uploadSelectedImage(String imagePath) async {
     DialogUtils.showLoading(title: 'uploading photo...');
     try {
       final File imageFile = File(imagePath);
-      //final response = await apiClient.uploadData(AppConstants.fileUpload, imageFile);
-      final response =
-          await apiClient.uploadImage(AppConstants.fileUpload, imageFile);
-      print('response : ${response}');
+      final response = await apiClient.uploadFileWithDio(
+          AppConstants.fileUpload, imageFile, frontFileName.value);
+      print('response : $response');
       if (response.statusCode == 200) {
         hideLoading();
         DialogUtils.showSnackBar('Successful', 'Image uploaded successfully');
         changePage();
-        print('Image uploaded successfully');
       } else {
-        // Handle error case
         hideLoading();
         DialogUtils.showSnackBar('Error', 'Failed to upload, please try again',
             bgColor: redColor);
         print('Error uploading image: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle error case
       hideLoading();
       DialogUtils.showErrorDialog(
         title: 'Error',
@@ -171,7 +201,7 @@ class RegistrationController extends GetxController {
       );
       print('Error uploading image: $e');
     }
-  }
+  }*/
 
 /*  Future uploadData(imageFilePath, url) async {
     var request = http.MultipartRequest('POST', Uri.parse(url));

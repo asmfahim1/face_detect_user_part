@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/auth/login/controller/login_controller.dart';
 import 'package:mict_final_project/module/home/controller/home_controller.dart';
-import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
-import 'package:mict_final_project/module/home/view/widgets/uploaded_pictures.dart';
+
 import '../../../core/widgets/sized_box_height_10.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final HomeController home = Get.put(HomeController());
+  final HomeController home = Get.find<HomeController>();
   final imageList = [
     openCameraIconPath,
     openCameraIconPath,
@@ -41,7 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.back();
+              if (Get.find<LoginController>().userLoggedIn()) {
+                Get.find<LoginController>().clearSharedData();
+                Get.offAllNamed(AppRoutes.loginScreen);
+              }
             },
             child: const Padding(
               padding: EdgeInsets.only(right: 10),

@@ -34,25 +34,16 @@ class LoginController extends GetxController {
 
   Future<void> loginMethod() async {
     try {
-      print('test 1');
       DialogUtils.showLoading(title: "Please wait...");
-
       final Map<String, dynamic> map = <String, dynamic>{};
       map['email'] = email.text.trim();
       map['password'] = password.text.trim();
-
-      print('test 2');
-      print('=============$map');
       Response response = await loginRepo!.login(map);
 
       print(
           'Response and maps : ${response.statusCode} =====${response.body}=========$map');
 
-      print('test 3');
-
       if (response.statusCode == 200) {
-        print('test 4');
-
         responseModel = LoginResponseModel.fromJson(response.body);
         if (responseModel!.data == null) {
           closeLoading();
@@ -64,14 +55,10 @@ class LoginController extends GetxController {
           Get.offAllNamed(AppRoutes.registrationPage);
         }
       } else {
-        print('test 5');
-
         closeLoading();
         DialogUtils.showErrorDialog();
       }
     } catch (e) {
-      print('test 6');
-
       closeLoading();
       "There is an error occurred while login request is processing: $e".log();
     }

@@ -1,12 +1,10 @@
 import 'dart:developer' as darttools show log;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'
-    show AppLocalizations;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
 import 'package:intl/intl.dart';
+import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:mict_final_project/core/utils/pref_helper.dart';
-
-import '../../constant/constant_key.dart';
 
 extension ConvertNum on String {
   static const english = [
@@ -158,7 +156,7 @@ extension Log on Object {
 
 // It will formate the date which will show in our application.
 extension FormatedDateExtention on DateTime {
-  String get formattedDate => DateFormat(AppConstant.MMM.key).format(this);
+  String get formattedDate => DateFormat(AppConstantKey.MMM.key).format(this);
 }
 
 extension FormatedDateExtentionString on String {
@@ -170,7 +168,7 @@ extension FormatedDateExtentionString on String {
 
 extension FormattedYearMonthDate on String? {
   DateTime fomateDateFromString({String? dateFormat}) {
-    return DateFormat(dateFormat ?? AppConstant.YYYY_MM.key).parse(this ?? "");
+    return DateFormat(dateFormat ?? AppConstantKey.YYYY_MM.key).parse(this ?? "");
   }
 }
 

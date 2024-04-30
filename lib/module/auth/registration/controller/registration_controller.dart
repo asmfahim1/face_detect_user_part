@@ -1,13 +1,37 @@
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image/image.dart' as img;
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/ML/Recognition.dart';
+import 'package:mict_final_project/core/ML/Recognizer.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
+import 'package:mict_final_project/core/utils/dialogue_utils.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/utils/extensions.dart';
+import 'package:mict_final_project/module/auth/registration/repo/regi_repo.dart';
 
 class RegistrationController extends GetxController {
+  RegiRepo? regiRepo;
+  RegistrationController({this.regiRepo});
+
+@override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    imagePicker = ImagePicker();
+
+    //TODO initialize face detector
+
+    final options = FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
+    faceDetector = FaceDetector(options: options);
+
+    //TODO initialize face recognizer
+    recognizer = Recognizer();
+  }
+
   PageController _pageController = PageController(initialPage: 0);
   int _activePage = 0;
   RxString selectedFrontImagePath = ''.obs;
@@ -70,7 +94,7 @@ class RegistrationController extends GetxController {
     }
   }
 
-/*  final RxString frontFileName = ''.obs;
+  final RxString frontFileName = ''.obs;
   RxBool isFileUploaded = false.obs;
   Future<void> pickFrontImage(ImageSource source) async {
     print('test 1');
@@ -84,8 +108,7 @@ class RegistrationController extends GetxController {
       DialogUtils.showLoading();
       try {
         print('test 3');
-        Map<String, dynamic> response = await apiClient.uploadFileWithDio(
-            AppConstants.fileUpload, imageFile, frontFileName.value);
+        Map<String, dynamic> response = await regiRepo!.uploadFileWithDio(imageFile, frontFileName.value);
         print('response : $response');
         if (response["statusCode"] == 200) {
           //selectedPdfFileList[index] = response["name"];
@@ -116,7 +139,7 @@ class RegistrationController extends GetxController {
         duration: const Duration(seconds: 2),
       );
     }
-  }*/
+  }
 
   Future<void> pickRightImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
@@ -237,6 +260,163 @@ class RegistrationController extends GetxController {
   PageController get pageController => _pageController;
 
   int get activePage => _activePage;
+
+
+  ///face detection function work flow
+
+
+  //TODO declare variables
+  late ImagePicker imagePicker;
+  File? _image;
+
+  //TODO declare detector
+  late FaceDetector faceDetector;
+
+  //TODO declare face recognizer
+  late Recognizer recognizer;
+
+
+  //TODO capture image using camera
+  _imgFromCamera() async {
+    XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      doFaceDetection();
+      update();
+    }
+  }
+
+  //TODO choose image using gallery
+  _imgFromGallery() async {
+    XFile? pickedFile =
+    await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      doFaceDetection();
+      update();
+    }
+  }
+
+  //TODO face detection code here
+  List<Face> faces = [];
+  doFaceDetection() async {
+    //TODO remove rotation of camera images
+    InputImage inputImage = InputImage.fromFile(_image!);
+
+    //image = await _image?.readAsBytes();
+    image = await decodeImageFromList(_image!.readAsBytesSync());
+
+    //TODO passing input to face detector and getting detected faces
+    faces = await faceDetector.processImage(inputImage);
+
+    for (Face face in faces){
+      final Rect  boundingBox = face.boundingBox;
+      print('locate face in image : $boundingBox');
+
+
+      num left = boundingBox.left < 0 ? 0 : boundingBox.left;
+      num top = boundingBox.top < 0 ? 0 : boundingBox.top;
+      num right = boundingBox.right > image.width ? image.width -1 : boundingBox.right;
+      num bottom = boundingBox.bottom > image.width ? image.width -1 : boundingBox.bottom;
+
+      num width = right - left ;
+      num height = bottom - top ;
+
+
+      //crop image
+      final bytes =  _image!.readAsBytesSync();
+      img.Image? faceImage = img.decodeImage(bytes);
+      img.Image croppedFace =  img.copyCrop(faceImage!, x: left.toInt(), y: top.toInt(), width: width.toInt(), height: height.toInt());
+
+      Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
+      recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
+      //showFaceRegistrationDialogue(Uint8List.fromList(img.encodeBmp(croppedFace)), recognition);
+
+
+    }
+
+    drawRectangleAroundFaces();
+
+
+    //TODO call the method to perform face recognition on detected faces
+  }
+
+  //TODO remove rotation of camera images
+  removeRotation(File inputImage) async {
+    final img.Image? capturedImage = img.decodeImage(await File(inputImage.path).readAsBytes());
+    final img.Image orientedImage = img.bakeOrientation(capturedImage!);
+    return await File(_image!.path).writeAsBytes(img.encodeJpg(orientedImage));
+  }
+
+  //TODO perform Face Recognition
+
+  //TODO Face Registration Dialogue
+  TextEditingController textEditingController = TextEditingController();
+/*  showFaceRegistrationDialogue(Uint8List cropedFace, Recognition recognition){
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Face Registration",textAlign: TextAlign.center),alignment: Alignment.center,
+        content: SizedBox(
+          height: 340,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20,),
+              Image.memory(
+                cropedFace,
+                width: 200,
+                height: 200,
+              ),
+              SizedBox(
+                width: 200,
+                child: TextField(
+                    controller: textEditingController,
+                    decoration: const InputDecoration( fillColor: Colors.white, filled: true,hintText: "Enter Name")
+                ),
+              ),
+              const SizedBox(height: 10,),
+              ElevatedButton(
+                  onPressed: () {
+                    recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
+                    // print('face embeddings============= : ${recognition.embeddings}');
+                    textEditingController.text = "";
+                    Get.back();
+                    Get.snackbar('Successful', 'Face Registered',);
+                  },style: ElevatedButton.styleFrom(backgroundColor:Colors.blue,minimumSize: const Size(200,40)),
+                  child: const Text("Register"))
+            ],
+          ),
+        ),contentPadding: EdgeInsets.zero,
+      ),
+    );
+  }*/
+  //TODO draw rectangles
+  var image;
+  drawRectangleAroundFaces() async {
+    image = await _image?.readAsBytes();
+    image = await decodeImageFromList(image);
+    print("${image.width}   ${image.height}");
+    image;
+    faces;
+    update();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*  File? get firstImageFile => _firstImageFile;
   File? get secondImageFile => _secondImageFile;

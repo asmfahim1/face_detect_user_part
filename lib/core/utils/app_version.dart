@@ -1,7 +1,7 @@
+import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:mict_final_project/core/utils/extensions.dart';
 import 'package:mict_final_project/core/utils/pref_helper.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import '../../constant/constant_key.dart';
 
 class AppVersion {
   static String currentVersion = "";
@@ -10,8 +10,8 @@ class AppVersion {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     currentVersion = packageInfo.version;
     versionCode = packageInfo.buildNumber;
-    await PrefHelper.setString(AppConstant.APP_VERSION.key, currentVersion);
-    await PrefHelper.setString(AppConstant.BUILD_NUMBER.key, versionCode);
+    await PrefHelper.setString(AppConstantKey.APP_VERSION.key, currentVersion);
+    await PrefHelper.setString(AppConstantKey.BUILD_NUMBER.key, versionCode);
     "Current version is  ${currentVersion.toString()}".log();
     "App version Code is  ${versionCode.toString()}".log();
   }

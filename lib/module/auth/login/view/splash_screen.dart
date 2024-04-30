@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Image.asset(appIconImage),
             ),
             TextWidget(
-              'USER DEMO APP',
+              'Face Registration APP',
               style: TextStyles.title32.copyWith(color: primaryColor),
             )
           ],

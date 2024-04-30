@@ -1,6 +1,8 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:get/get.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:http_parser/http_parser.dart';
 import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,7 +11,6 @@ class ApiClient extends GetConnect implements GetxService {
   final String appBaseUrl;
   late SharedPreferences sharedPreferences;
   late Map<String, String> _mainHeaders;
-  late Map<String, String> _mainHeadersFileUpload;
 
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
     baseUrl = appBaseUrl;
@@ -20,10 +21,6 @@ class ApiClient extends GetConnect implements GetxService {
       'Context-type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token',
     };
-    /*_mainHeadersFileUpload = {
-      'Context-type': 'multipart/form-data; charset=UTF-8',
-      'Authorization': 'Bearer $token',
-    };*/
   }
 
   void updateHeader(String token) {
@@ -65,48 +62,67 @@ class ApiClient extends GetConnect implements GetxService {
     }
   }
 
-/*  Future<Response> uploadImage(String partialUrl, File imageFile) async {
-    try {
-      final url = _buildUrl(partialUrl);
-      // Open the image file and read its content
-      final bytes = await imageFile.readAsBytes();
-      // Send a POST request with the image content as the request body
-      final response = await post(
-        url,
-        bytes,
-        headers: _mainHeaders,
-        contentType:
-            'image/jpg', // Adjust the content type based on your image type
-      );
-      return response;
-    } catch (e) {
-      print('Error uploading image: $e');
-      rethrow;
-    }
-  }*/
-
-/*  Future<Map<String, dynamic>> uploadFileWithDio(
+Future<Map<String, dynamic>> uploadFileWithDio(
       String uri, File file, String fileName) async {
     Map<String, dynamic> map = {};
     String completeUrl = '$baseUrl' '$uri';
     final request = dio.Dio();
     final formData = dio.FormData.fromMap({
       'file': await dio.MultipartFile.fromFile(file.path,
-          filename: fileName, contentType: MediaType('image', 'jpg')),
+          filename: fileName, contentType: MediaType('application', 'pdf')),
     });
 
     final response = await request.postUri(
-      Uri.parse('http://localhost:38784/file-upload,'),
+      Uri.parse(
+        completeUrl,
+      ),
       data: formData,
-      */ /*options: dio.Options(
+      options: dio.Options(
         headers: {
           HttpHeaders.authorizationHeader: 'Bearer $token',
           HttpHeaders.contentTypeHeader: 'multipart/form-data; charset=UTF-8',
           HttpHeaders.contentLengthHeader: formData.length,
         },
-      ),*/ /*
+      ),
     );
-    print(' response data : $response');
+    map = response.data;
+    print('map from response data : $map');
+    return map;
+  }
+
+/* //Download pdf file
+  Future<String> _getDownloadPath() async {
+    Directory? downloadsDirectory;
+    if (Platform.isAndroid) {
+      if (await Permission.storage.request().isGranted) {
+        downloadsDirectory = await getExternalStorageDirectory();
+      } else {
+        throw Exception('Storage permission not granted');
+      }
+    } else if (Platform.isIOS) {
+      downloadsDirectory = await getApplicationDocumentsDirectory();
+    }
+    if (downloadsDirectory == null) {
+      throw Exception('Could not access download directory');
+    }
+    return downloadsDirectory.path;
+  }
+
+  Future<Map<String, dynamic>> downloadPDF(
+      String uri, Function(double) onProgress) async {
+    final request = dio.Dio();
+    String completeUrl = '$baseUrl' '$uri';
+    Map<String, dynamic> map = {};
+    String downloadPath = await _getDownloadPath();
+    String filePath = '$downloadPath/flutter-succinctly.pdf';
+    final response = await request.download(
+        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+        filePath, onReceiveProgress: (received, total) {
+      if (total != -1) {
+        onProgress((received / total) * 100);
+      }
+    });
+    print('-------${response.data}${response.statusCode}---------');
     map = response.data;
     print('map from response data : $map');
     return map;

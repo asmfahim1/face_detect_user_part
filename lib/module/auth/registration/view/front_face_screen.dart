@@ -1,12 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image/image.dart' as img;
-import 'package:mict_final_project/core/ML/Recognition.dart';
-import 'package:mict_final_project/core/ML/Recognizer.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
@@ -20,9 +16,9 @@ class FrontFaceScreen extends StatefulWidget {
 }
 
 class _FrontFaceScreenState extends State<FrontFaceScreen> {
-  RegistrationController regi = Get.put(RegistrationController());
+  RegistrationController regi = Get.find<RegistrationController>();
 
-  //TODO declare variables
+/*  //TODO declare variables
   late ImagePicker imagePicker;
   File? _image;
 
@@ -40,7 +36,8 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
 
     //TODO initialize face detector
 
-    final options = FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
+    final options =
+        FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
     faceDetector = FaceDetector(options: options);
 
     //TODO initialize face recognizer
@@ -51,7 +48,7 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
   _imgFromCamera() async {
     XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      setState((){
+      setState(() {
         _image = File(pickedFile.path);
         doFaceDetection();
       });
@@ -61,9 +58,9 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
   //TODO choose image using gallery
   _imgFromGallery() async {
     XFile? pickedFile =
-    await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      setState((){
+      setState(() {
         _image = File(pickedFile.path);
         doFaceDetection();
       });
@@ -82,40 +79,44 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
     //TODO passing input to face detector and getting detected faces
     faces = await faceDetector.processImage(inputImage);
 
-    for (Face face in faces){
-      final Rect  boundingBox = face.boundingBox;
+    for (Face face in faces) {
+      final Rect boundingBox = face.boundingBox;
       print('locate face in image : $boundingBox');
-
 
       num left = boundingBox.left < 0 ? 0 : boundingBox.left;
       num top = boundingBox.top < 0 ? 0 : boundingBox.top;
-      num right = boundingBox.right > image.width ? image.width -1 : boundingBox.right;
-      num bottom = boundingBox.bottom > image.width ? image.width -1 : boundingBox.bottom;
+      num right =
+          boundingBox.right > image.width ? image.width - 1 : boundingBox.right;
+      num bottom = boundingBox.bottom > image.width
+          ? image.width - 1
+          : boundingBox.bottom;
 
-      num width = right - left ;
-      num height = bottom - top ;
-
+      num width = right - left;
+      num height = bottom - top;
 
       //crop image
-      final bytes =  _image!.readAsBytesSync();
+      final bytes = _image!.readAsBytesSync();
       img.Image? faceImage = img.decodeImage(bytes);
-      img.Image croppedFace =  img.copyCrop(faceImage!, x: left.toInt(), y: top.toInt(), width: width.toInt(), height: height.toInt());
+      img.Image croppedFace = img.copyCrop(faceImage!,
+          x: left.toInt(),
+          y: top.toInt(),
+          width: width.toInt(),
+          height: height.toInt());
 
       Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
-      showFaceRegistrationDialogue(Uint8List.fromList(img.encodeBmp(croppedFace)), recognition);
-
-
+      showFaceRegistrationDialogue(
+          Uint8List.fromList(img.encodeBmp(croppedFace)), recognition);
     }
 
     drawRectangleAroundFaces();
-
 
     //TODO call the method to perform face recognition on detected faces
   }
 
   //TODO remove rotation of camera images
   removeRotation(File inputImage) async {
-    final img.Image? capturedImage = img.decodeImage(await File(inputImage.path).readAsBytes());
+    final img.Image? capturedImage =
+        img.decodeImage(await File(inputImage.path).readAsBytes());
     final img.Image orientedImage = img.bakeOrientation(capturedImage!);
     return await File(_image!.path).writeAsBytes(img.encodeJpg(orientedImage));
   }
@@ -124,17 +125,20 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
 
   //TODO Face Registration Dialogue
   TextEditingController textEditingController = TextEditingController();
-  showFaceRegistrationDialogue(Uint8List cropedFace, Recognition recognition){
+  showFaceRegistrationDialogue(Uint8List cropedFace, Recognition recognition) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Face Registration",textAlign: TextAlign.center),alignment: Alignment.center,
+        title: const Text("Face Registration", textAlign: TextAlign.center),
+        alignment: Alignment.center,
         content: SizedBox(
           height: 340,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Image.memory(
                 cropedFace,
                 width: 200,
@@ -144,27 +148,37 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
                 width: 200,
                 child: TextField(
                     controller: textEditingController,
-                    decoration: const InputDecoration( fillColor: Colors.white, filled: true,hintText: "Enter Name")
-                ),
+                    decoration: const InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "Enter Name")),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               ElevatedButton(
                   onPressed: () {
-                    recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
+                    recognizer.registerFaceInDB(
+                        textEditingController.text, recognition.embeddings);
                     // print('face embeddings============= : ${recognition.embeddings}');
                     textEditingController.text = "";
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Face Registered"),
                     ));
-                  },style: ElevatedButton.styleFrom(backgroundColor:Colors.blue,minimumSize: const Size(200,40)),
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      minimumSize: const Size(200, 40)),
                   child: const Text("Register"))
             ],
           ),
-        ),contentPadding: EdgeInsets.zero,
+        ),
+        contentPadding: EdgeInsets.zero,
       ),
     );
   }
+
   //TODO draw rectangles
   var image;
   drawRectangleAroundFaces() async {
@@ -175,8 +189,7 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
       image;
       faces;
     });
-  }
-
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -207,10 +220,9 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
           () => Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: ImagePickerWidget(
-              imageFile: File(regi.selectedFrontImagePath.value),
+              imageFile: File(regi.selectedFrontImagePath.value ?? ''),
               onTap: () {
-                _imgFromGallery();
-                //showImagePickerOptions(context, regiController);
+                showImagePickerOptions(context, regiController);
               },
             ),
           ),
@@ -227,9 +239,8 @@ class _FrontFaceScreenState extends State<FrontFaceScreen> {
       width: size.width / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
-
-        // regi.changePage();
-        // regi.pickFrontImage(ImageSource.camera);
+        regi.changePage();
+        //regi.pickFrontImage(ImageSource.camera);
       },
     );
   }
@@ -260,7 +271,7 @@ Future<void> showImagePickerOptions(
               Center(
                 child: InkWell(
                   onTap: () {
-                    //regi.pickFrontImage(ImageSource.camera);
+                    regi.pickFrontImage(ImageSource.camera);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

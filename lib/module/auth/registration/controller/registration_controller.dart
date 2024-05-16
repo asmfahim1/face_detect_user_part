@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/ML/Recognition.dart';
 import 'package:mict_final_project/core/ML/Recognizer.dart';
@@ -17,7 +17,7 @@ class RegistrationController extends GetxController {
   RegiRepo? regiRepo;
   RegistrationController({this.regiRepo});
 
-@override
+  @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
@@ -25,7 +25,8 @@ class RegistrationController extends GetxController {
 
     //TODO initialize face detector
 
-    final options = FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
+    final options =
+        FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
     faceDetector = FaceDetector(options: options);
 
     //TODO initialize face recognizer
@@ -97,38 +98,25 @@ class RegistrationController extends GetxController {
   final RxString frontFileName = ''.obs;
   RxBool isFileUploaded = false.obs;
   Future<void> pickFrontImage(ImageSource source) async {
-    print('test 1');
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      print('test 2');
       selectedFrontImagePath.value = pickedImage.path;
       frontFileName.value = pickedImage.path.split('/').last;
       final File imageFile = File(selectedFrontImagePath.value);
       isFileUploaded(true);
       DialogUtils.showLoading();
       try {
-        print('test 3');
-        Map<String, dynamic> response = await regiRepo!.uploadFileWithDio(imageFile, frontFileName.value);
-        print('response : $response');
-        if (response["statusCode"] == 200) {
-          //selectedPdfFileList[index] = response["name"];
-          print('test 1=================$response');
-        } else {
-          print('test 2=================$response');
-        }
-        print('test 4');
+        await doFaceDetection(imageFile);
         Get.back();
         Get.back();
         isFileUploaded(false);
       } catch (error) {
-        print('test 5 $error');
         Get.back();
         Get.back();
         isFileUploaded(false);
       }
       //await uploadData(selectedFrontImagePath.value, 'http://localhost:8000/file-upload');
     } else {
-      print('test 6');
       Get.back();
       Get.snackbar(
         'Warning!',
@@ -261,9 +249,7 @@ class RegistrationController extends GetxController {
 
   int get activePage => _activePage;
 
-
   ///face detection function work flow
-
 
   //TODO declare variables
   late ImagePicker imagePicker;
@@ -275,13 +261,12 @@ class RegistrationController extends GetxController {
   //TODO declare face recognizer
   late Recognizer recognizer;
 
-
   //TODO capture image using camera
   _imgFromCamera() async {
     XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       _image = File(pickedFile.path);
-      doFaceDetection();
+      //doFaceDetection();
       update();
     }
   }
@@ -289,61 +274,65 @@ class RegistrationController extends GetxController {
   //TODO choose image using gallery
   _imgFromGallery() async {
     XFile? pickedFile =
-    await imagePicker.pickImage(source: ImageSource.gallery);
+        await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       _image = File(pickedFile.path);
-      doFaceDetection();
+      doFaceDetection(_image!);
       update();
     }
   }
 
   //TODO face detection code here
   List<Face> faces = [];
-  doFaceDetection() async {
+  doFaceDetection(File imageFile) async {
     //TODO remove rotation of camera images
-    InputImage inputImage = InputImage.fromFile(_image!);
+    InputImage inputImage = InputImage.fromFile(imageFile);
 
     //image = await _image?.readAsBytes();
-    image = await decodeImageFromList(_image!.readAsBytesSync());
+    image = await decodeImageFromList(imageFile.readAsBytesSync());
 
     //TODO passing input to face detector and getting detected faces
     faces = await faceDetector.processImage(inputImage);
 
-    for (Face face in faces){
-      final Rect  boundingBox = face.boundingBox;
+    for (Face face in faces) {
+      final Rect boundingBox = face.boundingBox;
       print('locate face in image : $boundingBox');
-
 
       num left = boundingBox.left < 0 ? 0 : boundingBox.left;
       num top = boundingBox.top < 0 ? 0 : boundingBox.top;
-      num right = boundingBox.right > image.width ? image.width -1 : boundingBox.right;
-      num bottom = boundingBox.bottom > image.width ? image.width -1 : boundingBox.bottom;
+      num right =
+          boundingBox.right > image.width ? image.width - 1 : boundingBox.right;
+      num bottom = boundingBox.bottom > image.width
+          ? image.width - 1
+          : boundingBox.bottom;
 
-      num width = right - left ;
-      num height = bottom - top ;
-
+      num width = right - left;
+      num height = bottom - top;
 
       //crop image
-      final bytes =  _image!.readAsBytesSync();
+      final bytes = imageFile.readAsBytesSync();
       img.Image? faceImage = img.decodeImage(bytes);
-      img.Image croppedFace =  img.copyCrop(faceImage!, x: left.toInt(), y: top.toInt(), width: width.toInt(), height: height.toInt());
+      img.Image croppedFace = img.copyCrop(faceImage!,
+          x: left.toInt(),
+          y: top.toInt(),
+          width: width.toInt(),
+          height: height.toInt());
 
       Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
-      recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
+      recognizer.registerFaceInDB(
+          textEditingController.text, recognition.embeddings);
       //showFaceRegistrationDialogue(Uint8List.fromList(img.encodeBmp(croppedFace)), recognition);
-
-
     }
 
-    drawRectangleAroundFaces();
-
+    drawRectangleAroundFaces(imageFile);
 
     //TODO call the method to perform face recognition on detected faces
   }
 
   //TODO remove rotation of camera images
   removeRotation(File inputImage) async {
-    final img.Image? capturedImage = img.decodeImage(await File(inputImage.path).readAsBytes());
+    final img.Image? capturedImage =
+        img.decodeImage(await File(inputImage.path).readAsBytes());
     final img.Image orientedImage = img.bakeOrientation(capturedImage!);
     return await File(_image!.path).writeAsBytes(img.encodeJpg(orientedImage));
   }
@@ -393,30 +382,14 @@ class RegistrationController extends GetxController {
   }*/
   //TODO draw rectangles
   var image;
-  drawRectangleAroundFaces() async {
-    image = await _image?.readAsBytes();
+  drawRectangleAroundFaces(File imageSelected) async {
+    image = await imageSelected.readAsBytes();
     image = await decodeImageFromList(image);
     print("${image.width}   ${image.height}");
     image;
     faces;
     update();
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*  File? get firstImageFile => _firstImageFile;
   File? get secondImageFile => _secondImageFile;

@@ -82,7 +82,7 @@ class RegistrationController extends GetxController {
   void changePage() {
     if (pageController.page != null) {
       int currentPage = pageController.page!.round();
-      if (currentPage < 3 - 1) {
+      if (currentPage <= 3 ) {
         // Not the last page, proceed to the next page
         pageController.nextPage(
           duration: const Duration(milliseconds: 500),
@@ -96,24 +96,28 @@ class RegistrationController extends GetxController {
   }
 
   final RxString frontFileName = ''.obs;
-  RxBool isFileUploaded = false.obs;
+  //RxBool isFileUploaded = false.obs;
   Future<void> pickFrontImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
       selectedFrontImagePath.value = pickedImage.path;
       frontFileName.value = pickedImage.path.split('/').last;
       final File imageFile = File(selectedFrontImagePath.value);
-      isFileUploaded(true);
+      Get.back();
+      //isFileUploaded(true);
       DialogUtils.showLoading();
       try {
         await doFaceDetection(imageFile);
+
+        //api will call after detecting the face
+
         Get.back();
-        Get.back();
-        isFileUploaded(false);
+       // isFileUploaded(false);
+        changePage();
       } catch (error) {
         Get.back();
         Get.back();
-        isFileUploaded(false);
+       // isFileUploaded(false);
       }
       //await uploadData(selectedFrontImagePath.value, 'http://localhost:8000/file-upload');
     } else {
@@ -129,18 +133,34 @@ class RegistrationController extends GetxController {
     }
   }
 
+  final RxString rightFileName = ''.obs;
   Future<void> pickRightImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
       selectedRightImagePath.value = pickedImage.path;
-      selectedRightImageSize.value =
-          '${((File(selectedRightImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
-      // await uploadSelectedImage(selectedRightImagePath.value);
+      rightFileName.value = pickedImage.path.split('/').last;
+      final File imageFile = File(selectedRightImagePath.value);
       Get.back();
-      "the size of the image is: $selectedRightImagePath".log();
+      //isFileUploaded(true);
+      DialogUtils.showLoading();
+      try {
+        await doFaceDetection(imageFile);
+
+        //api will call after detecting the face
+
+        Get.back();
+        // isFileUploaded(false);
+        changePage();
+      } catch (error) {
+        Get.back();
+        Get.back();
+        // isFileUploaded(false);
+      }
     } else {
       Get.back();
-      Get.snackbar('Warning!', 'No image selected from device',
+      Get.snackbar(
+          'Warning!',
+          'No image selected from device',
           snackPosition: SnackPosition.TOP,
           backgroundColor: redColor,
           colorText: whiteColor,
@@ -148,15 +168,29 @@ class RegistrationController extends GetxController {
     }
   }
 
+  final RxString leftFileName = ''.obs;
   Future<void> pickLeftImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
       selectedLeftImagePath.value = pickedImage.path;
-      selectedLeftImageSize.value =
-          '${((File(selectedLeftImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} MB';
-      // await uploadSelectedImage(selectedLeftImagePath.value);
+      leftFileName.value = pickedImage.path.split('/').last;
+      final File imageFile = File(selectedLeftImagePath.value);
       Get.back();
-      "the size of the image is: $selectedLeftImageSize".log();
+      //isFileUploaded(true);
+      DialogUtils.showLoading();
+      try {
+        await doFaceDetection(imageFile);
+
+        //api will call after detecting the face
+
+        Get.back();
+        // isFileUploaded(false);
+        changePage();
+      } catch (error) {
+        Get.back();
+        Get.back();
+        // isFileUploaded(false);
+      }
     } else {
       Get.back();
       Get.snackbar('Warning!', 'No image selected from device',

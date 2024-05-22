@@ -108,7 +108,7 @@ class Recognizer {
     final runs = DateTime.now().millisecondsSinceEpoch;
     interpreter.run(input, output);
     final run = DateTime.now().millisecondsSinceEpoch - runs;
-    print('Time to run inference: $run ms$output');
+    print('=======Time to run inference: $run ms$output==========');
 
     //TODO convert dynamic list to double list
     List<double> outputArray = output.first.cast<double>();

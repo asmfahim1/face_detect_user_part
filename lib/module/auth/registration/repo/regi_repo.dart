@@ -12,8 +12,7 @@ class RegiRepo {
   ///file upload process
   Future<Map<String, dynamic>> uploadFileWithDio(
       File file, String fileName) async {
-    return await apiClient.uploadFileWithDio(
-        AppConstants.fileUpload, file, fileName);
+    return await apiClient.uploadFileWithDio(AppConstants.fileUpload, file, fileName);
   }
 
 

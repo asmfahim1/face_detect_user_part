@@ -68,8 +68,10 @@ Future<Map<String, dynamic>> uploadFileWithDio(
     String completeUrl = '$baseUrl' '$uri';
     final request = dio.Dio();
     final formData = dio.FormData.fromMap({
-      'file': await dio.MultipartFile.fromFile(file.path,
-          filename: fileName, contentType: MediaType('application', 'pdf')),
+      'image': await dio.MultipartFile.fromFile(file.path,
+          filename: fileName,
+          //contentType: MediaType('application', 'pdf'),
+      ),
     });
 
     final response = await request.postUri(

@@ -110,6 +110,10 @@ class RegistrationController extends GetxController {
         await doFaceDetection(imageFile);
 
         //api will call after detecting the face
+        Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, 'image file'));
+
+        print('=================$response["code]');
+
 
         Get.back();
        // isFileUploaded(false);
@@ -118,6 +122,7 @@ class RegistrationController extends GetxController {
         Get.back();
         Get.back();
        // isFileUploaded(false);
+        print('===============Error occurred : $error');
       }
       //await uploadData(selectedFrontImagePath.value, 'http://localhost:8000/file-upload');
     } else {
@@ -295,7 +300,7 @@ class RegistrationController extends GetxController {
   //TODO declare face recognizer
   late Recognizer recognizer;
 
-  //TODO capture image using camera
+/*  //TODO capture image using camera
   _imgFromCamera() async {
     XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
@@ -314,7 +319,7 @@ class RegistrationController extends GetxController {
       doFaceDetection(_image!);
       update();
     }
-  }
+  }*/
 
   //TODO face detection code here
   List<Face> faces = [];
@@ -428,5 +433,6 @@ class RegistrationController extends GetxController {
 /*  File? get firstImageFile => _firstImageFile;
   File? get secondImageFile => _secondImageFile;
   File? get thirdImageFile => _thirdImageFile;
-  File? get fourImageFile => _fourImageFile;*/
+  File? get fourImageFile => _fourImageFile;
+  */
 }

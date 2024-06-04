@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/login/controller/login_controller.dart';
@@ -62,6 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _profileWidget(),
           const SizedBoxHeight10(),
+          Expanded(
+            child: Center(
+              child: TextWidget(
+                  'You have Successfully completed registration for --- exam', style: TextStyles.regular16,),
+            ),
+          )
           // _uploadedPhotoWidget(home),
         ],
       ),
@@ -69,12 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _profileWidget() {
-    Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height / 6,
-      width: size.width,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(8),
+      height: Dimensions.screenHeight / 6,
+      width: Dimensions.screenWidth,
+      padding: const EdgeInsets.all(14),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.grey.shade300,
         border: Border.all(),
@@ -100,15 +106,15 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               TextWidget(
                 'Abu Sale Mohammad Fahim',
-                style: TextStyles.title16,
+                style: TextStyles.title16.copyWith(fontSize: 14),
               ),
               TextWidget(
                 'id: 2254991017',
-                style: TextStyles.title16,
+                style: TextStyles.title16.copyWith(fontSize: 14),
               ),
               TextWidget(
                 'exam : BCS exam',
-                style: TextStyles.title16,
+                style: TextStyles.title16.copyWith(fontSize: 14),
               ),
             ],
           ),

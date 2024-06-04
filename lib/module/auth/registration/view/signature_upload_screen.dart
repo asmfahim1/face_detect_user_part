@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/utils/app_routes.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
@@ -20,22 +22,52 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: whiteColor,
       body: SizedBox(
-        width: size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextWidget(
-              'Upload your signature here',
-              style: TextStyles.title16,
-            ),
-            _uploadedPhotoWidget(regi)
-          ],
-        ),
+        width: Dimensions.screenWidth,
+        child: Obx(() {
+          return regi.frontFileName.value == '' ||
+                  regi.leftFileName.value == '' ||
+                  regi.rightFileName.value == '' ||
+                  regi.signatureName.value == ''
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextWidget(
+                      'Upload your signature here',
+                      style: TextStyles.title16,
+                    ),
+                    _uploadedPhotoWidget(regi),
+                    SizedBox(
+                      height: Dimensions.height20,
+                    ),
+                    Obx(() {
+                      return regi.frontFileName.value == '' ||
+                              regi.leftFileName.value == '' ||
+                              regi.rightFileName.value == '' ||
+                              regi.signatureName.value == ''
+                          ? Container()
+                          : _completeProcess(regi);
+                    }),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextWidget(
+                      'Your registration is about to complete. Please press complete and all the best',
+                      style: TextStyles.title16,
+                    ),
+                    SizedBox(
+                      height: Dimensions.height20,
+                    ),
+                    _completeProcess(regi),
+                  ],
+                );
+        }),
       ),
     );
   }
@@ -60,10 +92,9 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
   }
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
-    Size size = MediaQuery.of(context).size;
     return CommonButton(
       buttonColor: blueColor,
-      width: size.width / 2,
+      width: Dimensions.screenWidth / 2,
       buttonTitle: 'Upload photo',
       onTap: () async {
         //regi.changePage();
@@ -72,6 +103,19 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
       },
     );
   }
+}
+
+Widget _completeProcess(RegistrationController regi) {
+  return CommonButton(
+    buttonColor: blueColor,
+    width: Dimensions.screenWidth / 2,
+    buttonTitle: 'Complete Process',
+    onTap: () async {
+      //regi.changePage();
+      print('the value of the page is :${regi.pageController}');
+      Get.offAllNamed(AppRoutes.homeScreen);
+    },
+  );
 }
 
 Future<void> showImagePickerOptions(

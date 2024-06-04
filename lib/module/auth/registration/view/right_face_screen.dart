@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
@@ -20,11 +21,10 @@ class _RightFaceUploadScreenState extends State<RightFaceUploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: whiteColor,
       body: SizedBox(
-        width: size.width,
+        width: Dimensions.screenWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,10 +60,9 @@ class _RightFaceUploadScreenState extends State<RightFaceUploadScreen> {
   }
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
-    Size size = MediaQuery.of(context).size;
     return CommonButton(
       buttonColor: blueColor,
-      width: size.width / 2,
+      width: Dimensions.screenWidth / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
         //regi.changePage();

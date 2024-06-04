@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
@@ -21,11 +22,10 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: whiteColor,
       body: SizedBox(
-        width: size.width,
+        width: Dimensions.screenWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,7 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
     Size size = MediaQuery.of(context).size;
     return CommonButton(
       buttonColor: blueColor,
-      width: size.width / 2,
+      width: Dimensions.screenWidth / 2,
       buttonTitle: 'Upload photo',
       onTap: () {
         //regi.changePage();

@@ -39,9 +39,14 @@ class DialogUtils {
     );
   }
 
+  static void closeLoading(){
+    Get.back();
+  }
+
   static void showErrorDialog({
     String title = "Oops Error",
     String description = "Something went wrong ",
+    String btnName = "Close",
   }) {
     Get.dialog(
       Dialog(
@@ -65,7 +70,7 @@ class DialogUtils {
                 onPressed: () {
                   if (Get.isDialogOpen!) Get.back();
                 },
-                child: const Text("Close"),
+                child: Text(btnName),
               ),
             ],
           ),
@@ -89,4 +94,5 @@ class DialogUtils {
       snackPosition: SnackPosition.TOP,
     );
   }
+
 }

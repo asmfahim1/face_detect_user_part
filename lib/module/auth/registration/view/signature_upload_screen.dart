@@ -111,9 +111,7 @@ Widget _completeProcess(RegistrationController regi) {
     width: Dimensions.screenWidth / 2,
     buttonTitle: 'Complete Process',
     onTap: () async {
-      //regi.changePage();
-      print('the value of the page is :${regi.pageController}');
-      Get.offAllNamed(AppRoutes.homeScreen);
+      regi.completeRegistrationProcess();
     },
   );
 }
@@ -127,8 +125,8 @@ Future<void> showImagePickerOptions(
     builder: (BuildContext context) {
       return AlertDialog(
         content: SizedBox(
-          height: 276,
-          width: 327,
+          height: Dimensions.height275,
+          width: Dimensions.width100 * 3.25,
           child: Column(
             children: [
               Align(
@@ -155,8 +153,8 @@ Future<void> showImagePickerOptions(
                       ),
                       const SizedBoxHeight20(),
                       Container(
-                        height: 52,
-                        width: 185,
+                        height: Dimensions.height50,
+                        width: Dimensions.width100 * 1.85,
                         decoration: BoxDecoration(
                           color: whiteColor,
                           border: Border.all(

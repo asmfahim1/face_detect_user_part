@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
@@ -10,7 +10,6 @@ import 'package:mict_final_project/core/ML/Recognizer.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/dialogue_utils.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
-import 'package:mict_final_project/core/utils/extensions.dart';
 import 'package:mict_final_project/module/auth/registration/repo/regi_repo.dart';
 
 class RegistrationController extends GetxController {
@@ -44,30 +43,6 @@ class RegistrationController extends GetxController {
   RxString selectedSignatureImagePath = ''.obs;
   RxString selectedSignatureImageSize = ''.obs;
 
-  /*File? _firstImageFile;
-  File? _secondImageFile;
-  File? _thirdImageFile;
-  File? _fourImageFile;
-
-  set firstImageFile(File? file) {
-    _firstImageFile = file;
-    update();
-  }
-
-  set secondImageFile(File? file) {
-    _secondImageFile = file;
-    update();
-  }
-
-  set thirdImageFile(File? file) {
-    _thirdImageFile = file;
-    update();
-  }
-
-  set fourImageFile(File? file) {
-    _fourImageFile = file;
-    update();
-  }*/
 
   set pageController(PageController value) {
     _pageController = value;
@@ -96,35 +71,41 @@ class RegistrationController extends GetxController {
   }
 
   final RxString frontFileName = ''.obs;
-  //RxBool isFileUploaded = false.obs;
   Future<void> pickFrontImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      selectedFrontImagePath.value = pickedImage.path;
+      //selectedFrontImagePath.value = pickedImage.path;
       String fileName = pickedImage.path.split('/').last;
-      final File imageFile = File(selectedFrontImagePath.value);
+      final File imageFile = File(pickedImage.path);
+
       Get.back();
-      //isFileUploaded(true);
       DialogUtils.showLoading(title: 'Uploading image ...');
+
       try {
-        await doFaceDetection(imageFile);
 
-        //api will call after detecting the face
-        Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
+        if(await doFaceDetection(imageFile) == true){
 
-        print('===Front===${response["imagePath"]}');
-        frontFileName.value = '${response["imagePath"]}';
+          Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
+          if(response["status"] == 201){
 
-        Get.back();
-       // isFileUploaded(false);
-        changePage();
+            selectedFrontImagePath.value = pickedImage.path;
+            DialogUtils.closeLoading();
+            changePage();
+
+            frontFileName.value = '${response["imagePath"]}';
+
+          }
+
+        }else{
+          DialogUtils.closeLoading();
+          DialogUtils.showErrorDialog(description: "Sorry no face detected",btnName: "try again");
+        }
+
       } catch (error) {
-        Get.back();
-       // isFileUploaded(false);
-        print('===============Error occurred : $error');
+        DialogUtils.closeLoading();
+        DialogUtils.showErrorDialog(btnName: "try again", description: "$error");
       }
-      //await uploadData(selectedFrontImagePath.value, 'http://localhost:8000/file-upload');
     } else {
       Get.back();
       Get.snackbar(
@@ -142,27 +123,38 @@ class RegistrationController extends GetxController {
   Future<void> pickRightImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      selectedRightImagePath.value = pickedImage.path;
+      //selectedRightImagePath.value = pickedImage.path;
       String fileName = pickedImage.path.split('/').last;
-      final File imageFile = File(selectedRightImagePath.value);
+      final File imageFile = File(pickedImage.path);
+
       Get.back();
-      //isFileUploaded(true);
+
       DialogUtils.showLoading(title: 'Uploading image ...');
+
       try {
-        await doFaceDetection(imageFile);
 
-        //api will call after detecting the face
-        Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
+        if(await doFaceDetection(imageFile) == true){
 
-        print('===Right===${response["imagePath"]}');
-        rightFileName.value = '${response["imagePath"]}';
+          Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        Get.back();
-        // isFileUploaded(false);
-        changePage();
+          if(response["status"] == 201){
+
+            selectedRightImagePath.value = pickedImage.path;
+            DialogUtils.closeLoading();
+            changePage();
+
+            rightFileName.value = '${response["imagePath"]}';
+
+          }
+
+        }else{
+          DialogUtils.closeLoading();
+          DialogUtils.showErrorDialog(description: "Sorry no face detected",btnName: "try again");
+        }
+
       } catch (error) {
-        Get.back();
-        // isFileUploaded(false);
+        DialogUtils.closeLoading();
+        DialogUtils.showSnackBar("Error", "$error");
       }
     } else {
       Get.back();
@@ -180,27 +172,37 @@ class RegistrationController extends GetxController {
   Future<void> pickLeftImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      selectedLeftImagePath.value = pickedImage.path;
+      //selectedLeftImagePath.value = pickedImage.path;
       String fileName = pickedImage.path.split('/').last;
-      final File imageFile = File(selectedLeftImagePath.value);
+      final File imageFile = File(pickedImage.path);
+
       Get.back();
-      //isFileUploaded(true);
+
       DialogUtils.showLoading(title: 'Uploading image ...');
+
       try {
-        await doFaceDetection(imageFile);
+        if(await doFaceDetection(imageFile) == true){
 
-        //api will call after detecting the face
-        Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
+          Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        print('===Left===${response["imagePath"]}');
-        leftFileName.value = '${response["imagePath"]}';
+          if(response["status"] == 201){
 
-        Get.back();
-        // isFileUploaded(false);
-        changePage();
+            selectedLeftImagePath.value = pickedImage.path;
+            DialogUtils.closeLoading();
+            changePage();
+
+            leftFileName.value = '${response["imagePath"]}';
+
+          }
+
+        }else{
+          DialogUtils.closeLoading();
+          DialogUtils.showErrorDialog(description: "Sorry no face detected",btnName: "try again");
+        }
+
       } catch (error) {
-        Get.back();
-        // isFileUploaded(false);
+        DialogUtils.closeLoading();
+        DialogUtils.showSnackBar("Error", "$error");
       }
     } else {
       Get.back();
@@ -214,28 +216,33 @@ class RegistrationController extends GetxController {
 
   final RxString signatureName = ''.obs;
   Future<void> pickSignatureImage(ImageSource source) async {
+
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      selectedSignatureImagePath.value = pickedImage.path;
+
+      //selectedSignatureImagePath.value = pickedImage.path;
       String fileName = pickedImage.path.split('/').last;
-      //await uploadSelectedImage(selectedSignatureImagePath.value);
       final File imageFile = File(selectedSignatureImagePath.value);
+
       Get.back();
-      //isFileUploaded(true);
       DialogUtils.showLoading(title: 'Uploading image ...');
+
       try {
-        //api will call after detecting the face
         Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        print('===Sign===${response["imagePath"]}');
-        signatureName.value = '${response["imagePath"]}';
+        if(response["status"] == 201){
 
-        Get.back();
-        // isFileUploaded(false);
-        changePage();
+          selectedSignatureImagePath.value = pickedImage.path;
+          DialogUtils.closeLoading();
+          changePage();
+
+          signatureName.value = '${response["imagePath"]}';
+
+        }
+
       } catch (error) {
-        Get.back();
-        // isFileUploaded(false);
+        DialogUtils.closeLoading();
+        DialogUtils.showSnackBar("Error", "$error");
       }
     } else {
       Get.back();
@@ -247,53 +254,32 @@ class RegistrationController extends GetxController {
     }
   }
 
-  /*Future<void> uploadSelectedImage(String imagePath) async {
-    DialogUtils.showLoading(title: 'uploading photo...');
-    try {
-      final File imageFile = File(imagePath);
-      final response = await apiClient.uploadFileWithDio(
-          AppConstants.fileUpload, imageFile, frontFileName.value);
-      print('response : $response');
-      if (response.statusCode == 200) {
-        hideLoading();
-        DialogUtils.showSnackBar('Successful', 'Image uploaded successfully');
-        changePage();
-      } else {
-        hideLoading();
-        DialogUtils.showSnackBar('Error', 'Failed to upload, please try again',
-            bgColor: redColor);
-        print('Error uploading image: ${response.statusCode}');
+
+  Future<void> completeRegistrationProcess() async{
+
+    DialogUtils.showLoading(title: 'Please wait for a while ...');
+    Map<String, dynamic> imagePathList = {
+      "imagePaths": [{"image":"$frontFileName"},{"image":"$leftFileName"},{"image":"$rightFileName"}]
+    };
+
+    try{
+
+      Response response = await (regiRepo!.uploadImagePathsToCompleteRegistration(imagePathList));
+      if (kDebugMode) {
+        print('response from face detection : ${response.body}');
       }
-    } catch (e) {
-      hideLoading();
-      DialogUtils.showErrorDialog(
-        title: 'Error',
-        description:
-            'Network issue! Make sure you have stable internet connection',
-      );
-      print('Error uploading image: $e');
+
+
+      if(response.statusCode == 201){
+        DialogUtils.closeLoading();
+        Get.offAllNamed(AppRoutes.homeScreen);
+      }
+
+    }catch(error){
+      DialogUtils.closeLoading();
     }
-  }*/
-
-/*  Future uploadData(imageFilePath, url) async {
-    var request = http.MultipartRequest('POST', Uri.parse(url));
-
-    await http.MultipartFile.fromPath(
-      'image',
-      imageFilePath,
-      filename: 'image.jpg',
-    );
-    request.fields['fileName'] = 'fahim';
-    request.fields['own_id'] = 'fahim';
-
-    var res = await request.send();
-    print('statusCode : ${res.statusCode}');
-    return res.statusCode;
-  }*/
-
-  void hideLoading() {
-    Get.back();
   }
+
 
   void clearImageFields() {
     selectedFrontImagePath.value = '';
@@ -324,11 +310,15 @@ class RegistrationController extends GetxController {
 
   //TODO face detection code here
   List<Face> faces = [];
-  doFaceDetection(File imageFile) async {
+  Future<bool?> doFaceDetection(File imageFile) async {
+
+    if (kDebugMode) {
+      print('======doFaceDetectionIn======');
+    }
+
     //TODO remove rotation of camera images
     InputImage inputImage = InputImage.fromFile(imageFile);
 
-    //image = await _image?.readAsBytes();
     image = await decodeImageFromList(imageFile.readAsBytesSync());
 
     //TODO passing input to face detector and getting detected faces
@@ -336,7 +326,6 @@ class RegistrationController extends GetxController {
 
     for (Face face in faces) {
       final Rect boundingBox = face.boundingBox;
-      print('locate face in image : $boundingBox');
 
       num left = boundingBox.left < 0 ? 0 : boundingBox.left;
       num top = boundingBox.top < 0 ? 0 : boundingBox.top;
@@ -349,7 +338,7 @@ class RegistrationController extends GetxController {
       num width = right - left;
       num height = bottom - top;
 
-      //crop image
+      ///crop image
       final bytes = imageFile.readAsBytesSync();
       img.Image? faceImage = img.decodeImage(bytes);
       img.Image croppedFace = img.copyCrop(faceImage!,
@@ -359,16 +348,35 @@ class RegistrationController extends GetxController {
           height: height.toInt());
 
       Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
-      print("+++++++++++++++++++ print recognition : ${recognition.embeddings}");
+
+      Map<String, dynamic> faceVectorsBody= {
+        "faceVector" : "${recognition.embeddings}",
+      };
+
+      if (kDebugMode) {
+        print('Face vector length : $faceVectorsBody');
+        print('Face vector length : ${recognition.embeddings}');
+      }
 
 
-      //recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
-      //showFaceRegistrationDialogue(Uint8List.fromList(img.encodeBmp(croppedFace)), recognition);
+      try{
+        Response response = await (regiRepo!.uploadFaceVectors(faceVectorsBody));
+        if (kDebugMode) {
+          print('response from face detection : ${response.body}');
+        }
+
+
+        if(response.statusCode == 201){
+          return true;
+        }
+      }catch(error){
+        if (kDebugMode) {
+          print('Error occurred : $error');
+        }
+      }
+
     }
-
-    //drawRectangleAroundFaces(imageFile);
-
-    //TODO call the method to perform face recognition on detected faces
+    return null;
   }
 
   //TODO remove rotation of camera images
@@ -379,55 +387,15 @@ class RegistrationController extends GetxController {
     return await File(_image!.path).writeAsBytes(img.encodeJpg(orientedImage));
   }
 
-  //TODO perform Face Recognition
-
-  //TODO Face Registration Dialogue
-  TextEditingController textEditingController = TextEditingController();
-/*  showFaceRegistrationDialogue(Uint8List cropedFace, Recognition recognition){
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text("Face Registration",textAlign: TextAlign.center),alignment: Alignment.center,
-        content: SizedBox(
-          height: 340,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20,),
-              Image.memory(
-                cropedFace,
-                width: 200,
-                height: 200,
-              ),
-              SizedBox(
-                width: 200,
-                child: TextField(
-                    controller: textEditingController,
-                    decoration: const InputDecoration( fillColor: Colors.white, filled: true,hintText: "Enter Name")
-                ),
-              ),
-              const SizedBox(height: 10,),
-              ElevatedButton(
-                  onPressed: () {
-                    recognizer.registerFaceInDB(textEditingController.text, recognition.embeddings);
-                    // print('face embeddings============= : ${recognition.embeddings}');
-                    textEditingController.text = "";
-                    Get.back();
-                    Get.snackbar('Successful', 'Face Registered',);
-                  },style: ElevatedButton.styleFrom(backgroundColor:Colors.blue,minimumSize: const Size(200,40)),
-                  child: const Text("Register"))
-            ],
-          ),
-        ),contentPadding: EdgeInsets.zero,
-      ),
-    );
-  }*/
   //TODO draw rectangles
   var image;
   drawRectangleAroundFaces(File imageSelected) async {
     image = await imageSelected.readAsBytes();
     image = await decodeImageFromList(image);
-    print("${image.width}   ${image.height}");
+
+    if (kDebugMode) {
+      print("${image.width}   ${image.height}");
+    }
     image;
     faces;
     update();

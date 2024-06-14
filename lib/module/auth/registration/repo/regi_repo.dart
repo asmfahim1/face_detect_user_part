@@ -10,15 +10,26 @@ class RegiRepo {
   RegiRepo({required this.apiClient, required this.sharedPreferences});
 
   ///file upload process
-  Future<Map<String, dynamic>> uploadFileWithDio(
-      File file, String fileName) async {
-    return await apiClient.uploadFileWithDio(AppConstants.fileUpload, file, fileName);
+  Future<Map<String, dynamic>> uploadFileWithDio(File file, String fileName) async {
+
+    //print('----------------${AppConstants.fileUpload}\n  ${file}\n ${fileName}============');
+
+      return await apiClient.uploadFileWithDio(AppConstants.fileUpload, file, fileName);
+
+
   }
 
 
-  ///download pdf file
-  /*Future<Map<String, dynamic>> downloadFileWithDio(
-      String uri, Function(double) onProgress) async {
-    return await apiClient.downloadPDF(uri, onProgress);
-  }*/
+
+  ///post face vectors
+  Future<Response> uploadFaceVectors(Map<String, dynamic> data) async {
+    return await apiClient.postData(AppConstants.postDescriptor, data);
+  }
+
+
+
+  ///post face vectors
+  Future<Response> uploadImagePathsToCompleteRegistration(Map<String, dynamic> data) async {
+    return await apiClient.postData(AppConstants.postDescriptor, data);
+  }
 }

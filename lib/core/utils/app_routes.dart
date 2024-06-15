@@ -30,7 +30,7 @@ class AppRoutes {
     GetPage(
       name: loginScreen,
       transition: Transition.noTransition,
-      page: () => const LoginScreen(),
+      page: () => LoginScreen(),
     ),
     GetPage(
       name: registrationPage,

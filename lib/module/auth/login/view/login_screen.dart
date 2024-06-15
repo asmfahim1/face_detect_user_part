@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
+import 'package:mict_final_project/module/auth/login/controller/login_controller.dart';
 import 'package:mict_final_project/module/auth/login/view/widgets/login_form_section_widget.dart';
 import '../../../../core/utils/exports.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  final LoginController loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
+    //loginController.getExamList();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

@@ -43,7 +43,6 @@ class RegistrationController extends GetxController {
   RxString selectedSignatureImagePath = ''.obs;
   RxString selectedSignatureImageSize = ''.obs;
 
-
   set pageController(PageController value) {
     _pageController = value;
     update();
@@ -57,15 +56,12 @@ class RegistrationController extends GetxController {
   void changePage() {
     if (pageController.page != null) {
       int currentPage = pageController.page!.round();
-      if (currentPage <= 3 ) {
+      if (currentPage <= 4) {
         // Not the last page, proceed to the next page
         pageController.nextPage(
           duration: const Duration(milliseconds: 500),
           curve: Curves.ease,
         );
-      } else {
-        // Last page, navigate to home page
-        Get.offAllNamed(AppRoutes.homeScreen); // Adjust route as needed
       }
     }
   }
@@ -82,29 +78,26 @@ class RegistrationController extends GetxController {
       DialogUtils.showLoading(title: 'Uploading image ...');
 
       try {
+        if (await doFaceDetection(imageFile) == true) {
+          Map<String, dynamic> response =
+              await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        if(await doFaceDetection(imageFile) == true){
-
-          Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
-
-          if(response["status"] == 201){
-
+          if (response["status"] == 201) {
             selectedFrontImagePath.value = pickedImage.path;
             DialogUtils.closeLoading();
             changePage();
 
             frontFileName.value = '${response["imagePath"]}';
-
           }
-
-        }else{
+        } else {
           DialogUtils.closeLoading();
-          DialogUtils.showErrorDialog(description: "Sorry no face detected",btnName: "try again");
+          DialogUtils.showErrorDialog(
+              description: "Sorry no face detected", btnName: "try again");
         }
-
       } catch (error) {
         DialogUtils.closeLoading();
-        DialogUtils.showErrorDialog(btnName: "try again", description: "$error");
+        DialogUtils.showErrorDialog(
+            btnName: "try again", description: "$error");
       }
     } else {
       Get.back();
@@ -132,35 +125,29 @@ class RegistrationController extends GetxController {
       DialogUtils.showLoading(title: 'Uploading image ...');
 
       try {
+        if (await doFaceDetection(imageFile) == true) {
+          Map<String, dynamic> response =
+              await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        if(await doFaceDetection(imageFile) == true){
-
-          Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
-
-          if(response["status"] == 201){
-
+          if (response["status"] == 201) {
             selectedRightImagePath.value = pickedImage.path;
             DialogUtils.closeLoading();
             changePage();
 
             rightFileName.value = '${response["imagePath"]}';
-
           }
-
-        }else{
+        } else {
           DialogUtils.closeLoading();
-          DialogUtils.showErrorDialog(description: "Sorry no face detected",btnName: "try again");
+          DialogUtils.showErrorDialog(
+              description: "Sorry no face detected", btnName: "try again");
         }
-
       } catch (error) {
         DialogUtils.closeLoading();
         DialogUtils.showSnackBar("Error", "$error");
       }
     } else {
       Get.back();
-      Get.snackbar(
-          'Warning!',
-          'No image selected from device',
+      Get.snackbar('Warning!', 'No image selected from device',
           snackPosition: SnackPosition.TOP,
           backgroundColor: redColor,
           colorText: whiteColor,
@@ -181,25 +168,22 @@ class RegistrationController extends GetxController {
       DialogUtils.showLoading(title: 'Uploading image ...');
 
       try {
-        if(await doFaceDetection(imageFile) == true){
+        if (await doFaceDetection(imageFile) == true) {
+          Map<String, dynamic> response =
+              await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-          Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
-
-          if(response["status"] == 201){
-
+          if (response["status"] == 201) {
             selectedLeftImagePath.value = pickedImage.path;
             DialogUtils.closeLoading();
             changePage();
 
             leftFileName.value = '${response["imagePath"]}';
-
           }
-
-        }else{
+        } else {
           DialogUtils.closeLoading();
-          DialogUtils.showErrorDialog(description: "Sorry no face detected",btnName: "try again");
+          DialogUtils.showErrorDialog(
+              description: "Sorry no face detected", btnName: "try again");
         }
-
       } catch (error) {
         DialogUtils.closeLoading();
         DialogUtils.showSnackBar("Error", "$error");
@@ -216,30 +200,30 @@ class RegistrationController extends GetxController {
 
   final RxString signatureName = ''.obs;
   Future<void> pickSignatureImage(ImageSource source) async {
-
     final pickedImage = await ImagePicker().pickImage(source: source);
-    if (pickedImage != null) {
 
-      //selectedSignatureImagePath.value = pickedImage.path;
+    if (pickedImage != null) {
       String fileName = pickedImage.path.split('/').last;
-      final File imageFile = File(selectedSignatureImagePath.value);
+      final File imageFile = File(pickedImage.path);
 
       Get.back();
+
       DialogUtils.showLoading(title: 'Uploading image ...');
+      print('-----------1');
 
       try {
-        Map<String, dynamic> response = await (regiRepo!.uploadFileWithDio(imageFile, fileName));
+        Map<String, dynamic> response =
+            await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        if(response["status"] == 201){
+        print('-----------${response["message"]}');
 
+        if (response["status"] == 201) {
           selectedSignatureImagePath.value = pickedImage.path;
           DialogUtils.closeLoading();
           changePage();
 
           signatureName.value = '${response["imagePath"]}';
-
         }
-
       } catch (error) {
         DialogUtils.closeLoading();
         DialogUtils.showSnackBar("Error", "$error");
@@ -254,32 +238,33 @@ class RegistrationController extends GetxController {
     }
   }
 
-
-  Future<void> completeRegistrationProcess() async{
-
+  Future<void> completeRegistrationProcess() async {
     DialogUtils.showLoading(title: 'Please wait for a while ...');
     Map<String, dynamic> imagePathList = {
-      "imagePaths": [{"image":"$frontFileName"},{"image":"$leftFileName"},{"image":"$rightFileName"}]
+      "imagePaths": [
+        {"image": frontFileName.toString()},
+        {"image": leftFileName.toString()},
+        {"image": rightFileName.toString()}
+      ]
     };
 
-    try{
+    print('=================${imagePathList}===============');
 
-      Response response = await (regiRepo!.uploadImagePathsToCompleteRegistration(imagePathList));
+    try {
+      Response response = await (regiRepo!
+          .uploadImagePathsToCompleteRegistration(imagePathList));
       if (kDebugMode) {
         print('response from face detection : ${response.body}');
       }
 
-
-      if(response.statusCode == 201){
+      if (response.statusCode == 201) {
         DialogUtils.closeLoading();
         Get.offAllNamed(AppRoutes.homeScreen);
       }
-
-    }catch(error){
+    } catch (error) {
       DialogUtils.closeLoading();
     }
   }
-
 
   void clearImageFields() {
     selectedFrontImagePath.value = '';
@@ -311,7 +296,6 @@ class RegistrationController extends GetxController {
   //TODO face detection code here
   List<Face> faces = [];
   Future<bool?> doFaceDetection(File imageFile) async {
-
     if (kDebugMode) {
       print('======doFaceDetectionIn======');
     }
@@ -349,8 +333,8 @@ class RegistrationController extends GetxController {
 
       Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
 
-      Map<String, dynamic> faceVectorsBody= {
-        "faceVector" : "${recognition.embeddings}",
+      Map<String, dynamic> faceVectorsBody = {
+        "faceVector": "${recognition.embeddings}",
       };
 
       if (kDebugMode) {
@@ -358,23 +342,21 @@ class RegistrationController extends GetxController {
         print('Face vector length : ${recognition.embeddings}');
       }
 
-
-      try{
-        Response response = await (regiRepo!.uploadFaceVectors(faceVectorsBody));
+      try {
+        Response response =
+            await (regiRepo!.uploadFaceVectors(faceVectorsBody));
         if (kDebugMode) {
           print('response from face detection : ${response.body}');
         }
 
-
-        if(response.statusCode == 201){
+        if (response.statusCode == 201) {
           return true;
         }
-      }catch(error){
+      } catch (error) {
         if (kDebugMode) {
           print('Error occurred : $error');
         }
       }
-
     }
     return null;
   }

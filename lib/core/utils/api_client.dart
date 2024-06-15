@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:http_parser/http_parser.dart';
 import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +14,7 @@ class ApiClient extends GetConnect implements GetxService {
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
     baseUrl = appBaseUrl;
 
-    timeout = const Duration(seconds: 20);
+    timeout = const Duration(seconds: 30);
     token = sharedPreferences.getString(AppConstantKey.TOKEN.key) ?? '';
     _mainHeaders = {
       'Context-type': 'application/json; charset=UTF-8',
@@ -97,6 +95,7 @@ class ApiClient extends GetConnect implements GetxService {
     } on dio.DioException catch (error) {
 
       throw 'Something Went Wrong';
+
     } catch (error) {
 
       throw 'Something Went Wrong';

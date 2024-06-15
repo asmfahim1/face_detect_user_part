@@ -1,24 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
+import 'package:mict_final_project/module/auth/registration/view/widgets/common_image_show_widget.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
-class UploadSignatureScreen extends StatefulWidget {
-  const UploadSignatureScreen({Key? key}) : super(key: key);
+class UploadSignatureScreen extends StatelessWidget {
+  UploadSignatureScreen({Key? key}) : super(key: key);
 
-  @override
-  State<UploadSignatureScreen> createState() => _UploadSignatureScreenState();
-}
-
-class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
-  RegistrationController regi = Get.put(RegistrationController());
+  final RegistrationController regi = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,53 +20,23 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
       backgroundColor: whiteColor,
       body: SizedBox(
         width: Dimensions.screenWidth,
-        child: Obx(() {
-          return regi.frontFileName.value == '' ||
-                  regi.leftFileName.value == '' ||
-                  regi.rightFileName.value == '' ||
-                  regi.signatureName.value == ''
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextWidget(
-                      'Upload your signature here',
-                      style: TextStyles.title16,
-                    ),
-                    _uploadedPhotoWidget(regi),
-                    SizedBox(
-                      height: Dimensions.height20,
-                    ),
-                    Obx(() {
-                      return regi.frontFileName.value == '' ||
-                              regi.leftFileName.value == '' ||
-                              regi.rightFileName.value == '' ||
-                              regi.signatureName.value == ''
-                          ? Container()
-                          : _completeProcess(regi);
-                    }),
-                  ],
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextWidget(
-                      'Your registration is about to complete. Please press complete and all the best',
-                      style: TextStyles.title16,
-                    ),
-                    SizedBox(
-                      height: Dimensions.height20,
-                    ),
-                    _completeProcess(regi),
-                  ],
-                );
-        }),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextWidget(
+              'Upload your signature here',
+              style: TextStyles.title16,
+            ),
+            _uploadedPhotoWidget(regi, context),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _uploadedPhotoWidget(RegistrationController regiController) {
+  Widget _uploadedPhotoWidget(
+      RegistrationController regiController, BuildContext context) {
     return Column(
       children: [
         Obx(
@@ -97,24 +61,12 @@ class _UploadSignatureScreenState extends State<UploadSignatureScreen> {
       width: Dimensions.screenWidth / 2,
       buttonTitle: 'Upload photo',
       onTap: () async {
-        //regi.changePage();
-        print('the value of the page is :${regi.pageController}');
         await regi.pickSignatureImage(ImageSource.camera);
       },
     );
   }
 }
 
-Widget _completeProcess(RegistrationController regi) {
-  return CommonButton(
-    buttonColor: blueColor,
-    width: Dimensions.screenWidth / 2,
-    buttonTitle: 'Complete Process',
-    onTap: () async {
-      regi.completeRegistrationProcess();
-    },
-  );
-}
 
 Future<void> showImagePickerOptions(
   BuildContext context,

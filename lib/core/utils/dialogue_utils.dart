@@ -5,42 +5,30 @@ import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 
 class DialogUtils {
-  static void showLoading({String title = "Loading..."}) {
-    Get.dialog(
-      Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: allPadding15,
-          child: SizedBox(
-            height: Dimensions.height40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+  static void showLoading({required String title}) {
+    showDialog(
+      context: Get.context!,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  width: Dimensions.width20,
-                ),
-                const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                ),
-                SizedBox(
-                  width: Dimensions.width20,
-                ),
-                Text(
-                  title,
-                ),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(title),
               ],
             ),
           ),
-        ),
-      ),
-      barrierDismissible: false,
+        );
+      },
     );
   }
 
-  static void closeLoading(){
-    Get.back();
+  static void closeLoading() {
+    Navigator.of(Get.context!).pop();
   }
 
   static void showErrorDialog({
@@ -81,7 +69,7 @@ class DialogUtils {
   }
 
   static void showSnackBar(String messageTitle, String messageBody,
-      {int seconds = 1, Color bgColor = greenColor}) {
+      {int seconds = 1, Color bgColor = redColor}) {
     Get.snackbar(
       messageTitle,
       messageBody,

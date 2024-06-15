@@ -35,12 +35,12 @@ class AppRoutes {
     GetPage(
       name: registrationPage,
       transition: Transition.noTransition,
-      page: () => const RegistrationScreen(),
+      page: () => RegistrationScreen(),
     ),
     GetPage(
       name: homeScreen,
       transition: Transition.noTransition,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
     ),
   ];
 }

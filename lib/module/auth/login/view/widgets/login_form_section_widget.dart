@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 
 import '../../../../../core/widgets/common_button.dart';
@@ -9,26 +10,21 @@ import '../../../../../core/widgets/sized_box_height_20.dart';
 import '../../../../../core/widgets/text_widget.dart';
 import '../../controller/login_controller.dart';
 
-class LoginFormSectionWidget extends StatefulWidget {
-  const LoginFormSectionWidget({Key? key}) : super(key: key);
+class LoginFormSectionWidget extends StatelessWidget {
+  LoginFormSectionWidget({Key? key}) : super(key: key);
 
-  @override
-  State<LoginFormSectionWidget> createState() => _LoginFormSectionWidgetState();
-}
-
-class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
   final _formKey = GlobalKey<FormState>();
+
   final FocusNode _passwordFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return GetBuilder<LoginController>(builder: (controller) {
       return Form(
         key: _formKey,
         child: Container(
-          height: size.height / 2,
-          width: size.width,
+          height: Dimensions.screenHeight / 2,
+          width: Dimensions.screenWidth,
           padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
             color: whiteColor.withOpacity(0.7),
@@ -38,9 +34,9 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _textFields(controller),
-              const SizedBox(
-                height: 15,
+              _textFields(context, controller),
+              SizedBox(
+                height: Dimensions.height15,
               ),
               _loginButton(controller),
             ],
@@ -50,14 +46,13 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
     });
   }
 
-  Widget _textFields(LoginController login) {
-    Size size = MediaQuery.of(context).size;
+  Widget _textFields(BuildContext context, LoginController login) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: size.height / 14,
-          width: size.width,
+          height: Dimensions.screenHeight / 14,
+          width: Dimensions.screenWidth,
           padding: const EdgeInsets.only(left: 10, right: 10),
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.only(top: 10),
@@ -115,11 +110,9 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
           controller: login.password,
           obSecure: login.passwordVisible,
           onFieldSubmitted: (v) {
-            //login method will call
-            Get.toNamed(AppRoutes.registrationPage);
-            /*if (_formKey.currentState!.validate()) {
+            if (_formKey.currentState!.validate()) {
               login.loginMethod();
-            }*/
+            }
           },
           suffixIcon: IconButton(
             color: blackColor,
@@ -136,16 +129,15 @@ class _LoginFormSectionWidgetState extends State<LoginFormSectionWidget> {
   }
 
   Widget _loginButton(LoginController login) {
-    Size size = MediaQuery.of(context).size;
     return CommonButton(
-      width: size.width / 1.6,
+      width: Dimensions.screenWidth / 1.6,
       buttonColor: blueColor,
       buttonTitle: 'Login',
       onTap: () {
-        Get.toNamed(AppRoutes.registrationPage);
-        /*if (_formKey.currentState!.validate()) {
+        //Get.toNamed(AppRoutes.registrationPage);
+        if (_formKey.currentState!.validate()) {
           login.loginMethod();
-        }*/
+        }
       },
     );
   }

@@ -10,8 +10,7 @@ class LoginRepo {
   LoginRepo({required this.apiClient, required this.sharedPreferences});
 
   Future<Response> login(Map<String, dynamic> loginBody) async {
-    print('------------------$loginBody');
-    return await apiClient.postData(AppConstants.loginUrl, loginBody);
+        return await apiClient.postData(AppConstants.loginUrl, loginBody);
   }
 
   saveUserToken(String token) async {

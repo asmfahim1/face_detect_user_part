@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
@@ -12,8 +13,8 @@ class LoginController extends GetxController {
 
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
-  LoginResponseModel? responseModel;
-  final RxBool _passwordVisible = false.obs;
+
+  final RxBool _passwordVisible = true.obs;
   final RxString _examType = 'Exam type'.obs;
 
   set passwordVisible(bool value) {
@@ -33,34 +34,49 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginMethod() async {
+    LoginResponseModel responseModel;
     try {
       DialogUtils.showLoading(title: "Please wait...");
+
       final Map<String, dynamic> map = <String, dynamic>{};
       map['email'] = email.text.trim();
       map['password'] = password.text.trim();
+
       Response response = await loginRepo!.login(map);
 
-      print(
-          'Response and maps : ${response.statusCode} =====${response.body}=========$map');
+      if (kDebugMode) {
+        print('Response and maps : ${response.statusCode} =====${response.body}=========$map');
+      }
+
+      closeLoading();
 
       if (response.statusCode == 200) {
+
         responseModel = LoginResponseModel.fromJson(response.body);
-        if (responseModel!.data == null) {
-          closeLoading();
+
+        if (responseModel.data == null) {
           DialogUtils.showErrorDialog(
-              title: 'Warning', description: '${responseModel!.message}');
+            title: 'Warning',
+            description: responseModel.message ?? 'No data found',
+          );
         } else {
-          await loginRepo!.saveUserToken(responseModel!.data!.token.toString());
-          closeLoading();
+          await loginRepo!.saveUserToken(responseModel.token.toString());
           Get.offAllNamed(AppRoutes.registrationPage);
         }
       } else {
-        closeLoading();
-        DialogUtils.showErrorDialog();
+        // Handle non-200 status code
+        responseModel = LoginResponseModel.fromJson(response.body);
+        DialogUtils.showErrorDialog(
+          title: 'Warning',
+          description: responseModel.message ?? 'Unknown error occurred',
+        );
       }
-    } catch (e) {
-      closeLoading();
-      "There is an error occurred while login request is processing: $e".log();
+    } catch (error) {
+      closeLoading(); // Ensure closeLoading() is called in case of an error
+
+      DialogUtils.showErrorDialog(description: "$error");
+
+      "There is an error occurred while login request is processing: $error".log();
     }
   }
 
@@ -68,7 +84,7 @@ class LoginController extends GetxController {
     Get.back();
   }
 
-  //ise user logged in
+  //is user logged in
   bool userLoggedIn() {
     return loginRepo!.userLoggedIn();
   }
@@ -80,47 +96,3 @@ class LoginController extends GetxController {
   String get examType => _examType.value;
 }
 
-/*  Future<void> loginMethod() async {
-    try {
-      print('test 1');
-      DialogUtils.showLoading(title: "Please wait...");
-
-      final Map<String, dynamic> map = <String, dynamic>{};
-      map['email'] = email.text.trim();
-      map['password'] = password.text.trim();
-
-      print('test 2');
-      print('=============$map');
-      Response response = await loginRepo.login(map);
-
-      print(
-          'Response and maps : ${response.statusCode} =====${response.body}=========$map');
-
-      print('test 3');
-
-      if (response.statusCode == 200) {
-        print('test 4');
-
-        responseModel = LoginResponseModel.fromJson(response.body);
-        if (responseModel!.data == null) {
-          closeLoading();
-          DialogUtils.showErrorDialog(
-              title: 'Warning', description: '${responseModel!.message}');
-        } else {
-          await loginRepo!.saveUserToken(responseModel!.data!.token.toString());
-          closeLoading();
-          Get.offAllNamed(AppRoutes.registrationPage);
-        }
-      } else {
-        print('test 5');
-
-        closeLoading();
-        DialogUtils.showErrorDialog();
-      }
-    } catch (e) {
-      print('test 6');
-
-      closeLoading();
-      "There is an error occurred while login request is processing: $e".log();
-    }
-  }*/

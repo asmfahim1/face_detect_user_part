@@ -7,18 +7,12 @@ import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
-
 import '../controller/registration_controller.dart';
 
-class LeftFaceUploadScreen extends StatefulWidget {
-  const LeftFaceUploadScreen({Key? key}) : super(key: key);
+class LeftFaceUploadScreen extends StatelessWidget {
+  LeftFaceUploadScreen({Key? key}) : super(key: key);
 
-  @override
-  State<LeftFaceUploadScreen> createState() => _LeftFaceUploadScreenState();
-}
-
-class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
-  RegistrationController regi = Get.put(RegistrationController());
+  final RegistrationController regi = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +28,14 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
               'Upload left side of your face',
               style: TextStyles.title16,
             ),
-            _uploadedPhotoWidget(regi)
+            _uploadedPhotoWidget(regi, context)
           ],
         ),
       ),
     );
   }
 
-  Widget _uploadedPhotoWidget(RegistrationController regiController) {
+  Widget _uploadedPhotoWidget(RegistrationController regiController, BuildContext context) {
     return Column(
       children: [
         Obx(
@@ -61,7 +55,6 @@ class _LeftFaceUploadScreenState extends State<LeftFaceUploadScreen> {
   }
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
-    Size size = MediaQuery.of(context).size;
     return CommonButton(
       buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,

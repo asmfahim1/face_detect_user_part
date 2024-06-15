@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,15 +8,10 @@ import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
-class RightFaceUploadScreen extends StatefulWidget {
-  const RightFaceUploadScreen({Key? key}) : super(key: key);
+class RightFaceUploadScreen extends StatelessWidget {
+  RightFaceUploadScreen({Key? key}) : super(key: key);
 
-  @override
-  State<RightFaceUploadScreen> createState() => _RightFaceUploadScreenState();
-}
-
-class _RightFaceUploadScreenState extends State<RightFaceUploadScreen> {
-  RegistrationController regi = Get.put(RegistrationController());
+  final RegistrationController regi = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +27,14 @@ class _RightFaceUploadScreenState extends State<RightFaceUploadScreen> {
               'Upload right side of your face',
               style: TextStyles.title16,
             ),
-            _uploadedPhotoWidget(regi)
+            _uploadedPhotoWidget(regi, context),
           ],
         ),
       ),
     );
   }
 
-  Widget _uploadedPhotoWidget(RegistrationController regiController) {
+  Widget _uploadedPhotoWidget(RegistrationController regiController, BuildContext context) {
     return Column(
       children: [
         Obx(

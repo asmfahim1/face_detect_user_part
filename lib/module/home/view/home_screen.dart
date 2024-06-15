@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
@@ -8,17 +7,11 @@ import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/login/controller/login_controller.dart';
 import 'package:mict_final_project/module/home/controller/home_controller.dart';
 
-import '../../../core/widgets/sized_box_height_10.dart';
+class HomeScreen extends StatelessWidget {
+  HomeScreen({Key? key}) : super(key: key);
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final HomeController home = Get.find<HomeController>();
+
   final imageList = [
     openCameraIconPath,
     openCameraIconPath,
@@ -60,16 +53,25 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _profileWidget(),
-          const SizedBoxHeight10(),
           Expanded(
-            child: Center(
-              child: TextWidget(
-                  'You have Successfully completed registration for --- exam', style: TextStyles.regular16,),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _registrationSuccessPhotoWidget(),
+                SizedBox(height: Dimensions.height10,),
+                TextWidget(
+                  'You have successfully completed the registration process for ___ exam ',
+                  textAlign: TextAlign.center,
+                  style: TextStyles.title16.copyWith(),
+                ),
+              ],
             ),
           )
-          // _uploadedPhotoWidget(home),
+
         ],
       ),
     );
@@ -82,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(14),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Colors.grey.shade200,
         border: Border.all(),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -113,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyles.title16.copyWith(fontSize: 14),
               ),
               TextWidget(
-                'exam : BCS exam',
+                'exam : ___ exam',
                 style: TextStyles.title16.copyWith(fontSize: 14),
               ),
             ],
@@ -123,152 +125,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /*Widget _uploadedPhotoWidget(HomeController homeController) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
-          child: ImagePickerWidget(
-            imageFile: homeController.firstImageFile,
-            onTap: () {
-              showImagePickerOptions(context, homeController);
-            },
-          ),
-        ),
-        _uploadPhotoButton(homeController),
-        const SizedBoxHeight20(),
-        Container(
-          height: 84,
-          padding: const EdgeInsets.only(left: 10),
-          child: Row(
-            children: [
-              _uploadedPicturesWidget(
-                imagePath: appIconImage,
-              ),
-              Container(
-                height: 84,
-                width: 50,
-                alignment: Alignment.center,
-                child: const SizedBox(
-                  height: 25,
-                  width: 25,
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _uploadedPicturesWidget({
-    required String imagePath,
-  }) {
-    Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: size.width / 1.2,
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: imageList.length,
-        itemBuilder: (context, index) {
-          return Container(
-            height: 77,
-            width: 84,
-            margin: const EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-              color: darkGrayColor,
-              borderRadius: radiusAll10,
-            ),
-            child: UploadedPicturesWidget(
-              imageList[index],
-              height: 48,
-              width: 48,
-              color: whiteColor,
-            ),
-          );
-        },
+  Widget _registrationSuccessPhotoWidget() {
+    return Container(
+      height: Dimensions.height100 * 1.5,
+      width: Dimensions.width100 * 1.5,
+      alignment: Alignment.center,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(10),
       ),
-    );
-  }
-
-  Widget _uploadPhotoButton(HomeController homeController) {
-    Size size = MediaQuery.of(context).size;
-    return CommonButton(
-      buttonColor: blueColor,
-      width: size.width / 2,
-      buttonTitle: 'Upload photo',
-      onTap: () {
-        showImagePickerOptions(context, homeController);
-      },
-    );
-  }*/
-
-  Future<void> showImagePickerOptions(
-    BuildContext context,
-    HomeController homeController,
-  ) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: SizedBox(
-            height: 276,
-            width: 327,
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.close),
-                  ),
-                ),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      homeController.pickImage(ImageSource.camera);
-                      Navigator.pop(context);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.camera_alt_outlined,
-                          color: Colors.grey,
-                          size: 100,
-                        ),
-                        const SizedBoxHeight20(),
-                        Container(
-                          height: 52,
-                          width: 185,
-                          decoration: BoxDecoration(
-                            color: whiteColor,
-                            border: Border.all(
-                              color: primaryColor,
-                            ),
-                          ),
-                          alignment: Alignment.center,
-                          child: TextWidget(
-                            'Open camera',
-                            style: TextStyles.title16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      child: Image.asset(
+        registrationSuccessfulImage,
+        height: Dimensions.height100 * 2,
+        width: Dimensions.width100 * 2,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

@@ -30,6 +30,6 @@ class RegiRepo {
 
   ///post face vectors
   Future<Response> uploadImagePathsToCompleteRegistration(Map<String, dynamic> data) async {
-    return await apiClient.postData(AppConstants.postDescriptor, data);
+    return await apiClient.postData(AppConstants.postImagePath, data);
   }
 }

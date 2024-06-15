@@ -3,27 +3,25 @@ import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
+import 'package:mict_final_project/module/auth/registration/view/complete_registration_process_screen.dart';
 import 'package:mict_final_project/module/auth/registration/view/front_face_screen.dart';
 import 'package:mict_final_project/module/auth/registration/view/left_face_screen.dart';
 import 'package:mict_final_project/module/auth/registration/view/right_face_screen.dart';
 import 'package:mict_final_project/module/auth/registration/view/signature_upload_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+class RegistrationScreen extends StatelessWidget {
+  RegistrationScreen({Key? key}) : super(key: key);
 
-  @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
   final _list = [
-    const FrontFaceScreen(),
-    const RightFaceUploadScreen(),
-    const LeftFaceUploadScreen(),
-    const UploadSignatureScreen(),
+    FrontFaceScreen(),
+    RightFaceUploadScreen(),
+    LeftFaceUploadScreen(),
+    UploadSignatureScreen(),
+    CompleteRegistrationScreen(),
   ];
-  RegistrationController regi = Get.put(RegistrationController());
+
+  final RegistrationController regi = Get.put(RegistrationController());
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +81,4 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
   }
-
-  /*Widget _continueButton() {
-    Size size = MediaQuery.of(context).size;
-    return CommonButton(
-      buttonColor: blueColor,
-      width: size.width / 2,
-      buttonTitle: 'Continue',
-      onTap: () {
-        regi.changePage();
-        //Get.to(()=> HomeScreen());
-      },
-    );
-  }*/
 }

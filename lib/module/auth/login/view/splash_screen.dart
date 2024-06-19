@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3)).then((value) {
+    Future.delayed(const Duration(seconds: 2)).then((value) {
       return Get.find<LoginController>().userLoggedIn()
           ? Get.offAllNamed(AppRoutes.homeScreen)
           : Get.offAllNamed(AppRoutes.loginScreen);
@@ -36,14 +36,14 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height / 14,
               width: MediaQuery.of(context).size.width / 1.5,
               child: Image.asset(appIconImage),
             ),
             TextWidget(
               'Face Registration APP',
-              style: TextStyles.title32.copyWith(color: primaryColor),
+              style: TextStyles.title22.copyWith(color: primaryColor),
             )
           ],
         ),

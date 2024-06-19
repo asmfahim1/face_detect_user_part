@@ -74,8 +74,8 @@ Future<void> showImagePickerOptions(
     builder: (BuildContext context) {
       return AlertDialog(
         content: SizedBox(
-          height: 276,
-          width: 327,
+          height: Dimensions.height100 * 2.76,
+          width: Dimensions.width100 * 3.70,
           child: Column(
             children: [
               Align(

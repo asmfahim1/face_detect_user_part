@@ -13,7 +13,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //loginController.getExamList();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -34,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 TextWidget(
                   'Welcome to Face Detection App',
-                  style: TextStyles.title20.copyWith(color: whiteColor),
+                  style: TextStyles.title16.copyWith(color: whiteColor),
                 ),
                 const SizedBoxHeight20(),
                 LoginFormSectionWidget()

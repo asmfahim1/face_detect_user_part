@@ -9,6 +9,10 @@ class LoginRepo {
 
   LoginRepo({required this.apiClient, required this.sharedPreferences});
 
+  Future<Response> getAllExams() async {
+        return await apiClient.getData(AppConstants.getAllExams);
+  }
+
   Future<Response> login(Map<String, dynamic> loginBody) async {
         return await apiClient.postData(AppConstants.loginUrl, loginBody);
   }

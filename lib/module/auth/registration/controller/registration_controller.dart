@@ -70,7 +70,7 @@ class RegistrationController extends GetxController {
   Future<void> pickFrontImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      //selectedFrontImagePath.value = pickedImage.path;
+
       String fileName = pickedImage.path.split('/').last;
       final File imageFile = File(pickedImage.path);
 
@@ -116,7 +116,7 @@ class RegistrationController extends GetxController {
   Future<void> pickRightImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      //selectedRightImagePath.value = pickedImage.path;
+
       String fileName = pickedImage.path.split('/').last;
       final File imageFile = File(pickedImage.path);
 
@@ -159,7 +159,7 @@ class RegistrationController extends GetxController {
   Future<void> pickLeftImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
-      //selectedLeftImagePath.value = pickedImage.path;
+
       String fileName = pickedImage.path.split('/').last;
       final File imageFile = File(pickedImage.path);
 
@@ -209,13 +209,13 @@ class RegistrationController extends GetxController {
       Get.back();
 
       DialogUtils.showLoading(title: 'Uploading image ...');
-      print('-----------1');
+
 
       try {
         Map<String, dynamic> response =
             await (regiRepo!.uploadFileWithDio(imageFile, fileName));
 
-        print('-----------${response["message"]}');
+
 
         if (response["status"] == 201) {
           selectedSignatureImagePath.value = pickedImage.path;
@@ -248,17 +248,13 @@ class RegistrationController extends GetxController {
       ]
     };
 
-    print('=================${imagePathList}===============');
-
     try {
       Response response = await (regiRepo!
           .uploadImagePathsToCompleteRegistration(imagePathList));
-      if (kDebugMode) {
-        print('response from face detection : ${response.body}');
-      }
 
       if (response.statusCode == 201) {
         DialogUtils.closeLoading();
+        clearImageFields();
         Get.offAllNamed(AppRoutes.homeScreen);
       }
     } catch (error) {
@@ -296,9 +292,6 @@ class RegistrationController extends GetxController {
   //TODO face detection code here
   List<Face> faces = [];
   Future<bool?> doFaceDetection(File imageFile) async {
-    if (kDebugMode) {
-      print('======doFaceDetectionIn======');
-    }
 
     //TODO remove rotation of camera images
     InputImage inputImage = InputImage.fromFile(imageFile);
@@ -337,17 +330,9 @@ class RegistrationController extends GetxController {
         "faceVector": "${recognition.embeddings}",
       };
 
-      if (kDebugMode) {
-        print('Face vector length : $faceVectorsBody');
-        print('Face vector length : ${recognition.embeddings}');
-      }
-
       try {
         Response response =
             await (regiRepo!.uploadFaceVectors(faceVectorsBody));
-        if (kDebugMode) {
-          print('response from face detection : ${response.body}');
-        }
 
         if (response.statusCode == 201) {
           return true;
@@ -382,10 +367,4 @@ class RegistrationController extends GetxController {
     faces;
     update();
   }
-
-/*  File? get firstImageFile => _firstImageFile;
-  File? get secondImageFile => _secondImageFile;
-  File? get thirdImageFile => _thirdImageFile;
-  File? get fourImageFile => _fourImageFile;
-  */
 }

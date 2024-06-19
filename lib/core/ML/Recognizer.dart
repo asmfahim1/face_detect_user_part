@@ -1,11 +1,8 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
-
 import 'package:image/image.dart' as img;
-import 'package:mict_final_project/core/utils/DatabaseHelper.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
-
 import 'Recognition.dart';
 
 class Recognizer {
@@ -13,7 +10,7 @@ class Recognizer {
   late InterpreterOptions _interpreterOptions;
   static const int WIDTH = 112;
   static const int HEIGHT = 112;
-  final dbHelper = DatabaseHelper();
+  //final dbHelper = DatabaseHelper();
   Map<String, Recognition> registered = Map();
   String get modelName => 'assets/trainned_model/mobile_face_net.tflite';
 
@@ -24,15 +21,15 @@ class Recognizer {
       _interpreterOptions.threads = numThreads;
     }
     loadModel();
-    initDB();
+    //initDB();
   }
 
-  initDB() async {
+/*  initDB() async {
     await dbHelper.init();
-    loadRegisteredFaces();
-  }
+   // loadRegisteredFaces();
+  }*/
 
-  void loadRegisteredFaces() async {
+/*  void loadRegisteredFaces() async {
     registered.clear();
     final allRows = await dbHelper.queryAllRows();
     // debugPrint('query all rows:');
@@ -61,7 +58,7 @@ class Recognizer {
     final id = await dbHelper.insert(row);
     print('inserted row id: $id');
     loadRegisteredFaces();
-  }
+  }*/
 
   Future<void> loadModel() async {
     try {
@@ -99,23 +96,22 @@ class Recognizer {
   Recognition recognize(img.Image image, Rect location) {
     //TODO crop face from image resize it and convert it to float array
     var input = imageToArray(image);
-    print(input.shape.toString());
 
     //TODO output array
     List output = List.filled(1 * 192, 0).reshape([1, 192]);
 
     //TODO performs inference
-    final runs = DateTime.now().millisecondsSinceEpoch;
+    //final runs = DateTime.now().millisecondsSinceEpoch;
     interpreter.run(input, output);
-    final run = DateTime.now().millisecondsSinceEpoch - runs;
-    print('=======Time to run inference: $run ms$output==========');
+    //final run = DateTime.now().millisecondsSinceEpoch - runs;
+    //print('=======Time to run inference: $run ms$output==========');
 
     //TODO convert dynamic list to double list
     List<double> outputArray = output.first.cast<double>();
 
     //TODO looks for the nearest embeeding in the database and returns the pair
     Pair pair = findNearest(outputArray);
-    print("distance= ${pair.distance}");
+    // print("distance= ${pair.distance}");
 
     return Recognition(pair.name, location, outputArray, pair.distance);
   }

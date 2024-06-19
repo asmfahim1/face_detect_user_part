@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/dialogue_utils.dart';
 import 'package:mict_final_project/core/utils/extensions.dart';
+import 'package:mict_final_project/module/auth/login/model/all_exams_model.dart';
 import 'package:mict_final_project/module/auth/login/model/login_response_model.dart';
 import 'package:mict_final_project/module/auth/login/repo/login_repo.dart';
 
@@ -15,7 +16,6 @@ class LoginController extends GetxController {
   final TextEditingController password = TextEditingController();
 
   final RxBool _passwordVisible = true.obs;
-  final RxString _examType = 'Exam type'.obs;
 
   set passwordVisible(bool value) {
     _passwordVisible.value = value;
@@ -24,14 +24,51 @@ class LoginController extends GetxController {
 
   bool get passwordVisible => _passwordVisible.value;
 
-  void setSelectedValue(String value) {
-    examType = value;
-  }
 
-  set examType(String value) {
-    _examType.value = value;
+  RxString examType = 'Exam type'.obs;
+  RxInt examId = 0.obs;
+
+
+  void setSelectedValue(String examName) {
+    final exam = examList
+        .firstWhere((element) => element.name! == examName);
+    examType.value = exam.name!;
+    examId.value = exam.id!;
     update();
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAllExams();
+  }
+
+
+
+  RxBool isExamListLoaded = false.obs;
+  RxList examList = <ExamNameList>[].obs;
+  Future<void> getAllExams() async {
+    try {
+      isExamListLoaded.value = true; // Set loading state to true
+      Response response = await loginRepo!.getAllExams();
+
+
+      if (response.statusCode == 200) {
+        var list = examNameListFromJson(response.bodyString!);
+        examList.value = list;
+      } else {
+        examList.clear();
+      }
+    } catch (error) {
+      DialogUtils.showErrorDialog(description: "$error");
+      examList.clear();
+    } finally {
+      isExamListLoaded.value = false; // Set loading state to false
+    }
+
+    update();
+  }
+
 
   Future<void> loginMethod() async {
     LoginResponseModel responseModel;
@@ -41,6 +78,7 @@ class LoginController extends GetxController {
       final Map<String, dynamic> map = <String, dynamic>{};
       map['email'] = email.text.trim();
       map['password'] = password.text.trim();
+     // map['exam_id'] = examId;
 
       Response response = await loginRepo!.login(map);
 
@@ -93,6 +131,6 @@ class LoginController extends GetxController {
     return loginRepo!.clearSharedData();
   }
 
-  String get examType => _examType.value;
+
 }
 

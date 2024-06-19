@@ -17,12 +17,11 @@ class ImagePickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Image path $imageFile');
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: Dimensions.height100 * 2,
-        width: Dimensions.width100 * 2,
+        height: Dimensions.height100 * 1.5,
+        width: Dimensions.width100 * 1.5,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(color: strokeColor),

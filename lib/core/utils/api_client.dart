@@ -17,14 +17,14 @@ class ApiClient extends GetConnect implements GetxService {
     timeout = const Duration(seconds: 30);
     token = sharedPreferences.getString(AppConstantKey.TOKEN.key) ?? '';
     _mainHeaders = {
-      'Context-type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
   }
 
   void updateHeader(String token) {
     _mainHeaders = {
-      'Context-type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
   }

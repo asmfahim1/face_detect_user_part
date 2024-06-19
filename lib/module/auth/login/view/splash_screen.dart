@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
@@ -42,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Image.asset(appIconImage),
             ),
             TextWidget(
-              'Face Registration APP',
+              'splash text'.tr,
               style: TextStyles.title22.copyWith(color: primaryColor),
             )
           ],

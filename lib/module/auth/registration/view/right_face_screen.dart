@@ -24,7 +24,7 @@ class RightFaceUploadScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload right side of your face',
+              'right_upload'.tr,
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi, context),
@@ -57,7 +57,7 @@ class RightFaceUploadScreen extends StatelessWidget {
     return CommonButton(
       buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
-      buttonTitle: 'Upload photo',
+      buttonTitle: 'photo_upload'.tr,
       onTap: () {
         //regi.changePage();
         regi.pickRightImage(ImageSource.camera);
@@ -113,7 +113,7 @@ Future<void> showImagePickerOptions(
                         ),
                         alignment: Alignment.center,
                         child: TextWidget(
-                          'Open camera',
+                          'open_camera'.tr,
                           style: TextStyles.title16,
                         ),
                       ),

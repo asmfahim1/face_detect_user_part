@@ -32,7 +32,7 @@ class RegistrationScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         title: TextWidget(
-          'Registration',
+          'registration'.tr,
           style: TextStyles.title20.copyWith(
             color: darkGrayColor,
           ),

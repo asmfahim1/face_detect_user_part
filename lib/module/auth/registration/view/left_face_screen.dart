@@ -25,7 +25,7 @@ class LeftFaceUploadScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload left side of your face',
+              'left_upload'.tr,
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi, context)
@@ -58,7 +58,7 @@ class LeftFaceUploadScreen extends StatelessWidget {
     return CommonButton(
       buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
-      buttonTitle: 'Upload photo',
+      buttonTitle: 'photo_upload'.tr,
       onTap: () {
         //regi.changePage();
         regi.pickLeftImage(ImageSource.camera);
@@ -114,7 +114,7 @@ Future<void> showImagePickerOptions(
                         ),
                         alignment: Alignment.center,
                         child: TextWidget(
-                          'Open camera',
+                          'open_camera'.tr,
                           style: TextStyles.title16,
                         ),
                       ),

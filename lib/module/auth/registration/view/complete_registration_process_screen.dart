@@ -25,7 +25,7 @@ class CompleteRegistrationScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Your registration is about to complete. Please press complete and all the best',
+              'complete_process'.tr,
               style: TextStyles.title16,
             ),
 
@@ -73,7 +73,7 @@ class CompleteRegistrationScreen extends StatelessWidget {
     return CommonButton(
       buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
-      buttonTitle: 'Complete Process',
+      buttonTitle: 'complete_btn'.tr,
       onTap: () async {
         regi.completeRegistrationProcess();
       },

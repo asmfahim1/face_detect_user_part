@@ -75,7 +75,7 @@ class RegistrationController extends GetxController {
       final File imageFile = File(pickedImage.path);
 
       Get.back();
-      DialogUtils.showLoading(title: 'Uploading image ...');
+      DialogUtils.showLoading(title: 'uploading'.tr);
 
       try {
         if (await doFaceDetection(imageFile) == true) {
@@ -92,18 +92,17 @@ class RegistrationController extends GetxController {
         } else {
           DialogUtils.closeLoading();
           DialogUtils.showErrorDialog(
-              description: "Sorry no face detected", btnName: "try again");
+              description: 'no_face_found'.tr, btnName: 'try_again_btn'.tr);
         }
       } catch (error) {
         DialogUtils.closeLoading();
-        DialogUtils.showErrorDialog(
-            btnName: "try again", description: "$error");
+        DialogUtils.showErrorDialog(btnName: 'try_again_btn'.tr, description: "$error");
       }
     } else {
       Get.back();
       Get.snackbar(
-        'Warning!',
-        'No image selected from device',
+        'warning'.tr,
+        'no_image_selected'.tr,
         snackPosition: SnackPosition.TOP,
         backgroundColor: redColor,
         colorText: whiteColor,
@@ -122,7 +121,7 @@ class RegistrationController extends GetxController {
 
       Get.back();
 
-      DialogUtils.showLoading(title: 'Uploading image ...');
+      DialogUtils.showLoading(title: 'uploading'.tr);
 
       try {
         if (await doFaceDetection(imageFile) == true) {
@@ -139,19 +138,22 @@ class RegistrationController extends GetxController {
         } else {
           DialogUtils.closeLoading();
           DialogUtils.showErrorDialog(
-              description: "Sorry no face detected", btnName: "try again");
+              description: 'no_face_found'.tr, btnName: 'try_again_btn'.tr);
         }
       } catch (error) {
         DialogUtils.closeLoading();
-        DialogUtils.showSnackBar("Error", "$error");
+        DialogUtils.showErrorDialog(btnName: 'try_again_btn'.tr, description: "$error");
       }
     } else {
       Get.back();
-      Get.snackbar('Warning!', 'No image selected from device',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: redColor,
-          colorText: whiteColor,
-          duration: const Duration(seconds: 2));
+      Get.snackbar(
+        'warning'.tr,
+        'no_image_selected'.tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: redColor,
+        colorText: whiteColor,
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 
@@ -165,7 +167,7 @@ class RegistrationController extends GetxController {
 
       Get.back();
 
-      DialogUtils.showLoading(title: 'Uploading image ...');
+      DialogUtils.showLoading(title: 'uploading'.tr);
 
       try {
         if (await doFaceDetection(imageFile) == true) {
@@ -182,19 +184,22 @@ class RegistrationController extends GetxController {
         } else {
           DialogUtils.closeLoading();
           DialogUtils.showErrorDialog(
-              description: "Sorry no face detected", btnName: "try again");
+              description: 'no_face_found'.tr, btnName: 'try_again_btn'.tr);
         }
       } catch (error) {
         DialogUtils.closeLoading();
-        DialogUtils.showSnackBar("Error", "$error");
+        DialogUtils.showErrorDialog(btnName: 'try_again_btn'.tr, description: "$error");
       }
     } else {
       Get.back();
-      Get.snackbar('Warning!', 'No image selected from device',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: redColor,
-          colorText: whiteColor,
-          duration: const Duration(seconds: 2));
+      Get.snackbar(
+        'warning'.tr,
+        'no_image_selected'.tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: redColor,
+        colorText: whiteColor,
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 
@@ -208,7 +213,7 @@ class RegistrationController extends GetxController {
 
       Get.back();
 
-      DialogUtils.showLoading(title: 'Uploading image ...');
+      DialogUtils.showLoading(title: 'uploading'.tr);
 
 
       try {
@@ -226,20 +231,23 @@ class RegistrationController extends GetxController {
         }
       } catch (error) {
         DialogUtils.closeLoading();
-        DialogUtils.showSnackBar("Error", "$error");
+        DialogUtils.showErrorDialog(btnName: 'try_again_btn'.tr, description: "$error");
       }
     } else {
       Get.back();
-      Get.snackbar('Warning!', 'No image selected from device',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: redColor,
-          colorText: whiteColor,
-          duration: const Duration(seconds: 2));
+      Get.snackbar(
+        'warning'.tr,
+        'no_image_selected'.tr,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: redColor,
+        colorText: whiteColor,
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 
   Future<void> completeRegistrationProcess() async {
-    DialogUtils.showLoading(title: 'Please wait for a while ...');
+    DialogUtils.showLoading(title: 'wait_for_a_while'.tr);
     Map<String, dynamic> imagePathList = {
       "imagePaths": [
         {"image": frontFileName.toString()},

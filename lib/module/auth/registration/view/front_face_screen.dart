@@ -24,7 +24,7 @@ class FrontFaceScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload front side of your face',
+              'front_upload'.tr,
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi, context),
@@ -57,7 +57,7 @@ class FrontFaceScreen extends StatelessWidget {
     return CommonButton(
       buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
-      buttonTitle: 'Upload photo',
+      buttonTitle: 'photo_upload'.tr,
       onTap: () {
         showImagePickerOptions(context, regiController);
       },
@@ -112,7 +112,7 @@ Future<void> showImagePickerOptions(
                         ),
                         alignment: Alignment.center,
                         child: TextWidget(
-                          'Open camera',
+                          'open_camera'.tr,
                           style: TextStyles.title16,
                         ),
                       ),

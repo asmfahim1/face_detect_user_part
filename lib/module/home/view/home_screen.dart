@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         title: TextWidget(
-          'Home',
+          'dashboard'.tr,
           style: TextStyles.regular18.copyWith(
             color: darkGrayColor,
           ),
@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                 _registrationSuccessPhotoWidget(),
                 SizedBox(height: Dimensions.height10,),
                 TextWidget(
-                  'You have successfully completed the registration process for ___ exam ',
+                  'completed_registration'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyles.title16.copyWith(),
                 ),

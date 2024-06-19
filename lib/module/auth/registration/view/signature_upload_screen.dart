@@ -6,7 +6,6 @@ import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
-import 'package:mict_final_project/module/auth/registration/view/widgets/common_image_show_widget.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
 class UploadSignatureScreen extends StatelessWidget {
@@ -25,7 +24,7 @@ class UploadSignatureScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextWidget(
-              'Upload your signature here',
+              'sign_upload'.tr,
               style: TextStyles.title16,
             ),
             _uploadedPhotoWidget(regi, context),
@@ -59,7 +58,7 @@ class UploadSignatureScreen extends StatelessWidget {
     return CommonButton(
       buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
-      buttonTitle: 'Upload photo',
+      buttonTitle: 'photo_upload'.tr,
       onTap: () async {
         await regi.pickSignatureImage(ImageSource.camera);
       },
@@ -115,7 +114,7 @@ Future<void> showImagePickerOptions(
                         ),
                         alignment: Alignment.center,
                         child: TextWidget(
-                          'Open camera',
+                          'open_camera'.tr,
                           style: TextStyles.title16,
                         ),
                       ),

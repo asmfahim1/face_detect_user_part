@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
+import 'package:mict_final_project/l10n/getx_localization.dart';
 
 import 'core/utils/app_routes.dart';
 import 'core/utils/colors.dart';
@@ -37,8 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'user demo',
       debugShowCheckedModeBanner: false,
       //localization
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      translations: Language(),
       locale: (PrefHelper.getLanguage() == 1)
           ? const Locale('en', 'US')
           : const Locale('bn', 'BD'),

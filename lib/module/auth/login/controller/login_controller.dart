@@ -25,7 +25,7 @@ class LoginController extends GetxController {
   bool get passwordVisible => _passwordVisible.value;
 
 
-  RxString examType = 'Exam type'.obs;
+  RxString examType = 'exams'.tr.obs;
   RxInt examId = 0.obs;
 
 
@@ -73,7 +73,7 @@ class LoginController extends GetxController {
   Future<void> loginMethod() async {
     LoginResponseModel responseModel;
     try {
-      DialogUtils.showLoading(title: "Please wait...");
+      DialogUtils.showLoading(title: 'please_wait'.tr);
 
       final Map<String, dynamic> map = <String, dynamic>{};
       map['email'] = email.text.trim();
@@ -94,8 +94,8 @@ class LoginController extends GetxController {
 
         if (responseModel.data == null) {
           DialogUtils.showErrorDialog(
-            title: 'Warning',
-            description: responseModel.message ?? 'No data found',
+            title: 'warning'.tr,
+            description: responseModel.message ?? 'no_data'.tr,
           );
         } else {
           await loginRepo!.saveUserToken(responseModel.token.toString());
@@ -105,8 +105,8 @@ class LoginController extends GetxController {
         // Handle non-200 status code
         responseModel = LoginResponseModel.fromJson(response.body);
         DialogUtils.showErrorDialog(
-          title: 'Warning',
-          description: responseModel.message ?? 'Unknown error occurred',
+          title: 'warning'.tr,
+          description: responseModel.message ?? 'error_unknown'.tr,
         );
       }
     } catch (error) {

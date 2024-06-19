@@ -52,7 +52,7 @@ class LoginFormSectionWidget extends StatelessWidget {
         ExamDropdown(),
         const SizedBoxHeight20(),
         CommonTextField(
-          hintText: 'User id',
+          hintText: 'email_hint'.tr,
           validator: Validator().nullFieldValidate,
           controller: login.email,
           onFieldSubmitted: (v) {
@@ -62,7 +62,7 @@ class LoginFormSectionWidget extends StatelessWidget {
         const SizedBoxHeight20(),
         CommonTextField(
           validator: Validator().nullFieldValidate,
-          hintText: 'Password',
+          hintText: 'password_hint'.tr,
           focusNode: _passwordFocus,
           controller: login.password,
           obSecure: login.passwordVisible,
@@ -89,7 +89,7 @@ class LoginFormSectionWidget extends StatelessWidget {
     return CommonButton(
       width: Dimensions.screenWidth / 1.6,
       buttonColor: blueColor,
-      buttonTitle: 'Login',
+      buttonTitle: 'login'.tr,
       onTap: () {
         //Get.toNamed(AppRoutes.registrationPage);
         if (_formKey.currentState!.validate()) {

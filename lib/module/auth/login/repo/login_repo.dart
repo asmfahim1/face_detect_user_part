@@ -1,6 +1,7 @@
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
+import 'package:mict_final_project/core/utils/pref_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginRepo {
@@ -20,18 +21,25 @@ class LoginRepo {
   saveUserToken(String token) async {
     apiClient.token = token;
     apiClient.updateHeader(token);
+
+    //await PrefHelper.setString(AppConstantKey.TOKEN.key, token);
     await sharedPreferences.setString(AppConstantKey.TOKEN.key, token);
   }
 
   bool userLoggedIn() {
+    //PrefHelper.isLoggedIn();
     return sharedPreferences.containsKey(AppConstantKey.TOKEN.key);
   }
 
   Future<String> getUserToken() async {
+
+    //PrefHelper.getString(AppConstantKey.TOKEN.key);
+
     return sharedPreferences.getString(AppConstantKey.TOKEN.key) ?? "None";
   }
 
   bool clearSharedData() {
+   // PrefHelper.logout();
     sharedPreferences.remove(AppConstantKey.TOKEN.key);
     apiClient.token = '';
     apiClient.updateHeader('');

@@ -22,7 +22,7 @@ class ExamDropdown extends StatelessWidget {
 
         if (controller.examList.isEmpty) {
           return TextWidget(
-            "No exams available right now",
+            'null_exam_list'.tr,
             style: TextStyles.regular14.copyWith(color: redColor),
           );
         }

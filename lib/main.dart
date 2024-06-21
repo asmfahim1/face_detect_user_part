@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//localization
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mict_final_project/core/utils/app_version.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/l10n/getx_localization.dart';
 
@@ -26,6 +25,8 @@ Future<void> initializeGet() async {
   await Get.putAsync(() async {
     return Dimensions(); // Initialize Dimensions class
   });
+  await PrefHelper.init();
+  await AppVersion.getVersion();
 }
 
 class MyApp extends StatelessWidget {

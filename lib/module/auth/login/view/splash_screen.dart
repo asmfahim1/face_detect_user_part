@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Image.asset(appIconImage),
             ),
             TextWidget(
-              'splash text'.tr,
+              'splash_text'.tr,
               style: TextStyles.title22.copyWith(color: primaryColor),
             )
           ],

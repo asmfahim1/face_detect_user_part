@@ -6,7 +6,7 @@ class Language extends Translations {
     'en_US' : {
 
       //splash screen
-      'splash text' : 'Face Registration APP',
+      'splash_text' : 'Face Registration APP',
       'dashboard' : 'Dashboard',
 
 
@@ -48,7 +48,7 @@ class Language extends Translations {
 
     'bn_BD' : {
       //splash screen
-      'splash text' : 'ফেস ডিটেকশন অ্যাপ',
+      'splash_text' : 'ফেস ডিটেকশন অ্যাপ',
       'dashboard' : 'ড্যাশবোর্ড',
 
       //login screen

@@ -16,7 +16,6 @@ class FrontFaceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: whiteColor,
       body: SizedBox(
         width: Dimensions.screenWidth,
         child: Column(
@@ -39,7 +38,7 @@ class FrontFaceScreen extends StatelessWidget {
       children: [
         Obx(
           () => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
+            padding: EdgeInsets.symmetric(vertical: Dimensions.padding10 * 2.4),
             child: ImagePickerWidget(
               imageFile: File(regi.selectedFrontImagePath.value),
               onTap: () {

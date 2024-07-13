@@ -27,7 +27,7 @@ class Language extends Translations {
       'left_upload': 'Upload left side of your face',
       'right_upload': 'Upload right side of your face',
       'sign_upload': 'Upload your signature here',
-      'complete_process': 'Your registration is about to complete. Please press complete and all the best',
+      'complete_process': 'This is to inform you that the photos you capture will be verify with you during the examination. So be careful when uploading photos and give clear photos.',
       'complete_btn': 'Complete Process',
       'completed_registration': 'You have successfully completed the registration process for ___ exam',
 
@@ -38,11 +38,13 @@ class Language extends Translations {
       'error_unknown' : 'Unknown error occurred',
 
       //registration controller
+      'verification_text' : 'For facial verification you need to give your image in the following way.',
       'uploading' : 'Uploading image ...',
       'no_face_found' : 'Sorry no face detected',
       'try_again_btn' : 'try again',
       'no_image_selected' : 'No image selected from device',
       'wait_for_a_while' : 'Please wait for a while ...',
+      'next_btn' : 'Next',
 
     },
 

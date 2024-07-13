@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/login/controller/login_controller.dart';
@@ -36,8 +37,8 @@ class _SplashScreenState extends State<SplashScreen>
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height / 14,
-              width: MediaQuery.of(context).size.width / 1.5,
+              height: Dimensions.height10 * 5.7,
+              width: Dimensions.width100 * 2.4,
               child: Image.asset(appIconImage),
             ),
             TextWidget(

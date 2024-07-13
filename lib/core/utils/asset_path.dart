@@ -5,3 +5,6 @@ const registrationSuccessfulImage = 'assets/images/registration_success_image.pn
 const facebookIconPath = 'assets/icons/facebook.svg';
 const googleIconPath = 'assets/icons/google_icon.svg';
 const openCameraIconPath = 'assets/open_camera.svg';
+const faceIconLeft = 'assets/images/face_left.png';
+const faceIconFront = 'assets/images/face_front.png';
+const faceIconRight = 'assets/images/face_right.png';

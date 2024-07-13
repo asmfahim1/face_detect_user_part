@@ -56,7 +56,7 @@ class RegistrationController extends GetxController {
   void changePage() {
     if (pageController.page != null) {
       int currentPage = pageController.page!.round();
-      if (currentPage <= 4) {
+      if (currentPage <= 5) {
         // Not the last page, proceed to the next page
         pageController.nextPage(
           duration: const Duration(milliseconds: 500),

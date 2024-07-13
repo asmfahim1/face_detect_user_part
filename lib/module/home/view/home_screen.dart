@@ -34,22 +34,19 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          GestureDetector(
-            onTap: () {
+          IconButton(
+            onPressed: () {
               if (Get.find<LoginController>().userLoggedIn()) {
                 Get.find<LoginController>().clearSharedData();
                 Get.offAllNamed(AppRoutes.loginScreen);
               }
             },
-            child: const Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.logout_outlined,
-                color: redColor,
-                size: 25,
-              ),
+            icon: Icon(
+              Icons.logout_outlined,
+              color: redColor,
+              size: Dimensions.iconSize25,
             ),
-          )
+          ),
         ],
       ),
       body: Column(
@@ -62,7 +59,9 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _registrationSuccessPhotoWidget(),
-                SizedBox(height: Dimensions.height10,),
+                SizedBox(
+                  height: Dimensions.height10,
+                ),
                 TextWidget(
                   'completed_registration'.tr,
                   textAlign: TextAlign.center,
@@ -71,7 +70,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           )
-
         ],
       ),
     );
@@ -79,28 +77,28 @@ class HomeScreen extends StatelessWidget {
 
   Widget _profileWidget() {
     return Container(
-      height: Dimensions.screenHeight / 6,
+      height: Dimensions.height100 * 1.35,
       width: Dimensions.screenWidth,
-      padding: const EdgeInsets.all(14),
-      margin: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(Dimensions.padding10),
+      margin: EdgeInsets.all(Dimensions.padding10),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
         border: Border.all(),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Dimensions.radius12),
       ),
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: blueColor,
-            radius: 40,
+            radius: Dimensions.radius20 * 2,
             child: Icon(
               Icons.person,
-              size: 40,
+              size: Dimensions.iconSize20 * 2,
               color: Colors.white,
             ),
           ),
-          const SizedBox(
-            width: 10,
+          SizedBox(
+            width: Dimensions.width10,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,15 +106,15 @@ class HomeScreen extends StatelessWidget {
             children: [
               TextWidget(
                 'Abu Sale Mohammad Fahim',
-                style: TextStyles.title16.copyWith(fontSize: 14),
+                style: TextStyles.title16.copyWith(fontSize: Dimensions.font14),
               ),
               TextWidget(
                 'id: 2254991017',
-                style: TextStyles.title16.copyWith(fontSize: 14),
+                style: TextStyles.title16.copyWith(fontSize: Dimensions.font14),
               ),
               TextWidget(
                 'exam : ___ exam',
-                style: TextStyles.title16.copyWith(fontSize: 14),
+                style: TextStyles.title16.copyWith(fontSize: Dimensions.font14),
               ),
             ],
           ),
@@ -133,7 +131,7 @@ class HomeScreen extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(Dimensions.radius12),
       ),
       child: Image.asset(
         registrationSuccessfulImage,

@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/colors.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/styles.dart';
-import 'package:mict_final_project/core/widgets/common_button.dart';
-import 'package:mict_final_project/core/widgets/text_widget.dart';
+import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
 import 'package:mict_final_project/module/auth/registration/view/widgets/common_image_show_widget.dart';
 
@@ -28,6 +27,8 @@ class CompleteRegistrationScreen extends StatelessWidget {
               'complete_process'.tr,
               style: TextStyles.title16,
             ),
+
+            const SizedBoxHeight20(),
 
             Column(
               children: [

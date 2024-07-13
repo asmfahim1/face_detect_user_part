@@ -114,7 +114,9 @@ class LoginController extends GetxController {
 
       DialogUtils.showErrorDialog(description: "$error");
 
-      "There is an error occurred while login request is processing: $error".log();
+      if (kDebugMode) {
+        print("There is an error occurred while login request is processing: $error");
+      }
     }
   }
 

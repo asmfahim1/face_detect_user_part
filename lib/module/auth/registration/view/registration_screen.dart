@@ -8,12 +8,14 @@ import 'package:mict_final_project/module/auth/registration/view/front_face_scre
 import 'package:mict_final_project/module/auth/registration/view/left_face_screen.dart';
 import 'package:mict_final_project/module/auth/registration/view/right_face_screen.dart';
 import 'package:mict_final_project/module/auth/registration/view/signature_upload_screen.dart';
+import 'package:mict_final_project/module/auth/registration/view/verification_message.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RegistrationScreen extends StatelessWidget {
   RegistrationScreen({Key? key}) : super(key: key);
 
   final _list = [
+    VerificationMessage(),
     FrontFaceScreen(),
     RightFaceUploadScreen(),
     LeftFaceUploadScreen(),

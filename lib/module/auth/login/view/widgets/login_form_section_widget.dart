@@ -49,7 +49,7 @@ class LoginFormSectionWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ExamDropdown(),
+        const ExamDropdown(),
         const SizedBoxHeight20(),
         CommonTextField(
           hintText: 'email_hint'.tr,

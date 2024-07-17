@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
@@ -14,16 +15,24 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      return Get.find<LoginController>().userLoggedIn()
-          ? Get.offAllNamed(AppRoutes.homeScreen)
-          : Get.offAllNamed(AppRoutes.loginScreen);
-    });
     super.initState();
+
+    Future.delayed(const Duration(seconds: 2)).then((_) {
+      final bool isUserLoggedIn = Get.find<LoginController>().userLoggedIn();
+
+      if (kDebugMode) {
+        print("========$isUserLoggedIn");
+      }
+
+      if (isUserLoggedIn) {
+        Get.offAllNamed(AppRoutes.homeScreen);
+      } else {
+        Get.offAllNamed(AppRoutes.loginScreen); // Changed to registrationScreen
+      }
+    });
   }
 
   @override

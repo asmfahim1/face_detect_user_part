@@ -1,12 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mict_final_project/core/utils/colors.dart';
+import 'package:mict_final_project/core/utils/dialogue_utils.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
-import 'package:mict_final_project/core/utils/styles.dart';
+import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
-import 'package:mict_final_project/module/auth/registration/view/widgets/common_image_show_widget.dart';
-
+import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
 class CompleteRegistrationScreen extends StatelessWidget {
   CompleteRegistrationScreen({super.key});
@@ -20,26 +20,33 @@ class CompleteRegistrationScreen extends StatelessWidget {
       body: SizedBox(
         width: Dimensions.screenWidth,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextWidget(
               'complete_process'.tr,
-              style: TextStyles.title16,
+              style: TextStyles.regular14,
             ),
-
             const SizedBoxHeight20(),
-
             Column(
               children: [
                 Row(
                   children: [
                     Expanded(
-                      child: CommonImageShowWidget(imagePath: regi.selectedFrontImagePath.value),
+                      child: ImagePickerWidget(
+                        imageFile: File(regi.selectedFrontImagePath.value),
+                        faceName: 'front',
+                        onTap: null,
+                      ),
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
-                      child: CommonImageShowWidget(imagePath: regi.selectedRightImagePath.value),
+                      child: ImagePickerWidget(
+                        imageFile: File(regi.selectedRightImagePath.value),
+                        faceName: 'right',
+                        onTap: null,
+                      ),
                     ),
                   ],
                 ),
@@ -49,17 +56,26 @@ class CompleteRegistrationScreen extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: CommonImageShowWidget(imagePath: regi.selectedLeftImagePath.value),
+                      child: ImagePickerWidget(
+                        imageFile: File(regi.selectedLeftImagePath.value),
+                        faceName: 'left',
+                        onTap: null,
+                      ),
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Expanded(
-                      child: CommonImageShowWidget(imagePath: regi.selectedSignatureImagePath.value),
+                      child: ImagePickerWidget(
+                        imageFile: File(regi.selectedSignatureImagePath.value),
+                        faceName: 'signature',
+                        onTap: null,
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-
             SizedBox(
               height: Dimensions.height20,
             ),
@@ -72,13 +88,21 @@ class CompleteRegistrationScreen extends StatelessWidget {
 
   Widget _completeProcess(RegistrationController regi) {
     return CommonButton(
-      buttonColor: blueColor,
-      width: Dimensions.screenWidth / 2,
+      width: Dimensions.widthScreenHalf,
       buttonTitle: 'complete_btn'.tr,
       onTap: () async {
-        regi.completeRegistrationProcess();
+        if (regi.selectedFrontImagePath.isNotEmpty &&
+            regi.selectedRightImagePath.isNotEmpty &&
+            regi.selectedLeftImagePath.isNotEmpty &&
+            regi.selectedSignatureImagePath.isNotEmpty) {
+          regi.completeRegistrationProcess();
+        } else {
+          DialogUtils.showErrorDialog(
+              title: 'warning'.tr,
+              description: 'complete_process_warning'.tr,
+              btnName: 'retry'.tr);
+        }
       },
     );
   }
-
 }

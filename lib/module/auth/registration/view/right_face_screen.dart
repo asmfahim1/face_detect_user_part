@@ -24,7 +24,7 @@ class RightFaceUploadScreen extends StatelessWidget {
           children: [
             TextWidget(
               'right_upload'.tr,
-              style: TextStyles.title16,
+              style: TextStyles.title20,
             ),
             _uploadedPhotoWidget(regi, context),
           ],
@@ -33,7 +33,8 @@ class RightFaceUploadScreen extends StatelessWidget {
     );
   }
 
-  Widget _uploadedPhotoWidget(RegistrationController regiController, BuildContext context) {
+  Widget _uploadedPhotoWidget(
+      RegistrationController regiController, BuildContext context) {
     return Column(
       children: [
         Obx(
@@ -41,6 +42,7 @@ class RightFaceUploadScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: ImagePickerWidget(
               imageFile: File(regi.selectedRightImagePath.value),
+              faceName: 'right',
               onTap: () {
                 showImagePickerOptions(context, regiController);
               },
@@ -54,7 +56,6 @@ class RightFaceUploadScreen extends StatelessWidget {
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
     return CommonButton(
-      buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
       buttonTitle: 'photo_upload'.tr,
       onTap: () {

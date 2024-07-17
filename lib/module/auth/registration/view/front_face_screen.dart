@@ -11,7 +11,7 @@ import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.
 class FrontFaceScreen extends StatelessWidget {
   FrontFaceScreen({Key? key}) : super(key: key);
 
- final RegistrationController regi = Get.find<RegistrationController>();
+  final RegistrationController regi = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class FrontFaceScreen extends StatelessWidget {
           children: [
             TextWidget(
               'front_upload'.tr,
-              style: TextStyles.title16,
+              style: TextStyles.title20,
             ),
             _uploadedPhotoWidget(regi, context),
           ],
@@ -33,7 +33,8 @@ class FrontFaceScreen extends StatelessWidget {
     );
   }
 
-  Widget _uploadedPhotoWidget(RegistrationController regiController, BuildContext context) {
+  Widget _uploadedPhotoWidget(
+      RegistrationController regiController, BuildContext context) {
     return Column(
       children: [
         Obx(
@@ -41,6 +42,7 @@ class FrontFaceScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: Dimensions.padding10 * 2.4),
             child: ImagePickerWidget(
               imageFile: File(regi.selectedFrontImagePath.value),
+              faceName: 'front',
               onTap: () {
                 showImagePickerOptions(context, regiController);
               },
@@ -52,9 +54,9 @@ class FrontFaceScreen extends StatelessWidget {
     );
   }
 
-  Widget _uploadPhotoButton(RegistrationController regiController, BuildContext context) {
+  Widget _uploadPhotoButton(
+      RegistrationController regiController, BuildContext context) {
     return CommonButton(
-      buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
       buttonTitle: 'photo_upload'.tr,
       onTap: () {

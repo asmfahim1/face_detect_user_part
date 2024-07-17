@@ -8,11 +8,13 @@ import '../../../../core/utils/colors.dart';
 
 class ImagePickerWidget extends StatelessWidget {
   final File? imageFile;
+  final String? faceName;
   final void Function()? onTap;
   const ImagePickerWidget({
     Key? key,
     this.imageFile,
     required this.onTap,
+    this.faceName,
   }) : super(key: key);
 
   @override
@@ -20,24 +22,42 @@ class ImagePickerWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: Dimensions.height100 * 1.5,
+        height: Dimensions.height100 * 1.8,
         width: Dimensions.width100 * 1.5,
-        alignment: Alignment.center,
         decoration: BoxDecoration(
-          border: Border.all(color: strokeColor),
+          border: Border.all(color: primaryColor, width: 2),
         ),
         child: (imageFile != null && imageFile!.path.isNotEmpty)
             ? Image.file(
                 imageFile!,
-                height: Dimensions.height100 * 2,
-                width: Dimensions.width100 * 2,
                 fit: BoxFit.cover,
               )
-            : Image.asset(
-                appIconImage,
-                height: Dimensions.height100 * 2,
-                width: Dimensions.width100 * 2,
-                fit: BoxFit.cover,
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: faceName == 'front'
+                    ? Image.asset(
+                        faceIconFront1,
+                        fit: BoxFit.cover,
+                      )
+                    : faceName == 'left'
+                        ? Image.asset(
+                            faceIconLeft1,
+                            fit: BoxFit.cover,
+                          )
+                        : faceName == 'right'
+                            ? Image.asset(
+                                faceIconRight1,
+                                fit: BoxFit.cover,
+                              )
+                            : faceName == 'signature'
+                                ? Image.asset(
+                                    signatureIcon,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    appIconImage,
+                                    fit: BoxFit.cover,
+                                  ),
               ),
       ),
     );

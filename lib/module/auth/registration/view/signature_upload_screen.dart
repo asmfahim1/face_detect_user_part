@@ -24,7 +24,7 @@ class UploadSignatureScreen extends StatelessWidget {
           children: [
             TextWidget(
               'sign_upload'.tr,
-              style: TextStyles.title16,
+              style: TextStyles.title20,
             ),
             _uploadedPhotoWidget(regi, context),
           ],
@@ -42,6 +42,7 @@ class UploadSignatureScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: ImagePickerWidget(
               imageFile: File(regi.selectedSignatureImagePath.value),
+              faceName: 'signature',
               onTap: () {
                 showImagePickerOptions(context, regiController);
               },
@@ -55,7 +56,6 @@ class UploadSignatureScreen extends StatelessWidget {
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
     return CommonButton(
-      buttonColor: blueColor,
       width: Dimensions.screenWidth / 2,
       buttonTitle: 'photo_upload'.tr,
       onTap: () async {
@@ -64,7 +64,6 @@ class UploadSignatureScreen extends StatelessWidget {
     );
   }
 }
-
 
 Future<void> showImagePickerOptions(
   BuildContext context,

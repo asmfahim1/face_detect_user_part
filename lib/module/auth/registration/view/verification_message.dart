@@ -5,7 +5,6 @@ import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
 
-
 class VerificationMessage extends StatelessWidget {
   VerificationMessage({Key? key}) : super(key: key);
 
@@ -22,13 +21,11 @@ class VerificationMessage extends StatelessWidget {
           children: [
             TextWidget(
               'verification_text'.tr,
-              style: TextStyles.regular16,
+              style: TextStyles.title20,
             ),
-
             SizedBox(
               height: Dimensions.height20 * 4,
             ),
-
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -38,13 +35,17 @@ class VerificationMessage extends StatelessWidget {
                     height: Dimensions.height100,
                     width: Dimensions.width100 * .8,
                   ),
-                  SizedBox(width: Dimensions.width10 * 2.4,),
+                  SizedBox(
+                    width: Dimensions.width10 * 2.4,
+                  ),
                   Image.asset(
                     faceIconFront, // Adjust the asset path as needed
                     height: Dimensions.height100,
                     width: Dimensions.width100 * .8,
                   ),
-                  SizedBox(width: Dimensions.width10 * 2.4,),
+                  SizedBox(
+                    width: Dimensions.width10 * 2.4,
+                  ),
                   Image.asset(
                     faceIconRight, // Adjust the asset path as needed
                     height: Dimensions.height100,
@@ -53,13 +54,10 @@ class VerificationMessage extends StatelessWidget {
                 ],
               ),
             ),
-
             SizedBox(
               height: Dimensions.height20 * 4,
             ),
-
             CommonButton(
-              buttonColor: blueColor,
               width: Dimensions.screenWidth * .5,
               buttonTitle: 'next_btn'.tr,
               onTap: () {

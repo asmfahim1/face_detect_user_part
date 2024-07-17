@@ -14,13 +14,8 @@ class CommonImageShowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimensions.height100 * 1.5,
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6)
-      ),
       child: ImagePickerWidget(
-        imageFile: File(imagePath), onTap: () {},
+        imageFile: File(imagePath), onTap: null,
       ),
     );
   }

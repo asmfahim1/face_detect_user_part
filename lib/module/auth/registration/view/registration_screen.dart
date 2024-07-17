@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/utils/exports.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
@@ -36,11 +37,10 @@ class RegistrationScreen extends StatelessWidget {
         title: TextWidget(
           'registration'.tr,
           style: TextStyles.title20.copyWith(
-            color: darkGrayColor,
+            color: whiteColor,
           ),
         ),
       ),
-      backgroundColor: whiteColor,
       body: SafeArea(
         child: Padding(
           padding: commonScaffoldPadding,
@@ -59,21 +59,26 @@ class RegistrationScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBoxHeight20(),
-              SmoothPageIndicator(
-                controller: regi.pageController,
-                count: _list.length,
-                effect: const WormEffect(
-                  activeDotColor: primaryColor,
-                  dotWidth: 30,
-                  dotHeight: 8,
-                  spacing: 16,
-                  type: WormType.underground,
+              SizedBox(
+                height: Dimensions.height10 * 8,
+                width: Dimensions.screenWidth,
+                child: Center(
+                  child: SmoothPageIndicator(
+                    controller: regi.pageController,
+                    count: _list.length,
+                    effect: WormEffect(
+                      activeDotColor: primaryColor,
+                      dotWidth: Dimensions.width35,
+                      dotHeight: Dimensions.height10,
+                      spacing: Dimensions.width10 * 1.7,
+                      type: WormType.underground,
+                    ),
+                    onDotClicked: (int page) {
+                      // Jump to the selected page
+                      regi.pageController.jumpToPage(page);
+                    },
+                  ),
                 ),
-                onDotClicked: (int page) {
-                  // Jump to the selected page
-                  regi.pageController.jumpToPage(page);
-                },
               ),
               const SizedBoxHeight20(),
               // _continueButton(),

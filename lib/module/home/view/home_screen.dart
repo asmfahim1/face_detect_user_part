@@ -12,31 +12,24 @@ class HomeScreen extends StatelessWidget {
 
   final HomeController home = Get.find<HomeController>();
 
-  final imageList = [
-    openCameraIconPath,
-    openCameraIconPath,
-    openCameraIconPath,
-    openCameraIconPath,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: whiteColor,
+        backgroundColor: primaryColor,
         centerTitle: true,
         elevation: 0,
         title: TextWidget(
           'dashboard'.tr,
-          style: TextStyles.regular18.copyWith(
-            color: darkGrayColor,
+          style: TextStyles.title20.copyWith(
+            color: whiteColor,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () {
-              if (Get.find<LoginController>().userLoggedIn()) {
+              if (Get.find<LoginController>().userLogOutMethod()) {
                 Get.find<LoginController>().clearSharedData();
                 Get.offAllNamed(AppRoutes.loginScreen);
               }
@@ -77,48 +70,49 @@ class HomeScreen extends StatelessWidget {
 
   Widget _profileWidget() {
     return Container(
-      height: Dimensions.height100 * 1.35,
-      width: Dimensions.screenWidth,
-      padding: EdgeInsets.all(Dimensions.padding10),
-      margin: EdgeInsets.all(Dimensions.padding10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        border: Border.all(),
-        borderRadius: BorderRadius.circular(Dimensions.radius12),
+        color: primaryColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(Dimensions.radius20 * 1.5),
+          bottomRight: Radius.circular(Dimensions.radius20 * 1.5),
+        ),
       ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: blueColor,
-            radius: Dimensions.radius20 * 2,
-            child: Icon(
-              Icons.person,
-              size: Dimensions.iconSize20 * 2,
-              color: Colors.white,
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: Dimensions.padding10,
+          vertical: Dimensions.padding10 * 3,
+        ),
+        leading: CircleAvatar(
+          backgroundColor: blueColor,
+          radius: Dimensions.radius20 * 1.5,
+          backgroundImage: const NetworkImage(
+              'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.559178150.1721198416&semt=sph'),
+          // child: Icon(
+          //   Icons.person,
+          //   size: Dimensions.iconSize15 * 2,
+          //   color: Colors.white,
+          // ),
+        ),
+        title: TextWidget(
+          'Abu Sale Mohammad Fahim',
+          style: TextStyles.title16,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextWidget(
+              'id: 2254991017',
+              style: TextStyles.regular14,
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-          SizedBox(
-            width: Dimensions.width10,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextWidget(
-                'Abu Sale Mohammad Fahim',
-                style: TextStyles.title16.copyWith(fontSize: Dimensions.font14),
-              ),
-              TextWidget(
-                'id: 2254991017',
-                style: TextStyles.title16.copyWith(fontSize: Dimensions.font14),
-              ),
-              TextWidget(
-                'exam : ___ exam',
-                style: TextStyles.title16.copyWith(fontSize: Dimensions.font14),
-              ),
-            ],
-          ),
-        ],
+            TextWidget(
+              'asmfahim1@gmail.com',
+              style: TextStyles.regular14,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

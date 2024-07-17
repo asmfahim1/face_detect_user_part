@@ -83,4 +83,15 @@ class DialogUtils {
     );
   }
 
+  static void showNoImageTakenWarning(
+      {int seconds = 1, Color bgColor = redColor}) {
+    Get.snackbar(
+      'warning'.tr,
+      'no_image_selected'.tr,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: redColor,
+      colorText: whiteColor,
+      duration: const Duration(seconds: 2),
+    );
+  }
 }

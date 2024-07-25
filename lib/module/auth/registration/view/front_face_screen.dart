@@ -60,7 +60,7 @@ class FrontFaceScreen extends StatelessWidget {
       width: Dimensions.screenWidth / 2,
       buttonTitle: 'photo_upload'.tr,
       onTap: () {
-        showImagePickerOptions(context, regiController);
+        regi.pickFrontImage(ImageSource.camera);
       },
     );
   }

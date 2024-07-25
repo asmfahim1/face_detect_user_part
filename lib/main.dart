@@ -44,16 +44,16 @@ class MyApp extends StatelessWidget {
           ? const Locale('en', 'US')
           : const Locale('bn', 'BD'),
       theme: ThemeData(
-        progressIndicatorTheme: const ProgressIndicatorThemeData(
-          color: primaryColor,
-        ),
+        progressIndicatorTheme:
+            const ProgressIndicatorThemeData(color: primaryColor),
+        appBarTheme: const AppBarTheme(
+            backgroundColor: primaryColor, centerTitle: true, elevation: 0),
         scaffoldBackgroundColor: whiteColor,
         textTheme: GoogleFonts.poppinsTextTheme(),
         primaryColor: primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorScheme: ThemeData().colorScheme.copyWith(
-              secondary: secondaryColor,
-            ),
+        colorScheme:
+            ThemeData().colorScheme.copyWith(secondary: secondaryColor),
       ),
       //home: const SplashScreen(),
       initialRoute: AppRoutes.splashScreen,

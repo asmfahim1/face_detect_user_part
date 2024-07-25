@@ -83,11 +83,16 @@ class Language extends Translations {
           'error_unknown': 'অজানা ত্রুটি ঘটেছে',
 
           //registration controller
+          'verification_text':
+              'ফেসিয়াল ভেরিফিকেশনের জন্য আপনাকে নিচের উপায়ে আপনার পরিষ্কার ছবি দিতে হবে।',
           'uploading': 'ছবি আপলোড করা হচ্ছে...',
           'no_face_found': 'দুঃখিত কোন ফেস সনাক্ত করা হয়নি',
           'try_again_btn': 'আবার চেষ্টা করুন',
           'no_image_selected': 'ডিভাইস থেকে কোনো ছবি নির্বাচন করা হয়নি',
           'wait_for_a_while': 'কিছুক্ষন অপেক্ষা করুন...',
+          'next_btn': 'অগ্রসর হন',
+          'complete_process_warning':
+              'নিবন্ধন সম্পূর্ণ করার জন্য প্রদত্ত উপায়ে সমস্ত ছবি আপলোড করুন',
         },
       };
 }

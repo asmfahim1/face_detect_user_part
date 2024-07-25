@@ -17,9 +17,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: primaryColor,
-        centerTitle: true,
-        elevation: 0,
         title: TextWidget(
           'dashboard'.tr,
           style: TextStyles.title20.copyWith(
@@ -73,8 +70,8 @@ class HomeScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: primaryColor,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(Dimensions.radius20 * 1.5),
-          bottomRight: Radius.circular(Dimensions.radius20 * 1.5),
+          bottomLeft: Radius.circular(Dimensions.radius20 * 2),
+          bottomRight: Radius.circular(Dimensions.radius20 * 2),
         ),
       ),
       child: ListTile(
@@ -86,7 +83,8 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: blueColor,
           radius: Dimensions.radius20 * 1.5,
           backgroundImage: const NetworkImage(
-              'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.559178150.1721198416&semt=sph'),
+            'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.559178150.1721198416&semt=sph',
+          ),
           // child: Icon(
           //   Icons.person,
           //   size: Dimensions.iconSize15 * 2,
@@ -94,7 +92,7 @@ class HomeScreen extends StatelessWidget {
           // ),
         ),
         title: TextWidget(
-          'Abu Sale Mohammad Fahim',
+          'AMaz Uddin Shaon',
           style: TextStyles.title16,
           overflow: TextOverflow.ellipsis,
         ),
@@ -102,12 +100,12 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextWidget(
-              'id: 2254991017',
+              'ID: 2254991056',
               style: TextStyles.regular14,
               overflow: TextOverflow.ellipsis,
             ),
             TextWidget(
-              'asmfahim1@gmail.com',
+              'amaz@gmail.com',
               style: TextStyles.regular14,
               overflow: TextOverflow.ellipsis,
             ),

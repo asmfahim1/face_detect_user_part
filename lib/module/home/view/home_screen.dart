@@ -39,28 +39,34 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _profileWidget(),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _registrationSuccessPhotoWidget(),
-                SizedBox(
-                  height: Dimensions.height10,
-                ),
-                TextWidget(
-                  'completed_registration'.tr,
-                  textAlign: TextAlign.center,
-                  style: TextStyles.title16.copyWith(),
-                ),
-              ],
-            ),
-          )
-        ],
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (shouldPop) async {
+          await home.showWarningContext(context) ?? false;
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _profileWidget(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _registrationSuccessPhotoWidget(),
+                  SizedBox(
+                    height: Dimensions.height10,
+                  ),
+                  TextWidget(
+                    'completed_registration'.tr,
+                    textAlign: TextAlign.center,
+                    style: TextStyles.title16.copyWith(),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

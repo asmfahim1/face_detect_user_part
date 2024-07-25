@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mict_final_project/core/utils/app_version.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/l10n/getx_localization.dart';
+import 'package:mict_final_project/module/home/view/home_screen.dart';
 
 import 'core/utils/app_routes.dart';
 import 'core/utils/colors.dart';
@@ -55,9 +56,9 @@ class MyApp extends StatelessWidget {
         colorScheme:
             ThemeData().colorScheme.copyWith(secondary: secondaryColor),
       ),
-      //home: const SplashScreen(),
-      initialRoute: AppRoutes.splashScreen,
-      getPages: AppRoutes.routes,
+      home: HomeScreen(),
+      //initialRoute: AppRoutes.splashScreen,
+      //getPages: AppRoutes.routes,
     );
   }
 }

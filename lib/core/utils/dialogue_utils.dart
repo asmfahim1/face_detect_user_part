@@ -41,7 +41,7 @@ class DialogUtils {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Padding(
-          padding: allPadding15,
+          padding: EdgeInsets.all(Dimensions.padding15),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

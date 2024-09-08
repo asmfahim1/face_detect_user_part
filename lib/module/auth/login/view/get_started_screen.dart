@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/widgets/exports.dart';
 
 import '../../../../core/utils/app_routes.dart';
@@ -46,7 +47,7 @@ class GetStartedScreen extends StatelessWidget {
             children: [
               Container(
                 height: size.height / 2.4,
-                padding: allPadding20,
+                padding: EdgeInsets.all(Dimensions.padding20),
                 child: Column(
                   children: [
                     TextWidget(

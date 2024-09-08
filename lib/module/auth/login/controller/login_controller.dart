@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
-import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:mict_final_project/core/utils/dialogue_utils.dart';
 import 'package:mict_final_project/module/auth/login/model/all_exams_model.dart';
 import 'package:mict_final_project/module/auth/login/model/login_response_model.dart';
@@ -97,7 +96,6 @@ class LoginController extends GetxController {
           Get.offAllNamed(AppRoutes.registrationPage);
         }
       } else {
-        // Handle non-200 status code
         responseModel = LoginResponseModel.fromJson(response.body);
         DialogUtils.showErrorDialog(
           title: 'warning'.tr,
@@ -105,7 +103,7 @@ class LoginController extends GetxController {
         );
       }
     } catch (error) {
-      closeLoading(); // Ensure closeLoading() is called in case of an error
+      closeLoading();
 
       DialogUtils.showErrorDialog(description: "$error");
 

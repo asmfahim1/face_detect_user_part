@@ -43,7 +43,7 @@ class RegistrationScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: commonScaffoldPadding,
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.width20, vertical: Dimensions.height10),
           child: Column(
             children: [
               Expanded(

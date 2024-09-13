@@ -41,6 +41,7 @@ class ExamDropdown extends StatelessWidget {
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: DropdownButton<String>(
+            focusColor: whiteColor,
             underline: const SizedBox(),
             iconSize: 30.0,
             style: const TextStyle(

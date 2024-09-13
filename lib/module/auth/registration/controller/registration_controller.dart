@@ -252,10 +252,12 @@ class RegistrationController extends GetxController {
       Response response = await (regiRepo!
           .uploadImagePathsToCompleteRegistration(registrationBody));
 
-      clearAllFieldsFields();
+      DialogUtils.closeLoading();
+
 
       if (response.statusCode == 201) {
         Get.offAllNamed(AppRoutes.homeScreen);
+        clearAllFieldsFields();
       } else {
         DialogUtils.showErrorDialog(
             description: 'upload_failed'.tr, btnName: 'try_again_btn'.tr);

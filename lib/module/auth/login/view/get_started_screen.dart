@@ -42,7 +42,7 @@ class GetStartedScreen extends StatelessWidget {
           Get.toNamed(AppRoutes.loginScreen);
         },
         child: Container(
-          color: iconPrimaryColor,
+          color: primaryColor,
           child: Column(
             children: [
               Container(

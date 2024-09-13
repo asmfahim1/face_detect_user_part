@@ -26,7 +26,6 @@ class FAppTheme {
       checkboxTheme: FCheckBoxTheme.lightCheckBoxTheme,
       chipTheme: FChipTheme.lightChipTheme,
       inputDecorationTheme: FTextFieldTheme.lightInputDecorationTheme
-
       ///this input decoration is for text field theme
       );
   static ThemeData darkTheme = ThemeData(

@@ -67,7 +67,7 @@ class CommonTextField extends StatelessWidget {
     this.isRequired = false,
     this.autofocus = false,
     this.labelText,
-    this.fillColor = silverGrayColor,
+    this.fillColor = whiteColor,
     this.isFilled = true,
     this.hintText,
     this.minLines,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mict_final_project/core/utils/colors.dart';
 
 class FAppBarTheme {
   FAppBarTheme._();
@@ -7,7 +8,7 @@ class FAppBarTheme {
     centerTitle: false,
     elevation: 0,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
+    backgroundColor: primaryColor,
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: Colors.black, size: 24),
     actionsIconTheme: IconThemeData(color: Colors.black, size: 24),
@@ -19,7 +20,7 @@ class FAppBarTheme {
     centerTitle: false,
     elevation: 0,
     scrolledUnderElevation: 0,
-    backgroundColor: Colors.transparent,
+    backgroundColor: primaryColor,
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: Colors.white, size: 24),
     actionsIconTheme: IconThemeData(color: Colors.white, size: 24),

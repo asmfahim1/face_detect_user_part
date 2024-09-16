@@ -15,7 +15,6 @@ class RegistrationController extends GetxController {
   RegiRepo? regiRepo;
   RegistrationController({this.regiRepo});
 
-  @override
   void onInit() {
     super.onInit();
     imagePicker = ImagePicker();
@@ -232,18 +231,18 @@ class RegistrationController extends GetxController {
     try {
       DialogUtils.showLoading(title: 'wait_for_a_while'.tr);
       Map<String, dynamic> registrationBody = {
-        "face_vectors": [
+        "images": [
           {
-            "image_path": frontFileName.toString(),
-            "vectors": frontFaceDestructor,
+            "image": frontFileName.toString(),
+            "faceVector": frontFaceDestructor,
           },
           {
-            "image_path": leftFileName.toString(),
-            "vectors": frontFaceDestructor,
+            "image": leftFileName.toString(),
+            "faceVector": frontFaceDestructor,
           },
           {
-            "image_path": rightFileName.toString(),
-            "vectors": frontFaceDestructor,
+            "image": rightFileName.toString(),
+            "faceVector": frontFaceDestructor,
           }
         ],
         //"signature_image_path" : signatureName.toString()

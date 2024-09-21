@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/const_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,27 +14,27 @@ class ApiClient extends GetConnect implements GetxService {
 
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
     baseUrl = appBaseUrl;
-
     timeout = const Duration(seconds: 30);
     token = sharedPreferences.getString(AppConstantKey.TOKEN.key) ?? '';
-    _mainHeaders = {
+    _mainHeaders = _createHeaders(token);
+  }
+
+  Map<String, String> _createHeaders(String token) {
+    final headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
+    return headers;
   }
 
   void updateHeader(String token) {
-    _mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    };
+    _mainHeaders = _createHeaders(token);
   }
 
   Future<Response> getData(String uri, {Map<String, String>? headers}) async {
     try {
-      Response response =
-          await get(Uri.encodeFull(uri), headers: headers ?? _mainHeaders);
-      return response;
+      Response response = await get(Uri.encodeFull(uri), headers: headers ?? _mainHeaders);
+      return _handleResponseStatus(response);
     } catch (e) {
       return Response(statusCode: 1, statusText: e.toString());
     }
@@ -41,10 +42,9 @@ class ApiClient extends GetConnect implements GetxService {
 
   Future<Response> postData(String uri, dynamic body) async {
     try {
-      Response response =
-          await post(uri, jsonEncode(body), headers: _mainHeaders);
+      Response response = await post(uri, jsonEncode(body), headers: _mainHeaders);
 
-      return response;
+      return _handleResponseStatus(response);
     } catch (e) {
       return Response(statusCode: 1, statusText: e.toString());
     }
@@ -52,9 +52,9 @@ class ApiClient extends GetConnect implements GetxService {
 
   Future<Response> putData(String uri, dynamic body) async {
     try {
-      Response response =
-          await put(uri, jsonEncode(body), headers: _mainHeaders);
-      return response;
+      Response response = await put(uri, jsonEncode(body), headers: _mainHeaders);
+
+      return _handleResponseStatus(response);
     } catch (e) {
       return Response(statusCode: 1, statusText: e.toString());
     }
@@ -89,54 +89,37 @@ class ApiClient extends GetConnect implements GetxService {
           },
         ),
       );
+      _handleResponseStatus(Response(
+        statusCode: response.statusCode,
+        statusText: response.statusMessage,
+      ));
+
       map = response.data;
-
       return map;
-    } on dio.DioException catch (error) {
-
+    } on dio.DioException {
       throw 'Something Went Wrong';
-
     } catch (error) {
-
       throw 'Something Went Wrong';
     }
   }
 
-/* //Download pdf file
-  Future<String> _getDownloadPath() async {
-    Directory? downloadsDirectory;
-    if (Platform.isAndroid) {
-      if (await Permission.storage.request().isGranted) {
-        downloadsDirectory = await getExternalStorageDirectory();
-      } else {
-        throw Exception('Storage permission not granted');
-      }
-    } else if (Platform.isIOS) {
-      downloadsDirectory = await getApplicationDocumentsDirectory();
+  // Method to handle response status
+  dynamic _handleResponseStatus(Response response) {
+    switch (response.statusCode) {
+      case 401:
+        clearSharedData();
+        Get.offAllNamed(AppRoutes.loginScreen);
+        break;
+      default:
+        return response;
     }
-    if (downloadsDirectory == null) {
-      throw Exception('Could not access download directory');
-    }
-    return downloadsDirectory.path;
   }
 
-  Future<Map<String, dynamic>> downloadPDF(
-      String uri, Function(double) onProgress) async {
-    final request = dio.Dio();
-    String completeUrl = '$baseUrl' '$uri';
-    Map<String, dynamic> map = {};
-    String downloadPath = await _getDownloadPath();
-    String filePath = '$downloadPath/flutter-succinctly.pdf';
-    final response = await request.download(
-        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
-        filePath, onReceiveProgress: (received, total) {
-      if (total != -1) {
-        onProgress((received / total) * 100);
-      }
-    });
-    print('-------${response.data}${response.statusCode}---------');
-    map = response.data;
-    print('map from response data : $map');
-    return map;
-  }*/
+  bool clearSharedData() {
+    sharedPreferences.remove(AppConstantKey.TOKEN.key);
+    sharedPreferences.remove(AppConstantKey.USER_INFO.key);
+    token = '';
+    updateHeader('');
+    return true;
+  }
 }

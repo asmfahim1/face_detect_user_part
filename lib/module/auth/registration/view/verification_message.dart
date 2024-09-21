@@ -6,7 +6,7 @@ import 'package:mict_final_project/core/widgets/exports.dart';
 import 'package:mict_final_project/module/auth/registration/controller/registration_controller.dart';
 
 class VerificationMessage extends StatelessWidget {
-  VerificationMessage({Key? key}) : super(key: key);
+  VerificationMessage({super.key});
 
   final RegistrationController regi = Get.find<RegistrationController>();
 
@@ -60,7 +60,7 @@ class VerificationMessage extends StatelessWidget {
             CommonButton(
               width: Dimensions.screenWidth * .5,
               buttonTitle: 'next_btn'.tr,
-              onTap: () {
+              onPressed: () {
                 regi.changePage();
               },
             )

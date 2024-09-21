@@ -13,7 +13,7 @@ import 'package:mict_final_project/module/auth/registration/view/verification_me
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class RegistrationScreen extends StatelessWidget {
-  RegistrationScreen({Key? key}) : super(key: key);
+  RegistrationScreen({super.key});
 
   final _list = [
     VerificationMessage(),

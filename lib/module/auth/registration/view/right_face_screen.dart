@@ -9,7 +9,7 @@ import 'package:mict_final_project/module/auth/registration/controller/registrat
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
 class RightFaceUploadScreen extends StatelessWidget {
-  RightFaceUploadScreen({Key? key}) : super(key: key);
+  RightFaceUploadScreen({super.key});
 
   final RegistrationController regi = Get.find<RegistrationController>();
 
@@ -56,9 +56,9 @@ class RightFaceUploadScreen extends StatelessWidget {
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
     return CommonButton(
-      width: Dimensions.screenWidth / 2,
+      width: Dimensions.widthScreenHalf,
       buttonTitle: 'photo_upload'.tr,
-      onTap: () {
+      onPressed: () {
         //regi.changePage();
         regi.pickRightImage(ImageSource.camera);
       },

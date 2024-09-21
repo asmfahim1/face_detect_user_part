@@ -88,9 +88,9 @@ class CompleteRegistrationScreen extends StatelessWidget {
 
   Widget _completeProcess(RegistrationController regi) {
     return CommonButton(
-      width: Dimensions.widthScreenHalf,
+      width: Dimensions.screenWidth,
       buttonTitle: 'complete_btn'.tr,
-      onTap: () async {
+      onPressed: () async {
         if (regi.selectedFrontImagePath.isNotEmpty &&
             regi.selectedRightImagePath.isNotEmpty &&
             regi.selectedLeftImagePath.isNotEmpty &&

@@ -1,8 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:mict_final_project/core/utils/dimensions.dart';
-import 'package:mict_final_project/core/utils/extensions.dart';
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
 
@@ -13,10 +10,8 @@ class CommonImageShowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ImagePickerWidget(
-        imageFile: File(imagePath), onTap: null,
-      ),
+    return ImagePickerWidget(
+      imageFile: File(imagePath), onTap: null,
     );
   }
 }

@@ -9,7 +9,7 @@ import 'package:mict_final_project/module/auth/registration/controller/registrat
 import 'package:mict_final_project/module/home/view/widgets/image_picker_widget.dart';
 
 class UploadSignatureScreen extends StatelessWidget {
-  UploadSignatureScreen({Key? key}) : super(key: key);
+  UploadSignatureScreen({super.key});
 
   final RegistrationController regi = Get.find<RegistrationController>();
 
@@ -56,10 +56,10 @@ class UploadSignatureScreen extends StatelessWidget {
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
     return CommonButton(
-      width: Dimensions.screenWidth / 2,
+      width: Dimensions.widthScreenHalf,
       buttonTitle: 'photo_upload'.tr,
-      onTap: () async {
-        await regi.pickSignatureImage(ImageSource.camera);
+      onPressed: () {
+        regi.pickSignatureImage(ImageSource.camera);
       },
     );
   }

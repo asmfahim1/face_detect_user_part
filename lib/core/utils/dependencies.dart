@@ -7,7 +7,6 @@ import 'package:mict_final_project/module/auth/registration/controller/registrat
 import 'package:mict_final_project/module/auth/registration/repo/regi_repo.dart';
 import 'package:mict_final_project/module/home/controller/home_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../module/home/repo/home_repo.dart';
 
 Future<void> init() async {

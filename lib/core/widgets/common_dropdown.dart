@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../utils/colors.dart';
 import '../utils/styles.dart';
 
 class CommonDropDown extends StatelessWidget {

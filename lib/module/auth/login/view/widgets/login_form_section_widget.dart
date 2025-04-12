@@ -22,7 +22,7 @@ class LoginFormSectionWidget extends StatelessWidget {
         key: _formKey,
         child: Container(
           width: Dimensions.screenWidth,
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.padding15, vertical: Dimensions.padding20 * 2),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.padding15, vertical: Dimensions.padding20 * 1.5),
           decoration: BoxDecoration(
             color: whiteColor.withOpacity(0.7),
             borderRadius: BorderRadius.circular(Dimensions.radius20),

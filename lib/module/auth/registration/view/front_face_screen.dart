@@ -46,6 +46,11 @@ class FrontFaceScreen extends StatelessWidget {
               onTap: () {
                 showImagePickerOptions(context, regiController);
               },
+
+              onRemove: (){
+                regi.selectedFrontImagePath.value = '';
+              },
+
             ),
           ),
         ),

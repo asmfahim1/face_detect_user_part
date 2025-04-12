@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mict_final_project/core/utils/dimensions.dart';
 import 'package:mict_final_project/core/widgets/text_widget.dart';
 import '../utils/colors.dart';
 import '../utils/styles.dart';
@@ -31,18 +30,21 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color btnColor = buttonColor ?? primaryColor;
-    return SizedBox(
-      height: height ?? Dimensions.height10 * 5.7,
-      width: width,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-          backgroundColor: btnColor,
+
+    // We can use Elevated button, textButton etc
+
+    return FilledButton(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
-        onPressed: onPressed,
-        child: Flexible(
+        backgroundColor: btnColor,
+      ),
+      onPressed: onPressed,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Center(
           child: TextWidget(
             buttonTitle,
             textAlign: TextAlign.center,

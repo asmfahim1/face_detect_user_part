@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:mict_final_project/core/utils/pref_helper.dart';
 
 import 'colors.dart';
 
 class TextStyles {
-  static TextStyle title32 = GoogleFonts.poppins(
+  static TextStyle title32 = TextStyle(
+    fontFamily: PrefHelper.getLanguage() == 1 ? 'HindSiliguri' : 'Poppins',
     fontWeight: FontWeight.w600,
     fontSize: 32,
     color: blackColor,
   );
   static final title22 = title32.copyWith(fontSize: 22);
   static final title20 = title32.copyWith(fontSize: 20);
-  static final title16 = title32.copyWith(fontSize: 16, color: darkGrayColor);
+  static final title18 = title32.copyWith(fontSize: 18);
+  static final title16 = title32.copyWith(fontSize: 16);
+  static final title13 = title32.copyWith(fontSize: 13);
 
 
-  static final regular16 = GoogleFonts.poppins(
+  static final regular16 = TextStyle(
+    fontFamily: PrefHelper.getLanguage() == 1 ? 'HindSiliguri' : 'Poppins',
     fontWeight: FontWeight.w400,
     fontSize: 16,
   );

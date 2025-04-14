@@ -5,6 +5,7 @@ import 'package:mict_final_project/core/theme/theme.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/app_version.dart';
 import 'package:mict_final_project/core/utils/dimensions.dart';
+import 'package:mict_final_project/core/utils/network_connectivity_checker.dart';
 import 'package:mict_final_project/l10n/getx_localization.dart';
 import 'core/utils/dependencies.dart' as dep;
 import 'core/utils/pref_helper.dart';
@@ -14,6 +15,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
+  await NetworkConnection.instance.internetAvailable();
   await dep.init();
   initializeGet();
   runApp(const MyApp());

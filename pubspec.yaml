@@ -22,10 +22,10 @@ dependencies:
   google_mlkit_commons: ^0.7.1
   package_info_plus: ^8.0.2
   flutter_svg: ^2.0.10+1
-  google_fonts: ^4.0.4
+  connectivity_plus: ^3.0.3
+  dio: ^5.0.1
   get: ^4.6.5
   smooth_page_indicator: ^1.1.0
-  dio: ^5.4.0
 
 dependency_overrides:
   win32: ^5.5.4
@@ -69,3 +69,13 @@ flutter:
         - asset: assets/fonts/Poppins-BoldItalic.ttf
           weight: 800
           style: italic
+    - family: HindSiliguri
+      fonts:
+        - asset: assets/fonts/HindSiliguri-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/HindSiliguri-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/HindSiliguri-Bold.ttf
+          weight: 800
+        - asset: assets/fonts/HindSiliguri-SemiBold.ttf
+          weight: 600

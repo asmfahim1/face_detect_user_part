@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FTextTheme {
   FTextTheme._();
 
-  static TextTheme lightTextTheme = TextTheme(
+  static TextTheme   lightTextTheme = TextTheme(
     headlineLarge: const TextStyle().copyWith(
         fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
     headlineMedium: const TextStyle().copyWith(

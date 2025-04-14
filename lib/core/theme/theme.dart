@@ -8,13 +8,14 @@ import 'package:mict_final_project/core/theme/custome_themes/outline_button_them
 import 'package:mict_final_project/core/theme/custome_themes/text_field_theme.dart';
 import 'package:mict_final_project/core/theme/custome_themes/text_theme.dart';
 import 'package:mict_final_project/core/utils/colors.dart';
+import 'package:mict_final_project/core/utils/pref_helper.dart';
 
 class FAppTheme {
   FAppTheme._();
 
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
-      fontFamily: 'Poppins',
+      fontFamily: PrefHelper.getLanguage() == 1 ? 'HindSiliguri' : 'Poppins',
       brightness: Brightness.light,
       primaryColor: primaryColor,
       scaffoldBackgroundColor: Colors.white,
@@ -30,7 +31,7 @@ class FAppTheme {
       );
   static ThemeData darkTheme = ThemeData(
       useMaterial3: true,
-      fontFamily: 'Poppins',
+      fontFamily: PrefHelper.getLanguage() == 1 ? 'HindSiliguri' : 'Poppins',
       brightness: Brightness.dark,
       primaryColor: primaryColor,
       scaffoldBackgroundColor: Colors.black,

@@ -48,6 +48,7 @@ class Language extends Translations {
           'next_btn': 'Next',
           'complete_process_warning':
               'Please upload all the images in the given way to complete registration',
+          'no_internet': 'No internet connection',
         },
         'bn_BD': {
           //splash screen
@@ -93,6 +94,7 @@ class Language extends Translations {
           'next_btn': 'অগ্রসর হন',
           'complete_process_warning':
               'নিবন্ধন সম্পূর্ণ করার জন্য প্রদত্ত উপায়ে সমস্ত ছবি আপলোড করুন',
+          'no_internet': 'ইন্টারনেট সংযোগ নেই',
         },
       };
 }

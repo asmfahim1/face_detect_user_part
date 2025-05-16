@@ -16,4 +16,5 @@ class AppConstants {
   //Admin
   static const String storedUserId = 'user_id';
   static const String storedAdminNum = 'admin_num';
+
 }

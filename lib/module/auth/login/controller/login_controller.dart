@@ -66,8 +66,8 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginMethod() async {
+    LoginResponseModel responseModel;
     try {
-      LoginResponseModel responseModel;
       DialogUtils.showLoading(title: 'please_wait'.tr);
 
       final Map<String, dynamic> map = <String, dynamic>{};

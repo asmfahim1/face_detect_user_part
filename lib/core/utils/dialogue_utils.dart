@@ -54,7 +54,7 @@ class DialogUtils {
                 description,
                 style: TextStyles.regular14,
               ),
-              ElevatedButton(
+              FilledButton(
                 onPressed: () {
                   if (Get.isDialogOpen!) Get.back();
                 },

@@ -47,6 +47,7 @@ class ApiClient extends GetConnect implements GetxService {
       return _handleResponseStatus(response);
     } catch (e, stackTrace) {
       _logError('GET', fullUrl, e);
+      log('Stack trace: $stackTrace');
       return Response(statusCode: 1, statusText: "${e.toString()} $stackTrace");
     }
   }
@@ -67,6 +68,7 @@ class ApiClient extends GetConnect implements GetxService {
       return _handleResponseStatus(response);
     } catch (e, stackTrace) {
       _logError('POST', fullUrl, e);
+      log('Stack trace: $stackTrace');
       return Response(statusCode: 1, statusText: "${e.toString()} $stackTrace");
     }
   }
@@ -87,6 +89,7 @@ class ApiClient extends GetConnect implements GetxService {
       return _handleResponseStatus(response);
     } catch (e, stackTrace) {
       _logError('PUT', fullUrl, e);
+      log('Stack trace: $stackTrace');
       return Response(statusCode: 1, statusText: "${e.toString()} $stackTrace");
     }
   }
@@ -111,6 +114,7 @@ class ApiClient extends GetConnect implements GetxService {
       return _handleResponseStatus(response);
     } catch (e, stackTrace) {
       _logError('DELETE', fullUrl, e);
+      log('Stack trace: $stackTrace');
       return Response(statusCode: 1, statusText: "$e $stackTrace");
     }
   }
@@ -141,7 +145,8 @@ class ApiClient extends GetConnect implements GetxService {
       return response.body;
     } catch (e, stackTrace) {
       _logError('UPLOAD', fullUrl, e);
-      throw Exception('File upload failed: ${e.toString()} $stackTrace');
+      log('Stack trace: $stackTrace');
+      throw Exception('File upload failed: ${e.toString()}');
     }
   }
 
@@ -164,19 +169,23 @@ class ApiClient extends GetConnect implements GetxService {
 
       case 403:
         log('Forbidden access');
-        throw Exception('Forbidden access');
+        return response;
+        // throw Exception('Forbidden access');
 
       case 404:
         log('Resource not found');
-        throw Exception('Resource not found');
+        return response;
+        // throw Exception('Resource not found');
 
       case 500:
         log('Server error: ${response.body}');
-        throw Exception('Internal server error');
+        return response;
+        // throw Exception('Internal server error');
 
       default:
         log('Unhandled status code: ${response.statusCode}');
-        throw Exception('Unexpected status code: ${response.statusCode}');
+        return response;
+        // throw Exception('Unexpected status code: ${response.statusCode}');
     }
   }
 

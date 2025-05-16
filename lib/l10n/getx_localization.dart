@@ -42,7 +42,7 @@ class Language extends Translations {
               'For facial verification you need to give your clear photo in the following way.',
           'uploading': 'Uploading image ...',
           'no_face_found': 'Sorry no face detected',
-          'try_again_btn': 'try again',
+          'try_again_btn': 'Try again',
           'no_image_selected': 'No image selected from device',
           'wait_for_a_while': 'Please wait for a while ...',
           'next_btn': 'Next',

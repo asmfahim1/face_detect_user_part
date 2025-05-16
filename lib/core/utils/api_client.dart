@@ -154,7 +154,7 @@ class ApiClient extends GetConnect implements GetxService {
 
       case 400:
       // Handle bad request
-        print('Bad request: ${response.body}');
+        log('Bad request: ${response.body}');
         throw Exception('Bad request');
 
       case 401:
@@ -163,19 +163,19 @@ class ApiClient extends GetConnect implements GetxService {
         throw Exception('Unauthorized');
 
       case 403:
-        print('Forbidden access');
+        log('Forbidden access');
         throw Exception('Forbidden access');
 
       case 404:
-        print('Resource not found');
+        log('Resource not found');
         throw Exception('Resource not found');
 
       case 500:
-        print('Server error: ${response.body}');
+        log('Server error: ${response.body}');
         throw Exception('Internal server error');
 
       default:
-        print('Unhandled status code: ${response.statusCode}');
+        log('Unhandled status code: ${response.statusCode}');
         throw Exception('Unexpected status code: ${response.statusCode}');
     }
   }

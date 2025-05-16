@@ -50,6 +50,7 @@ class Language extends Translations {
               'Please upload all the images in the given way to complete registration',
           'no_internet': 'No internet connection',
         },
+
         'bn_BD': {
           //splash screen
           'splash_text': 'ফেস ডিটেকশন অ্যাপ',

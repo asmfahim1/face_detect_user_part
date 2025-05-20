@@ -21,7 +21,8 @@ class VerificationMessage extends StatelessWidget {
           children: [
             TextWidget(
               'verification_text'.tr,
-              style: TextStyles.title20,
+              style: TextStyles.title16,
+              textAlign: TextAlign.center,
             ),
             SizedBox(
               height: Dimensions.height20 * 4,

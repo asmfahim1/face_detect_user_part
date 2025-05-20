@@ -26,7 +26,7 @@ class FAppTheme {
       bottomSheetTheme: FBottomSheetTheme.lightBottomSheetTheme,
       checkboxTheme: FCheckBoxTheme.lightCheckBoxTheme,
       chipTheme: FChipTheme.lightChipTheme,
-      inputDecorationTheme: FTextFieldTheme.lightInputDecorationTheme
+      inputDecorationTheme: FTextFieldTheme.lightInputDecorationTheme,
       ///this input decoration is for text field theme
       );
   static ThemeData darkTheme = ThemeData(
@@ -42,7 +42,7 @@ class FAppTheme {
       bottomSheetTheme: FBottomSheetTheme.darkBottomSheetTheme,
       checkboxTheme: FCheckBoxTheme.darkCheckBoxTheme,
       chipTheme: FChipTheme.darkChipTheme,
-      inputDecorationTheme: FTextFieldTheme.darkInputDecorationTheme
+      inputDecorationTheme: FTextFieldTheme.darkInputDecorationTheme,
       ///this input decoration is for text field theme
       );
 }

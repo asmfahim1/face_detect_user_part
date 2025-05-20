@@ -5,7 +5,7 @@ import 'colors.dart';
 
 class TextStyles {
   static TextStyle title32 = TextStyle(
-    fontFamily: PrefHelper.getLanguage() == 1 ? 'HindSiliguri' : 'Poppins',
+    fontFamily: PrefHelper.getLanguage() == 1 ? 'Poppins' : 'HindSiliguri',
     fontWeight: FontWeight.w600,
     fontSize: 32,
     color: blackColor,
@@ -18,7 +18,7 @@ class TextStyles {
 
 
   static final regular16 = TextStyle(
-    fontFamily: PrefHelper.getLanguage() == 1 ? 'HindSiliguri' : 'Poppins',
+    fontFamily: PrefHelper.getLanguage() == 1 ? 'Poppins' : 'HindSiliguri',
     fontWeight: FontWeight.w400,
     fontSize: 16,
   );

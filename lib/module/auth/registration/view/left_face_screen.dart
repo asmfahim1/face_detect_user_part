@@ -57,7 +57,7 @@ class LeftFaceUploadScreen extends StatelessWidget {
 
   Widget _uploadPhotoButton(RegistrationController regiController) {
     return CommonButton(
-      width: Dimensions.widthScreenHalf,
+      width: Dimensions.screenWidth * 0.8,
       buttonTitle: 'photo_upload'.tr,
       onPressed: () {
         regi.pickLeftImage(ImageSource.camera);

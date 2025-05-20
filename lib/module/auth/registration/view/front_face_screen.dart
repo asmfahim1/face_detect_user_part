@@ -61,7 +61,7 @@ class FrontFaceScreen extends StatelessWidget {
 
   Widget _uploadPhotoButton(RegistrationController regiController, BuildContext context) {
     return CommonButton(
-      width: Dimensions.widthScreenHalf,
+      width: Dimensions.screenWidth * 0.8,
       buttonTitle: 'photo_upload'.tr,
       onPressed: () {
         regi.pickFrontImage(ImageSource.camera);

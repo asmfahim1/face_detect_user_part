@@ -8,7 +8,7 @@ class CommonButton extends StatelessWidget {
     super.key,
     required this.buttonTitle,
     this.onPressed,
-    this.height,
+    this.height = 50,
     this.width,
     this.fontSize = 14,
     this.borderRadius = 6,
@@ -18,7 +18,7 @@ class CommonButton extends StatelessWidget {
   });
 
   final String buttonTitle;
-  final double? height;
+  final double height;
   final VoidCallback? onPressed;
   final double? width;
   final double borderRadius;
@@ -33,17 +33,17 @@ class CommonButton extends StatelessWidget {
 
     // We can use Elevated button, textButton etc
 
-    return FilledButton(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
+    return SizedBox(
+      height: height,
+      width: width,
+      child: FilledButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          backgroundColor: btnColor,
         ),
-        backgroundColor: btnColor,
-      ),
-      onPressed: onPressed,
-      child: SizedBox(
-        height: height,
-        width: width,
+        onPressed: onPressed,
         child: Center(
           child: TextWidget(
             buttonTitle,

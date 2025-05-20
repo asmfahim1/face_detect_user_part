@@ -70,6 +70,7 @@ class LoginFormSectionWidget extends StatelessWidget {
                 width: Dimensions.screenWidth,
                 buttonColor: blueColor,
                 buttonTitle: 'login'.tr,
+                fontWeight: FontWeight.bold,
                 onPressed: () {
                   //Get.toNamed(AppRoutes.registrationPage);
                   if (_formKey.currentState!.validate()) {

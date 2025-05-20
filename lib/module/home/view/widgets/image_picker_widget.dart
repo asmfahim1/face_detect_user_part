@@ -23,11 +23,14 @@ class ImagePickerWidget extends StatelessWidget {
     return InkWell(
       onTap: (imageFile != null && imageFile!.path.isNotEmpty) ? onTap : null,
       child: Container(
-        height: Dimensions.height100 * 1.8,
-        width: Dimensions.width100 * 1.5,
+        width: Dimensions.screenWidth * 0.8,
+        // height: Dimensions.screenWidth * 0.8,
         decoration: BoxDecoration(
-          border: Border.all(color: primaryColor, width: 2),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Colors.grey.shade300,
+            width: 2,
+          ),
         ),
         child: Stack(
           children: [

@@ -48,7 +48,7 @@ class ApiClient extends GetConnect implements GetxService {
     } catch (e, stackTrace) {
       _logError('GET', fullUrl, e);
       log('Stack trace: $stackTrace');
-      return Response(statusCode: 1, statusText: "${e.toString()} $stackTrace");
+      return Response(statusCode: 0, statusText: "${e.toString()} $stackTrace");
     }
   }
 
@@ -69,7 +69,7 @@ class ApiClient extends GetConnect implements GetxService {
     } catch (e, stackTrace) {
       _logError('POST', fullUrl, e);
       log('Stack trace: $stackTrace');
-      return Response(statusCode: 1, statusText: "${e.toString()} $stackTrace");
+      return Response(statusCode: 0, statusText: "${e.toString()} $stackTrace");
     }
   }
 

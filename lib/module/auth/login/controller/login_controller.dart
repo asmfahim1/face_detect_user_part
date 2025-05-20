@@ -76,15 +76,13 @@ class LoginController extends GetxController {
       map['exam_id'] = examId.value;
 
       Response response = await loginRepo!.login(map);
-
       if (kDebugMode) {
-        print(
-            'Response and maps : ${response.statusCode} =====${response.body}=========$map');
+        print("Login response: ${response.body}");
       }
 
       closeLoading();
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.body != null) {
         responseModel = LoginResponseModel.fromJson(response.body);
 
         if (responseModel.data == null) {
@@ -108,7 +106,7 @@ class LoginController extends GetxController {
     } catch (error) {
       closeLoading();
 
-      DialogUtils.showErrorDialog(description: "$error");
+      DialogUtils.showErrorDialog(description: 'error_unknown'.tr);
 
       if (kDebugMode) {
         print(

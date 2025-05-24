@@ -59,7 +59,7 @@ class VerificationMessage extends StatelessWidget {
               height: Dimensions.height20 * 4,
             ),
             CommonButton(
-              width: Dimensions.screenWidth * .5,
+              width: Dimensions.screenWidth * .8,
               buttonTitle: 'next_btn'.tr,
               onPressed: () {
                 regi.changePage();

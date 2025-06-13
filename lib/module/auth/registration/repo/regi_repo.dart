@@ -10,8 +10,7 @@ class RegiRepo {
   RegiRepo({required this.apiClient, required this.sharedPreferences});
 
   ///file upload process
-  Future<Map<String, dynamic>> uploadFileWithDio(
-      File file, String fileName) async {
+  Future<Map<String, dynamic>> uploadFileWithDio(File file, String fileName) async {
     return await apiClient.uploadFile(AppConstants.fileUpload, file, fileName);
   }
 

@@ -94,7 +94,8 @@ class ApiClient extends GetConnect implements GetxService {
     }
   }
 
-  Future<Response> deleteData(String uri, {dynamic body, Map<String, String>? headers}) async {
+  Future<Response> deleteData(String uri,
+      {dynamic body, Map<String, String>? headers}) async {
     if (!await _checkInternetOrReturnError()) {
       return Response(statusCode: 0, statusText: 'no_internet'.tr);
     }
@@ -120,10 +121,10 @@ class ApiClient extends GetConnect implements GetxService {
   }
 
   Future<Map<String, dynamic>> uploadFile(
-      String uri,
-      File file,
-      String fileName,
-      ) async {
+    String uri,
+    File file,
+    String fileName,
+  ) async {
     if (!await _checkInternetOrReturnError()) {
       throw Exception('no_internet'.tr);
     }
@@ -136,9 +137,15 @@ class ApiClient extends GetConnect implements GetxService {
 
       log('UPLOAD Request: $fullUrl');
       log('Uploading file: ${file.path}');
-      log('Headers: $_mainHeaders');
+      log('Headers: ${"Authorization : Bearer $token"}');
 
-      final response = await post(uri, formData, headers: _mainHeaders);
+      final response = await post(
+        uri,
+        formData,
+        headers: {
+          'Authorization': 'Bearer $token',
+        }
+      );
       _logResponse('UPLOAD', response);
 
       _handleResponseStatus(response);
@@ -154,11 +161,11 @@ class ApiClient extends GetConnect implements GetxService {
     switch (response.statusCode) {
       case 200:
       case 201:
-      // Success, allow the response to be returned
+        // Success, allow the response to be returned
         return response;
 
       case 400:
-      // Handle bad request
+        // Handle bad request
         log('Bad request: ${response.body}');
         throw Exception('Bad request');
 
@@ -170,25 +177,24 @@ class ApiClient extends GetConnect implements GetxService {
       case 403:
         log('Forbidden access');
         return response;
-        // throw Exception('Forbidden access');
+      // throw Exception('Forbidden access');
 
       case 404:
         log('Resource not found');
         return response;
-        // throw Exception('Resource not found');
+      // throw Exception('Resource not found');
 
       case 500:
         log('Server error: ${response.body}');
         return response;
-        // throw Exception('Internal server error');
+      // throw Exception('Internal server error');
 
       default:
         log('Unhandled status code: ${response.statusCode}');
         return response;
-        // throw Exception('Unexpected status code: ${response.statusCode}');
+      // throw Exception('Unexpected status code: ${response.statusCode}');
     }
   }
-
 
   void _logResponse(String method, Response response) {
     log('$method Response (${response.statusCode}):');
@@ -205,7 +211,8 @@ class ApiClient extends GetConnect implements GetxService {
   }
 
   Future<bool> _checkInternetOrReturnError() async {
-    final hasInternet = await NetworkConnection.instance.hasInternetConnection();
+    final hasInternet =
+        await NetworkConnection.instance.hasInternetConnection();
     if (!hasInternet) {
       Get.snackbar("No Internet", "Please check your internet connection.");
     }

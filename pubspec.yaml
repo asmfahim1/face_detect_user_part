@@ -26,6 +26,7 @@ dependencies:
   dio: ^5.0.1
   get: ^4.6.5
   smooth_page_indicator: ^1.1.0
+  flutter_image_compress: ^2.4.0
 
 dependency_overrides:
   win32: ^5.5.4

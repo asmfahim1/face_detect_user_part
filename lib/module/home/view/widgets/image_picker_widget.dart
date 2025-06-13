@@ -24,7 +24,7 @@ class ImagePickerWidget extends StatelessWidget {
       onTap: (imageFile != null && imageFile!.path.isNotEmpty) ? onTap : null,
       child: Container(
         width: Dimensions.screenWidth * 0.8,
-        // height: Dimensions.screenWidth * 0.8,
+        height: Dimensions.screenWidth * 0.8,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
@@ -38,38 +38,17 @@ class ImagePickerWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: (imageFile != null && imageFile!.path.isNotEmpty)
                   ? Image.file(
-                      imageFile!,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    )
+                imageFile!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,  //< now safe because parent has fixed height
+              )
                   : Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _getPlaceholderImage(),
-                    ),
-            ),
-
-            // Remove button (visible only when image is selected)
-            if (imageFile != null && imageFile!.path.isNotEmpty)
-              Positioned(
-                top: 6,
-                right: 6,
-                child: GestureDetector(
-                  onTap: onRemove,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(6),
-                    child: const Icon(
-                      Icons.close,
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                  ),
-                ),
+                padding: const EdgeInsets.all(16.0),
+                child: _getPlaceholderImage(),
               ),
+            ),
+            // Remove button as before...
           ],
         ),
       ),

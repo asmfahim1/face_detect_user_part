@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as img;
@@ -10,17 +11,18 @@ import 'package:mict_final_project/core/ML/Recognizer.dart';
 import 'package:mict_final_project/core/utils/app_routes.dart';
 import 'package:mict_final_project/core/utils/dialogue_utils.dart';
 import 'package:mict_final_project/module/auth/registration/repo/regi_repo.dart';
+import 'package:path_provider/path_provider.dart';
 
 class RegistrationController extends GetxController {
   RegiRepo? regiRepo;
   RegistrationController({this.regiRepo});
 
+  @override
   void onInit() {
     super.onInit();
     imagePicker = ImagePicker();
 
-    final options =
-        FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
+    final options = FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
     faceDetector = FaceDetector(options: options);
 
     recognizer = Recognizer();
@@ -64,8 +66,8 @@ class RegistrationController extends GetxController {
         return;
       }
 
-      String fileName = 'FrontImage${pickedImage.path.split('/').last}';
       final File imageFile = File(pickedImage.path);
+      String fileName = 'FrontImage${pickedImage.path.split('/').last}';
 
       Get.back();
       DialogUtils.showLoading(title: 'uploading'.tr);
@@ -75,25 +77,33 @@ class RegistrationController extends GetxController {
 
       if (frontFaceDestructor.isEmpty) {
         DialogUtils.closeLoading();
-        DialogUtils.showErrorDialog(
-            description: 'no_face_found'.tr, btnName: 'try_again_btn'.tr);
+        DialogUtils.showErrorDialog(description: 'no_face_found'.tr, btnName: 'try_again_btn'.tr);
         return;
       }
 
-      final response = await regiRepo!.uploadFileWithDio(imageFile, fileName);
+      final File? compressedFile = await adaptiveCompressImage(imageFile.path);
+
+      if (compressedFile == null) {
+        DialogUtils.closeLoading();
+        DialogUtils.showErrorDialog(description: 'Compression failed', btnName: 'try_again_btn'.tr);
+        return;
+      }
+
+      // final response = await regiRepo!.uploadFileWithDio(imageFile, fileName);
+      final response = await regiRepo!.uploadFileWithDio(compressedFile, fileName);
+
       DialogUtils.closeLoading();
       if (response["status"] == 201) {
-        selectedFrontImagePath.value = pickedImage.path;
+        selectedFrontImagePath.value = imageFile.path;
         frontFileName.value = '${response["imagePath"]}';
         changePage();
       } else {
         DialogUtils.showErrorDialog(
-            description: 'upload_failed'.tr, btnName: 'try_again_btn'.tr);
+            description: "${response["error"]}", btnName: 'try_again_btn'.tr);
       }
     } catch (error) {
       DialogUtils.closeLoading();
-      DialogUtils.showErrorDialog(
-          btnName: 'try_again_btn'.tr, description: "$error");
+      DialogUtils.showErrorDialog(btnName: 'try_again_btn'.tr, description: "$error ==");
     }
   }
 
@@ -110,8 +120,8 @@ class RegistrationController extends GetxController {
         return;
       }
 
-      String fileName = 'RightImageImage${pickedImage.path.split('/').last}';
       final File imageFile = File(pickedImage.path);
+      String fileName = 'RightImage${pickedImage.path.split('/').last}';
 
       Get.back();
       DialogUtils.showLoading(title: 'uploading'.tr);
@@ -126,16 +136,25 @@ class RegistrationController extends GetxController {
         return;
       }
 
-      final response = await regiRepo!.uploadFileWithDio(imageFile, fileName);
+      final File? compressedFile = await adaptiveCompressImage(imageFile.path);
+
+      if (compressedFile == null) {
+        DialogUtils.closeLoading();
+        DialogUtils.showErrorDialog(description: 'Compression failed', btnName: 'try_again_btn'.tr);
+        return;
+      }
+
+      final response = await regiRepo!.uploadFileWithDio(compressedFile, fileName);
+
       DialogUtils.closeLoading();
 
       if (response["status"] == 201) {
-        selectedRightImagePath.value = pickedImage.path;
+        selectedRightImagePath.value = imageFile.path;
         rightFileName.value = '${response["imagePath"]}';
         changePage();
       } else {
         DialogUtils.showErrorDialog(
-            description: 'upload_failed'.tr, btnName: 'try_again_btn'.tr);
+            description: "${response["error"]}", btnName: 'try_again_btn'.tr);
       }
     } catch (error) {
       DialogUtils.closeLoading();
@@ -157,8 +176,8 @@ class RegistrationController extends GetxController {
         return;
       }
 
-      String fileName = 'LeftImage${pickedImage.path.split('/').last}';
       final File imageFile = File(pickedImage.path);
+      String fileName = 'LeftImage${pickedImage.path.split('/').last}';
 
       Get.back();
       DialogUtils.showLoading(title: 'uploading'.tr);
@@ -172,8 +191,18 @@ class RegistrationController extends GetxController {
             description: 'no_face_found'.tr, btnName: 'try_again_btn'.tr);
         return;
       }
+      final File? compressedFile = await adaptiveCompressImage(imageFile.path);
 
-      final response = await regiRepo!.uploadFileWithDio(imageFile, fileName);
+      if (compressedFile == null) {
+        DialogUtils.closeLoading();
+        DialogUtils.showErrorDialog(description: 'Compression failed', btnName: 'try_again_btn'.tr);
+        return;
+      }
+
+      // final response = await regiRepo!.uploadFileWithDio(imageFile, fileName);
+      final response = await regiRepo!.uploadFileWithDio(compressedFile, fileName);
+
+
       DialogUtils.closeLoading();
 
       if (response["status"] == 201) {
@@ -182,7 +211,7 @@ class RegistrationController extends GetxController {
         changePage();
       } else {
         DialogUtils.showErrorDialog(
-            description: 'upload_failed'.tr, btnName: 'try_again_btn'.tr);
+            description: "${response["message"]}", btnName: 'try_again_btn'.tr);
       }
     } catch (error) {
       DialogUtils.closeLoading();
@@ -209,16 +238,24 @@ class RegistrationController extends GetxController {
       Get.back();
       DialogUtils.showLoading(title: 'uploading'.tr);
 
-      final response = await regiRepo!.uploadFileWithDio(imageFile, fileName);
+      final File? compressedFile = await adaptiveCompressImage(imageFile.path);
+
+      if (compressedFile == null) {
+        DialogUtils.closeLoading();
+        DialogUtils.showErrorDialog(description: 'Compression failed', btnName: 'try_again_btn'.tr);
+        return;
+      }
+
+      final response = await regiRepo!.uploadFileWithDio(compressedFile, fileName);
       DialogUtils.closeLoading();
 
       if (response["status"] == 201) {
-        selectedSignatureImagePath.value = pickedImage.path;
+        selectedSignatureImagePath.value = imageFile.path;
         signatureName.value = '${response["imagePath"]}';
         changePage();
       } else {
         DialogUtils.showErrorDialog(
-            description: 'upload_failed'.tr, btnName: 'try_again_btn'.tr);
+            description: "${response["error"]}", btnName: 'try_again_btn'.tr);
       }
     } catch (error) {
       DialogUtils.closeLoading();
@@ -238,11 +275,11 @@ class RegistrationController extends GetxController {
           },
           {
             "image": leftFileName.toString(),
-            "faceVector": frontFaceDestructor,
+            "faceVector": leftFaceDestructor,
           },
           {
             "image": rightFileName.toString(),
-            "faceVector": frontFaceDestructor,
+            "faceVector": rightFaceDestructor,
           }
         ],
         //"signature_image_path" : signatureName.toString()
@@ -267,6 +304,47 @@ class RegistrationController extends GetxController {
           btnName: 'try_again_btn'.tr, description: "$error");
     }
   }
+
+  Future<File?> adaptiveCompressImage(String path, {int targetWidth = 600, int jpegQuality = 60}) async {
+    try {
+      final originalBytes = await File(path).readAsBytes();
+      final originalImage = img.decodeImage(originalBytes);
+
+      if (originalImage == null) {
+        print("Invalid image data");
+        return null;
+      }
+
+      // Resize while maintaining aspect ratio
+      img.Image resizedImage = img.copyResize(
+        originalImage,
+        width: targetWidth,
+      );
+
+      // Compress directly at fixed quality
+      final compressedBytes = img.encodeJpg(resizedImage, quality: jpegQuality);
+
+      // Save compressed image to temp directory
+      final tempDir = await getTemporaryDirectory();
+      final compressedFile = File('${tempDir.path}/compressed_${DateTime.now().millisecondsSinceEpoch}.jpg');
+      await compressedFile.writeAsBytes(compressedBytes);
+
+      print("Compressed file size: ${compressedBytes.length} bytes (${compressedBytes.length / 1024} KB)");
+      return compressedFile;
+    } catch (e) {
+      print("Compression error: $e");
+      return null;
+    }
+  }
+  Future<File> getTempFile(String path) async {
+    Directory tempDir = await getTemporaryDirectory();
+    return await File("${tempDir.path}/upload${DateTime
+        .now()
+        .millisecondsSinceEpoch}.${path
+        .split('.')
+        .last}").create();
+  }
+
 
   void clearAllFieldsFields() {
     selectedFrontImagePath.value = '';

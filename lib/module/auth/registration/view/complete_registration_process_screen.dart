@@ -24,54 +24,61 @@ class CompleteRegistrationScreen extends StatelessWidget {
             TextWidget(
               'complete_process'.tr,
               style: TextStyles.regular14,
+              textAlign: TextAlign.center,
             ),
             const SizedBoxHeight20(),
             Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: ImagePickerWidget(
-                        imageFile: File(regi.selectedFrontImagePath.value),
-                        faceName: 'front',
-                        onTap: null,
+                AspectRatio(
+                  aspectRatio: 1.7,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ImagePickerWidget(
+                          imageFile: File(regi.selectedFrontImagePath.value),
+                          faceName: 'front',
+                          onTap: null,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: ImagePickerWidget(
-                        imageFile: File(regi.selectedRightImagePath.value),
-                        faceName: 'right',
-                        onTap: null,
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: ImagePickerWidget(
+                          imageFile: File(regi.selectedRightImagePath.value),
+                          faceName: 'right',
+                          onTap: null,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ImagePickerWidget(
-                        imageFile: File(regi.selectedLeftImagePath.value),
-                        faceName: 'left',
-                        onTap: null,
+                AspectRatio(
+                  aspectRatio: 1.7,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ImagePickerWidget(
+                          imageFile: File(regi.selectedLeftImagePath.value),
+                          faceName: 'left',
+                          onTap: null,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: ImagePickerWidget(
-                        imageFile: File(regi.selectedSignatureImagePath.value),
-                        faceName: 'signature',
-                        onTap: null,
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: ImagePickerWidget(
+                          imageFile: File(regi.selectedSignatureImagePath.value),
+                          faceName: 'signature',
+                          onTap: null,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

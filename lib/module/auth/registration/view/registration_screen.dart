@@ -59,26 +59,23 @@ class RegistrationScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(
-                height: Dimensions.height10 * 8,
-                width: Dimensions.screenWidth,
-                child: Center(
-                  child: SmoothPageIndicator(
-                    controller: regi.pageController,
-                    count: _list.length,
-                    effect: WormEffect(
-                      activeDotColor: primaryColor,
-                      dotWidth: Dimensions.width35,
-                      dotHeight: Dimensions.height10,
-                      spacing: Dimensions.width10 * 1.7,
-                      type: WormType.underground,
-                    ),
-                    onDotClicked: (int page) {
-                      // Jump to the selected page
-                      regi.pageController.jumpToPage(page);
-                    },
-                  ),
+
+              SizedBox(height: Dimensions.height10 * 2,),
+
+              SmoothPageIndicator(
+                controller: regi.pageController,
+                count: _list.length,
+                effect: WormEffect(
+                  activeDotColor: primaryColor,
+                  dotWidth: Dimensions.width35,
+                  dotHeight: Dimensions.height10 * 1.5,
+                  spacing: Dimensions.width10 * 1.7,
+                  type: WormType.underground,
                 ),
+                onDotClicked: (int page) {
+                  // Jump to the selected page
+                  regi.pageController.jumpToPage(page);
+                },
               ),
               const SizedBoxHeight20(),
               // _continueButton(),

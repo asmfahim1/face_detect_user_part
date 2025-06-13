@@ -35,7 +35,7 @@ class ImagePickerWidget extends StatelessWidget {
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(20),
               child: (imageFile != null && imageFile!.path.isNotEmpty)
                   ? Image.file(
                 imageFile!,

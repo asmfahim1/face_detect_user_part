@@ -15,6 +15,7 @@ class VerificationMessage extends StatelessWidget {
     return Scaffold(
       body: SizedBox(
         width: Dimensions.screenWidth,
+        height: Dimensions.screenHeight,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

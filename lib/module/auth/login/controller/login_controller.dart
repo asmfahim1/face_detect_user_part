@@ -91,9 +91,9 @@ class LoginController extends GetxController {
             description: responseModel.message ?? 'no_data'.tr,
           );
         } else {
-          await loginRepo!.saveUserToken(responseModel.token.toString(),
-              responseModel.data!.registretionDone!);
-
+          await loginRepo!.saveUserToken(responseModel.token.toString(), responseModel.data!.registretionDone!);
+          // Hide the keyboard before navigating
+          FocusScope.of(Get.context!).unfocus();
           Get.offAllNamed(AppRoutes.registrationPage);
         }
       } else {

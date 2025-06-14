@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as img;
@@ -311,7 +310,7 @@ class RegistrationController extends GetxController {
       final originalImage = img.decodeImage(originalBytes);
 
       if (originalImage == null) {
-        print("Invalid image data");
+        // print("Invalid image data");
         return null;
       }
 
@@ -329,21 +328,22 @@ class RegistrationController extends GetxController {
       final compressedFile = File('${tempDir.path}/compressed_${DateTime.now().millisecondsSinceEpoch}.jpg');
       await compressedFile.writeAsBytes(compressedBytes);
 
-      print("Compressed file size: ${compressedBytes.length} bytes (${compressedBytes.length / 1024} KB)");
+      // print("Compressed file size: ${compressedBytes.length} bytes (${compressedBytes.length / 1024} KB)");
       return compressedFile;
     } catch (e) {
       print("Compression error: $e");
       return null;
     }
   }
-  Future<File> getTempFile(String path) async {
+
+  /*Future<File> getTempFile(String path) async {
     Directory tempDir = await getTemporaryDirectory();
     return await File("${tempDir.path}/upload${DateTime
         .now()
         .millisecondsSinceEpoch}.${path
         .split('.')
         .last}").create();
-  }
+  }*/
 
 
   void clearAllFieldsFields() {
